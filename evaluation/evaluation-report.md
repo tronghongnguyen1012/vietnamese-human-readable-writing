@@ -1,4 +1,12 @@
-# Báo cáo Kết quả Kiểm thử và Đánh giá (`evaluation-report.md`)
+# Báo cáo Kết quả Kiểm thử và Đánh giá v3 (Bản Lịch sử & Đính chính Round 2)
+
+> [!WARNING]
+> **Đính chính (Errata — Round 2 Audit, 25/11/2026):**
+> Kiểm tra độc lập dữ liệu thô [held-out-raw-results.jsonl](./results/held-out-raw-results.jsonl) đã phát hiện các điểm cần đính chính trong bản báo cáo v3 dưới đây (toàn văn gốc vẫn được giữ nguyên bên dưới để bảo toàn lịch sử thực nghiệm):
+> 1. **Số liệu vị trí A/B ở 3 ca bất nhất (Mục 5.2):** Báo cáo gốc viết nhầm rằng cả 3 ca `TEST-02, TEST-21, TEST-24` đều chọn `Output B`. Thực tế dữ liệu thô 48 lượt chấm là **`A = 23`, `B = 25`**, cụ thể: `TEST-02` (`Pass 1 = B`, `Pass 2 = B`), **`TEST-21` (`Pass 1 = A`, `Pass 2 = A`)**, `TEST-24` (`Pass 1 = B`, `Pass 2 = B`). Không có đủ bằng chứng kết luận Judge thiên lệch hệ thống về vị trí B; sự khác biệt giữa 2 lượt trên 3 ca này phản ánh **bất nhất vị trí (position inconsistency)** / **dao động chấm điểm ở các ca sát nút (near-tie / judge variance)**.
+> 2. **Phân biệt hai phép tính tỷ số độ dài (Mục 2.1):** Giá trị `0,78` (`0,7799`) là **trung bình của 24 tỷ số từng cặp** ($\frac{1}{n}\sum \text{exp\_words}_i / \text{base\_words}_i$), khác với **tỷ số giữa hai độ dài trung bình** ($573,208 / 794,292 = 0,7217$).
+> 3. **Diễn đạt về Hard Fail và tính bảo toàn:** Kết quả `0/24 Hard Fail` của Skill v3 phụ thuộc vào định nghĩa Rubric v1 tại thời điểm chấm. Khi hiệu chỉnh sang Rubric v2 để xử lý các lỗi kỹ thuật nghiêm trọng bị sót như `TEST-05` (`DLX` phá thứ tự) hay `TEST-02` (`git rm --cached`) và tránh quá nhạy với sáo ngữ vô hại, kết quả đối chứng lại được công bố tách riêng tại [evaluation-report-v2.md](./evaluation-report-v2.md). Không khẳng định Skill "bảo toàn 100% dữ kiện" hay "xóa sạch mọi lỗi".
+> 4. **Trạng thái bộ `held-out-test.jsonl` sau v3:** Vì 24 ca này đã được dùng để phân tích lỗi cho vòng sửa sang v4, chúng không còn là *unseen held-out* đối với phiên bản v4 mà được chuyển thành **Regression Suite (`regression-v3`)**. Kết quả đánh giá độc lập mới của v4 nằm tại [evaluation-report-v2.md](./evaluation-report-v2.md).
 
 Báo cáo này trình bày kết quả thực nghiệm có đối chứng giữa **Baseline** (AI không dùng Skill) và **Experiment** (AI dùng Skill `vietnamese-human-readable-writing` phiên bản đóng băng v3), cùng đầy đủ các giới hạn chưa được kiểm chứng. Toàn bộ số liệu định lượng được trích xuất trực tiếp từ [summary-stats.json](./results/summary-stats.json).
 

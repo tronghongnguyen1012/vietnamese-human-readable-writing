@@ -1,0 +1,46 @@
+{
+  "round": "round-2",
+  "baseline_commit": "cd5bba945886222d0ebd236b3c1ba92a60dd3155",
+  "skill_version": "v4-frozen",
+  "models": {
+    "generation_tier": "flash",
+    "judge_tier": "pro",
+    "runtime_note": "Antigravity subagent model tiers ('flash' for generation & trigger routing, 'pro' for Blind Judge v2); raw provider model IDs are abstracted by runtime."
+  },
+  "files_sha256": {
+    "SKILL.md": "b418c737eef1f916bd1c3a9ce10abbd4448dd336118ddb0848f88dd9995764a5",
+    "references/vietnamese-clarity-and-style.md": "79f7efd01886245ad23c5b4e0b65824191594699f908bc93b230f3f278101084",
+    "references/information-architecture.md": "c18662195d037c21bef604511954725b5a5ec3d80f42c9b5f0805d98983ac209",
+    "references/business-specs.md": "975075dcfedae827f6f4d18b20cd598b3b1d0ccbdeb9e1340affb90911785192",
+    "references/technical-specs.md": "c0cb934f4f26b6a6871a0903e6ba533c489e5509a152e4c4be52aaa7ffe4d86a",
+    "evaluation/development.jsonl": "5bcd94f392bad7d695664b8d614539ac0c4e7b91b94693919da26f55f185aeb1",
+    "evaluation/held-out-test.jsonl": "1fc46d0380a584b472141326ca5dbfc35f06159fda72f99b25f4e01fac6d937b",
+    "evaluation/held-out-v2.jsonl": "f4078a28acf5dfb3ea61ed6f0c3046cf4ed523331f8c4d2185f1ba329bffa185",
+    "evaluation/judge-calibration.jsonl": "4770c79a7da672288ba1983e25ff40d76802297166978ef7ccb428d804d64edb",
+    "evaluation/trigger-eval.jsonl": "c1a3334d9621e5292739ae97aaf619f2ef38a1b8c7ad46632f2299993768745a",
+    "evaluation/rubric-v2.md": "a272b9e5e25fb4994e31c8ae5712e8b673c582bd418be44f6713c172903a0ce3",
+    "evaluation/judge-instructions-v2.md": "b2cb83350821a97a38ea7447aa586e5e90b061db3da88527cce13d3959757564"
+  },
+  "arms": {
+    "Group_A_Neutral": {
+      "subagent": "eval-baseline",
+      "prompt": "Bạn là trợ lý AI hữu ích trả lời bằng tiếng Việt. Hãy thực hiện trực tiếp và đầy đủ yêu cầu của người dùng. Trả về chỉ nội dung câu trả lời cuối cùng dành cho người dùng, không kèm lời bình luận về quy trình của bạn."
+    },
+    "Group_B_Simple_Prompt": {
+      "subagent": "eval-simple-prompt",
+      "prompt": "Bạn là trợ lý AI hữu ích trả lời bằng tiếng Việt. Khi thực hiện yêu cầu của người dùng, hãy tuân thủ đầy đủ các nguyên tắc sau: Viết tiếng Việt rõ nghĩa và tự nhiên; Phù hợp đối tượng người đọc và ngữ cảnh; Không tự bịa thông tin chưa có căn cứ; Giữ đầy đủ dữ kiện và logic nghiệp vụ; Tránh nội dung dư thừa; Không làm mất chiều sâu chuyên môn. Trả về chỉ nội dung câu trả lời cuối cùng dành cho người dùng, không kèm lời bình luận về quy trình của bạn."
+    },
+    "Group_C0_Ablation_SKILL_Only": {
+      "subagent": "eval-ablation-core-v4b",
+      "note": "Frozen SKILL.md v4 body only; explicitly barred from reading references/."
+    },
+    "Group_C_Full_Skill_v4": {
+      "subagent": "eval-experiment-v4b",
+      "note": "Frozen SKILL.md v4 body + flexible 0-2 file progressive disclosure to references/."
+    },
+    "Judge_v2": {
+      "subagent": "eval-blind-judge-v2",
+      "note": "Independent of SKILL.md; encodes rubric-v2.md + judge-instructions-v2.md; calibrated 5/6 on judge-calibration.jsonl before running benchmarks."
+    }
+  }
+}

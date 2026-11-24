@@ -1,89 +1,99 @@
-# Vietnamese Human-Readable Writing Skill
+# Vietnamese Human-Readable Writing Skill (`Skill v4`)
 
-Skill chuẩn [`agentskills.io`](https://agentskills.io) giúp AI truyền tải thông tin bằng tiếng Việt **rõ nghĩa ngay từ lần đọc đầu**, **đúng trình tự tiếp nhận của con người**, **giữ nguyên 100% dữ kiện/điều kiện nghiệp vụ** và **phù hợp từng ngữ cảnh** (từ chat hằng ngày đến PRD, BRD, API Spec, System Design và biên tập tài liệu).
+Skill chuẩn [`agentskills.io`](https://agentskills.io) giúp AI truyền tải thông tin bằng tiếng Việt **rõ nghĩa ngay từ lần đọc đầu**, **đúng trình tự tiếp nhận của con người**, **giữ nguyên dữ kiện/điều kiện nghiệp vụ**, **không tự bịa để tạo độ rõ giả tạo (False Clarity)** và **thích ứng đúng ngữ cảnh** — từ hội thoại tự nhiên đến PRD, BRD, IDD, API Spec, SAD và biên tập tài liệu kỹ thuật.
+
+> [!NOTE]
+> Phiên bản hiện tại trên nhánh `round-2/v4-stabilization` là **Skill v4**, được nâng cấp và kiểm chứng độc lập sau vòng ổn định Round 2 đối chiếu với bản v3 lịch sử tại commit `cd5bba945886222d0ebd236b3c1ba92a60dd3155`.
 
 ---
 
 ## 1. Cấu trúc Dự án
 
-Phần **Skill cài đặt vào runtime** được tách biệt hoàn toàn khỏi phần **Nghiên cứu** và **Kiểm thử**:
+Phần **Skill cài đặt vào runtime** tách biệt hoàn toàn với phần **Nghiên cứu**, **Kiểm toán** và **Kiểm thử**:
 
 ```text
 Vi Writer/
-├── README.md                                  # Hướng dẫn cài đặt và sử dụng
-├── DESIGN_DECISIONS.md                        # Nhật ký quyết định thiết kế & việc tồn đọng
+├── README.md                                  # Hướng dẫn cài đặt, lựa chọn phương án & tổng quan kết quả
+├── CHANGELOG.md                               # Lịch sử thay đổi v1 -> v2 -> v3 -> v4
+├── REVIEW-FINDINGS.md                         # Xác minh 10 finding độc lập FIX-01..FIX-10
+├── DESIGN_DECISIONS.md                        # Quyết định thiết kế, đối chứng Ablation & việc tồn đọng
 ├── skills/
 │   └── vietnamese-human-readable-writing/     # <-- CHỈ COPY THƯ MỤC NÀY ĐỂ CÀI ĐẶT
-│       ├── SKILL.md                           # Instruction cốt lõi (90 dòng)
-│       └── references/                        # Progressive Disclosure (chỉ đọc khi cần)
+│       ├── SKILL.md                           # Instruction cốt lõi (78 dòng, 9.132 bytes)
+│       └── references/                        # Progressive Disclosure linh hoạt (0, 1 hoặc tối đa 2 file)
 │           ├── vietnamese-clarity-and-style.md
 │           ├── information-architecture.md
 │           ├── business-specs.md
 │           └── technical-specs.md
-├── research/                                  # Cơ sở nghiên cứu & phân loại lỗi
-│   ├── research-report.md
+├── research/
+│   ├── research-report.md                     # Cơ sở Việt ngữ học & Thiết kế thông tin
 │   ├── sources.md
-│   └── error-taxonomy.md
-└── evaluation/                                # Bộ dữ liệu, rubric & báo cáo kiểm thử
-    ├── rubric.md
-    ├── human-eval-protocol.md
-    ├── judge-instructions.md
-    ├── development.jsonl                      # 16 test cases phát triển
-    ├── held-out-test.jsonl                    # 24 test cases kiểm thử độc lập
-    ├── evaluation-report.md                   # Báo cáo kết quả & giới hạn thực nghiệm
+│   ├── error-taxonomy.md
+│   └── competitive-research-report.md         # Đối chiếu trực tiếp 8 GitHub repo công khai
+└── evaluation/
+    ├── rubric.md / rubric-v2.md               # Rubric v1 (lịch sử) & Rubric v2 (Round 2)
+    ├── judge-instructions.md / ...-v2.md      # Hướng dẫn Judge mù 2 lượt hoán đổi
+    ├── human-eval-protocol.md                 # Quy trình đo TtCU trên người thật (CHƯA thực thi)
+    ├── development.jsonl                      # 16 ca phát triển
+    ├── held-out-test.jsonl                    # Bộ Regression v3 (24 ca, hạ cấp từ Round 1)
+    ├── held-out-v2.jsonl                      # Bộ kiểm thử mới 24 ca (gồm 4 ca dài mô phỏng)
+    ├── judge-calibration.jsonl                # 6 ca kiểm chuẩn Judge v2
+    ├── trigger-eval.jsonl                     # 16 truy vấn kiểm thử kích hoạt
+    ├── evaluation-report.md                   # Báo cáo v3 lịch sử (kèm Errata Round 2)
+    ├── evaluation-report-v2.md                # Báo cáo Round 2 đầy đủ (4 nhóm A/B/C0/C + Overhead)
     ├── scripts/
-    │   ├── validate_datasets.py
-    │   └── analyze_results.py
-    └── results/                               # Dữ liệu thô, nhật ký lặp & thống kê
+    │   ├── validate_datasets.py               # Kiểm tra schema, chống leakage (Jaccard) & Skill v4
+    │   ├── analyze_results.py                 # Thống kê Round 1 (lịch sử)
+    │   └── analyze_results_v2.py              # Thống kê Round 2 -> results-v2/summary-stats-v2.json
+    ├── results/                               # Dữ liệu thô v3 lịch sử (giữ nguyên)
+    └── results-v2/                            # Run manifest, calibration, re-audit v3 & kết quả 4 nhóm v4
 ```
 
 ---
 
-## 2. Hướng dẫn Cài đặt & Sử dụng
+## 2. Hướng dẫn Cài đặt & Chọn Phương án Sử dụng
 
-Chỉ cần sao chép thư mục `skills/vietnamese-human-readable-writing/` vào thư mục `skills/` của công cụ AI bạn đang dùng (tên thư mục khớp chính xác với trường `name` trong `SKILL.md`):
+### Cài đặt Skill v4
+Sao chép nguyên thư mục `skills/vietnamese-human-readable-writing/` vào thư mục `skills/` của công cụ AI bạn sử dụng:
+- **Antigravity (theo dự án):** `<project-root>/.agents/skills/vietnamese-human-readable-writing/`
+- **Antigravity (toàn cục):** `~/.gemini/config/skills/vietnamese-human-readable-writing/`
+- **Claude Code:** `~/.claude/skills/vietnamese-human-readable-writing/` hoặc `.claude/skills/vietnamese-human-readable-writing/`
+- **Cursor / Codex / harness chuẩn `agentskills.io`:** Đặt vào thư mục skills tương ứng của workspace hoặc cấu hình toàn cục.
 
-- **Antigravity (theo dự án):** Copy vào `<project-root>/.agents/skills/vietnamese-human-readable-writing/`
-- **Antigravity (toàn cục trên máy):** Copy vào `~/.gemini/config/skills/vietnamese-human-readable-writing/`
-- **Claude Code:** Copy vào `~/.claude/skills/vietnamese-human-readable-writing/` hoặc `.claude/skills/vietnamese-human-readable-writing/`
-- **Cursor / Codex / các runtime hỗ trợ `agentskills.io`:** Đặt vào thư mục skills tương ứng của workspace hoặc cấu hình toàn cục.
+### Khi nào chỉ cần Simple Prompt vs `SKILL.md` độc lập vs Full Skill v4?
+Thực nghiệm đối chứng 4 nhóm trên `held-out-v2.jsonl` (`n = 24`) cho thấy rõ đánh đổi chi phí – chất lượng giữa 3 lựa chọn:
 
-Sau khi cài đặt:
-- Ở trạng thái chờ (**Discovery**), runtime chỉ nạp `name` và `description` (297 ký tự).
-- Khi bạn hỏi đáp nhanh hoặc nhắn tin ngắn bằng tiếng Việt, Skill chỉ dùng `SKILL.md` (**chế độ Nhẹ**, không đọc thêm file tham chiếu).
-- Khi bạn soạn thảo/review PRD, BRD, User Story, AC, API Spec, SAD, báo cáo hoặc biên tập văn bản nặng dịch máy, Skill tự đọc đúng **1 file** tương ứng trong `references/` (**Progressive Disclosure**).
+| Lựa chọn | Chi phí Prompt hệ thống | Tỷ lệ Hard Fail (`held-out-v2`) | Phù hợp nhất cho |
+|---|---:|---:|---|
+| **Simple Prompt 6 ý** (`Group B`) | `609 bytes` (`~160 tokens`), trễ TB `23,80s` | **`8 / 24 (33,3%)`** *(không giảm HF so với Neutral A)* | Hỏi đáp nhanh, trò chuyện tự nhiên đời thường không có rủi ro nghiệp vụ/kỹ thuật, cần phản hồi nhanh nhất. |
+| **Chỉ `SKILL.md` v4** (`Group C0`, host không đọc được `references/`) | `8.694 bytes` (`~2.288 tokens`), trễ TB `29,06s` | `2 / 12 (16,7%)` trên 12 ca khó | Harness giới hạn tool đọc file hoặc cần giảm mạnh bịa dữ kiện (`HF-3`) mà vẫn giữ 1 vòng gọi mô hình. |
+| **Full Skill v4** (`Group C`, `0–2` references) | `8.694 → 19.019 bytes` (TB `~3.814 tokens`), trễ TB `39,11s` | **`0 / 24 (0,0%)`** vs A; **`1 / 24 (4,2%)`** vs B *(17–1 thắng B)* | Đặc tả PRD/BRD/IDD/API/SAD, phân tích đánh đổi kỹ thuật đa trục, biên tập quy tắc/luồng dữ liệu nguồn thiếu chi tiết (*Trường hợp B*). |
 
----
-
-## 3. Tóm tắt Kết quả Kiểm thử Độc lập (Held-Out `n = 24`)
-
-Trên tập kiểm thử độc lập gồm **24 ca hoàn toàn tách biệt** thuộc 8 ngữ cảnh (cùng mức model sinh `flash`, đánh giá mù 2 lượt hoán đổi vị trí A/B bằng giám khảo `pro` và kiểm tra độ biến động Run 2 trên 8 ca đại diện):
-
-| Chỉ số | Baseline (Không Skill) | Skill v3 (Đóng băng) |
-|---|---:|---:|
-| **Thắng đồng thuận cả 2 lượt hoán đổi A/B** | 1 / 24 (4,17%) | **20 / 24 (83,33%)** |
-| **Bất nhất vị trí giữa Pass 1 & Pass 2** | — | 3 / 24 (12,50%) |
-| **Số ca dính Hard Fail (bịa dữ kiện/lệch logic)** | **11 / 24 (45,83%)** | **0 / 24 (0,00%)** |
-| **Độ dài trung bình** | 794,29 từ | **573,21 từ** (tỷ số 0,78) |
-| **Nhóm sạch không Hard Fail (`n = 13`)** | 1 thắng | **10 thắng** (`D6 +0,846`, `D5 +0,654`, `D7 +0,615`) |
-| **Variance Check Run 2 (`n = 8`)** | 3/8 Hard Fail | **8/8 thắng**, 0/8 Hard Fail |
-
-**Giới hạn quan trọng:** Kết quả trên dựa vào đánh giá tự động bằng LLM Judge trong một họ mô hình; **chưa thực thi đo thời gian hiểu đúng (TtCU) trực tiếp trên người đọc Việt Nam** (quy trình đã chuẩn bị sẵn trong [evaluation/human-eval-protocol.md](./evaluation/human-eval-protocol.md)). Xem đầy đủ phân tích ca thua (`TEST-05`), 3 ca bất nhất vị trí và giới hạn tại [evaluation/evaluation-report.md](./evaluation/evaluation-report.md).
+> [!TIP]
+> Trong **chế độ Nhẹ**, Full Skill v4 **không nạp thêm file tham chiếu** (`refs = []`), tránh tốn chi phí đọc file khi hội thoại ngắn, nhưng vẫn nạp cơ bản `SKILL.md` (`~2.288 tokens`) khi kích hoạt — vì vậy nếu cuộc trò chuyện thuần túy tán gẫu không liên quan kỹ thuật/tài liệu, `trigger` của Skill giữ kích hoạt đúng ngữ cảnh (`16/16`, `F1 = 1,00`).
 
 ---
 
-## 4. Kiểm định & Chạy lại Đánh giá
+## 3. Tóm tắt Kết quả Kiểm thử Round 2 (Skill v4)
 
-Kiểm tra tính toàn vẹn bộ dữ liệu và chuẩn `SKILL.md`:
+Toàn bộ kết quả chấm mù thực hiện trên `flash` (sinh) và `pro` (giám khảo [eval-blind-judge-v2](./evaluation/judge-instructions-v2.md) đã hiệu chuẩn `5/6`, hoán đổi 2 lượt vị trí A/B). Chi tiết xem [evaluation-report-v2.md](./evaluation/evaluation-report-v2.md).
+
+1. **Kiểm toán lại dữ liệu lịch sử v3 dưới Rubric v2 (`n = 24`, [held-out-test.jsonl](./evaluation/held-out-test.jsonl)):**
+   - Khi bắt nghiêm lỗi `HF-6` và bỏ phạt `HF-3` quá nhạy ở sáo ngữ vô hại, kết quả lịch sử v3 điều chỉnh từ `20W/1L/3 Inc` (`0/24 HF`) thành **`18` thắng v3 / `2` thua Baseline (`TEST-02`, `TEST-05`) / `4` bất nhất**, trong đó **Skill v3 dính `2/24` HF (`HF-6`: `TEST-02`, `TEST-05`)** và **Baseline dính `8/24` HF**.
+   - Xem thêm Errata số liệu Báo cáo v3 tại [evaluation-report.md](./evaluation/evaluation-report.md).
+2. **Bộ Hồi quy (`Regression v4 vs v3`, `n = 24`):**
+   - `v4` xóa sạch toàn bộ 3 ca HF của `v3` (`TEST-02, 05, 17`: **`0/24` HF** vs `3/24`), thắng **`9` vs `8`** (`7` bất nhất vị trí), tăng mạnh điểm **Đầy đủ `D2` (`3,750` vs `3,375`)**, **Tính sử dụng được `D9` (`3,562` vs `3,125`)** và **Trung thực `D1` (`3,312` vs `3,104`)** dù văn bản dài hơn (`767,9` vs `573,2` từ).
+3. **Bộ Kiểm thử Mới `held-out-v2.jsonl` (`n = 24`, gồm `technical_depth`, `ambiguity_no_fabrication`, `natural_conversation`, `hybrid_docs`, `real_world_long_docs` mô phỏng):**
+   - **`C (Full v4)` vs `A (Neutral)`:** **`20 / 24 (83,3%)`** thắng đồng thuận (`3` thua `A`, `1` bất nhất), **`0/24` vs `8/24` HF**, nhóm sạch (`n=16`) thắng **`12/16` (`75%`)**.
+   - **`C (Full v4)` vs `B (Simple Prompt)`:** **`17 / 24 (70,8%)`** thắng đồng thuận (`1` thua `B` tại `H2-14`, `6` bất nhất), **`1/24` (`H2-06: HF-2`) vs `8/24` HF**, nhóm sạch (`n=15`) thắng **`9/15`**.
+   - **`C (Full v4)` vs `C0 (SKILL-only Ablation, n = 12)`:** **`7 / 12` thắng `C`** vs `3` thắng `C0` (`H2-12, 19, 22`), `2` bất nhất.
+4. **Hạn chế chưa kiểm chứng:** Chưa chạy thực nghiệm đo thời gian hiểu đúng trên người đọc Việt Nam thật (`TtCU`, xem [human-eval-protocol.md](./evaluation/human-eval-protocol.md)); 4 ca `real_world_long_docs` là tài liệu mô phỏng sát thực tế; mới kiểm thử trong 1 họ mô hình (`flash` / `pro`) nên chưa kết luận độ ổn định chéo Claude/GPT/model khác.
+
+---
+
+## 4. Kiểm định Toàn vẹn & Tái chạy Thống kê
 
 ```bash
 python evaluation/scripts/validate_datasets.py --check-skill
+python evaluation/scripts/analyze_results_v2.py
 ```
-
-Tính lại toàn bộ thống kê từ kết quả kiểm thử thô:
-
-```bash
-python evaluation/scripts/analyze_results.py
-```
-
-Khi cập nhật Skill, luôn chạy vòng thay đổi trên [development.jsonl](./evaluation/development.jsonl), kiểm tra lại với `validate_datasets.py --check-skill`, sau đó mới chạy lại kiểm chứng mù trên [held-out-test.jsonl](./evaluation/held-out-test.jsonl).

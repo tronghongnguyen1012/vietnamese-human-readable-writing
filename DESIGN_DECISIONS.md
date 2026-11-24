@@ -1,45 +1,49 @@
 # Nhật ký Quyết định Thiết kế & Lộ trình Kế thừa (`DESIGN_DECISIONS.md`)
 
-Tài liệu này ghi lại các quyết định kiến trúc, phản biện cơ sở lý thuyết và các hạng mục còn tồn đọng để bất kỳ Agent hoặc kỹ sư nào tiếp quản dự án đều có thể tiếp tục phát triển mà không phải thử–sai lại từ đầu.
+Tài liệu ghi lại các quyết định kiến trúc qua hai vòng phát triển (**Round 1: v1–v3** và **Round 2: v4 Stabilization**), bằng chứng thực nghiệm đối chứng và các điểm tồn đọng thực tế cho phiên bản kế tiếp.
 
 ---
 
-## 1. Các Quyết định Thiết kế Chính và Lý do
+## 1. Các Quyết định Thiết kế Cốt lõi (Từ v1 đến v4)
 
-| Hạng mục | Phương án tham khảo / giả định đầu | Quyết định thực tế | Lý do (kèm cơ sở) |
+| Hạng mục | Giả định / Thiết kế cũ (v3) | Quyết định hiện tại (v4) | Lý do & Bằng chứng |
 |---|---|---|---|
-| **Cấu trúc thư mục Skill** | `skill/SKILL.md` | `skills/vietnamese-human-readable-writing/SKILL.md` | Chuẩn `agentskills.io` và `agy-customizations` bắt buộc tên thư mục cha khớp chính xác trường `name` trong frontmatter (`[a-z0-9-]`). Đặt dưới `skills/` thay vì `.agents/skills/` giúp cài đặt bằng cách copy 1 thư mục, đồng thời giữ môi trường chạy Baseline hoàn toàn sạch không bị runtime tự nạp Skill. |
-| **Số lượng file trong `references/`** | 6 file (`semantic-clarity`, `information-architecture`/`structure`, `natural-vietnamese`, `technical-writing`, `business-writing`, `anti-patterns`) | Gộp còn **4 file định tuyến theo tác vụ** (`vietnamese-clarity-and-style.md`, `information-architecture.md`, `business-specs.md`, `technical-specs.md`) | Trong `SKILL.md`, mỗi chế độ Trung bình/Chặt chỉ cần gọi `read_file` **1 lần** là đủ cả lý thuyết câu–phong cách–lỗi thường gặp hoặc trọn bộ quy chuẩn nghiệp vụ/kỹ thuật, giảm số vòng gọi tool và độ trễ. |
-| **Kích thước & ngôn ngữ `SKILL.md`** | Có thể viết dài hoặc viết toàn tiếng Anh | Thân `SKILL.md` tiếng Việt **90 dòng (~1.509 từ)**; `description` tiếng Anh chuẩn trigger `Use when...` (297 ký tự) | Thân tiếng Việt khớp trực tiếp với đầu ra mục tiêu và thuật ngữ Đề–Thuyết/ngữ dụng Việt Nam; `description` ngắn không tóm tắt quy trình giúp tối ưu kích hoạt đa runtime (theo hướng dẫn `writing-skills` về SDO). |
-| **Cơ chế phân tầng tải ngữ cảnh** | Áp dụng chung quy trình 9 bước mọi lúc | **Context Triage 3 chế độ (`Nhẹ / Trung bình / Chặt`)** | Kiểm chứng thực nghiệm trên 24 ca Held-Out cho thấy `casual_chat` (3/3) và tin nhắn Teams ngắn (`TEST-10`) giữ `refs=[]` (0 lần đọc reference), trong khi 100% ca đặc tả nạp đúng file chuyên sâu. |
-| **Kiến trúc kiểm định chất lượng** | TtCU làm chỉ số chính duy nhất + chấm điểm 9 tiêu chí cộng tổng | **Kiến trúc 2 tầng** + **Gate 0 Hard Fail phi bù trừ** + **Blind Position-Swapped A/B** | TtCU không đo được trên LLM và dễ bị đánh lừa bởi câu văn ngắn nhưng hiểu sai (*Subconscious Disambiguation*, Berry et al., 2003). Gate 0 phi bù trừ ngăn văn phong mượt che giấu lỗi bịa dữ kiện (`HF-3`), vốn xảy ra ở **11/24 ca Baseline Held-Out**. |
-| **Cấm từ & ép độ dài câu** | Danh sách từ cấm / quy tắc câu ngắn kiểu CNL | **Ranh giới chống máy móc dựa trên điều kiện quan sát được** | Tuân theo kết luận Việt ngữ học (Cao Xuân Hạo, Nguyễn Đức Dân): *"việc, sự, được, bị"* tự nhiên khi đúng vai Đề ngữ hoặc sắc thái lợi/hại; công thức đếm câu/từ không dùng được cho tiếng Việt (Luong et al., 2020). |
+| **Cấu trúc Skill** | `skills/vietnamese-human-readable-writing/SKILL.md` (90 dòng, `10.069 bytes`) | Giữ vị trí chuẩn `agentskills.io`, tinh gọn `SKILL.md` còn **78 dòng (`9.132 bytes`)** | Tách sạch Skill cài đặt khỏi nghiên cứu/eval; giảm kích thước thân ~13,7% nhưng bổ sung quy tắc Trường hợp B và phân lớp chiều sâu kỹ thuật. |
+| **Progressive Disclosure (`FIX-05`)** | Hardcode *"Chỉ dùng `read_file` mở đúng 1 file"* | Cơ chế **`0 → 1 → tối đa 2 file`**, **không nhắc tên tool `read_file`**, có fallback nếu host không có tool | Tài liệu lai (`H2-17..20`, `TEST-19`) cần phối hợp 2 mảng (ví dụ `business-specs.md` + `technical-specs.md`). Thực tế trên Held-Out v2: `2/24` ca đọc 0 file, `13/24` đọc 1 file, `9/24` đọc 2 file. |
+| **Chế độ Nhẹ & Hội thoại (`FIX-04`)** | Ép cứng *"2–6 câu, hoặc tối đa 3 gạch đầu dòng"* | Gỡ trần câu/bullet; điều chỉnh độ dài theo ý định, mạch nhiều lượt và tôn trọng yêu cầu phong cách riêng của người dùng | Ngăn gãy mạch hội thoại sâu (`H2-15`) và không phá vỡ yêu cầu viết đoạn văn xuôi liền mạch (`H2-16`). |
+| **Bảo toàn chiều sâu kỹ thuật (`FIX-02`)** | Dễ nén mỏng một trục khi câu hỏi kỹ thuật yêu cầu đa khía cạnh (`TEST-05`) | Phân biệt rõ 4 lớp nội dung; buộc giữ đủ chiều sâu trên **từng trục** và kiểm chứng tính nhất quán cơ chế | Trên Regression `v4 vs v3`, điểm `D2` (Đầy đủ) tăng từ `3,375` lên **`3,750`** (`+0,375`) và xóa hoàn toàn `HF-6` trên `TEST-05` & `TEST-02`. |
+| **Chống *False Clarity* (`FIX-03`)** | Mới có quy tắc chung *"không bịa JSON/SLA"* | Tách rạch ròi **Trường hợp A** (nguồn đủ dữ kiện, rối văn -> làm rõ không thêm ý) vs **Trường hợp B** (nguồn thiếu chủ thể/điều kiện/giao thức hoặc mâu thuẫn -> lộ diện lỗ hổng/câu hỏi mở) | Trong Held-Out v2 `C vs A` và `C vs B`, nhóm Neutral A và Simple Prompt B đều mắc `8/24 (33,3%)` HF (chủ yếu `HF-3` ở nhóm nguồn thiếu dữ kiện), trong khi C giảm xuống **`0/24`** (vs A) và **`1/24`** (vs B). |
+| **Kiểm định chất lượng & Judge (`FIX-01`, `FIX-09`)** | Rubric v1 (chỉ 1 tập held-out 24 ca, chưa hiệu chuẩn Judge) | Hạ cấp 24 ca cũ thành Regression; tạo **Held-Out v2 (`n=24`)**, hiệu chuẩn **Judge v2 (`5/6`)** và tách rạch ròi `Major` vs `Critical HF` | Tái chấm v3 dưới Rubric v2 phơi bày `2/24 HF-6` ẩn trên v3 (`TEST-02`, `TEST-05`) và gỡ lỗi `HF-3` thổi phồng trên Baseline (`TEST-12`), giúp kết quả đáng tin cậy và không bảo vệ thành tích ảo. |
 
 ---
 
-## 2. Bài học Thực nghiệm từ Vòng Lặp Phát triển (`v1 → v2 → v3`)
+## 2. Giá trị của Ablation (`C0`) & So sánh với Simple Prompt (`B`) (`FIX-06`)
 
-1. **Bẫy "Nuance / Over-broad Rule" trong `SKILL.md` (v1 → v2):** Khi mở rộng quy tắc giữ văn xuôi sang *"đoạn biên tập ngắn (2–4 câu, tối đa 2–3 điều kiện đơn giản)"*, model đã gom cả email thông báo bảo trì B2B (`DEV-16`) thành đoạn văn xuôi liền làm giảm khả năng quét nhanh. Khắc phục ở v3 bằng cách tách thành 2 điều kiện quan sát được rạch ròi (mô tả 1–2 ý thuần túy vs email thông báo vận hành).
-2. **Sức mạnh của Bất biến chống bịa chi tiết (`HF-3`):** Chỉ cần một quy tắc rõ ràng *"không tự bịa trường JSON/mã lỗi/quy tắc như sự thật đã chốt; tách riêng vào mục `Đề xuất bổ sung (cần xác nhận)` hoặc `Ví dụ minh họa`"*, tỷ lệ ca mắc Hard Fail giảm từ **7/16 (Dev Baseline)** và **11/24 (Held-Out Baseline)** xuống **0/16 (Dev v1, v2, v3)** và **0/24 (Held-Out)**.
-3. **Điểm cân bằng khó ở Chế độ Chuyên gia (`TEST-05`, `DEV-04`):** Khi thúc đẩy cô đọng thông tin (`D6`), model có xu hướng nén quá mức một trong các nhánh kỹ thuật nếu câu hỏi yêu cầu so sánh sâu nhiều trục (*lưu trữ* + *thứ tự* ở `TEST-05`), dẫn tới mất độ sâu hoặc đơn giản hóa chi tiết nội tại (`R-04`).
+Thử nghiệm 4 nhóm (`A`, `B`, `C0`, `C`) trả lời thẳng hai câu hỏi thiết kế quan trọng nhất:
+1. **Prompt ngắn 6 nguyên tắc (`Group B`, `609 bytes`) có thay thế được Skill không?**  
+   - **Không trên tác vụ đặc tả / tài liệu / phân tích thiếu dữ kiện.** Dù B chỉ tốn ~`160 tokens` prompt và viết mượt ở hội thoại hài hước (`H2-14` thắng C `2–0`), B vẫn mắc **`8/24 (33,3%)` Hard Fail** (giống hệt Group A!) khi gặp nguồn mơ hồ hoặc tài liệu lai vì mô hình không tự biết quy trình phân tách *Đã biết / Chưa xác định / Câu hỏi mở*. C thắng B **`17–1`** (`6` bất nhất).
+2. **`references/` (`17.804 bytes` tổng cộng) có thực sự mang lại giá trị vượt trên `SKILL.md` (`Group C0`) không?**  
+   - **Có, ở độ đầy đủ và cấu trúc đặc tả, nhưng đi kèm đánh đổi độ trễ.** Chỉ riêng `SKILL.md` (`C0`) đã đủ giữ phần lớn bất biến chống bịa (`HF` giảm xuống `2/12`), giúp `C0` thắng `C` ở 3 ca (`H2-12, 19, 22`). Tuy nhiên trên toàn bộ 12 ca khó, việc nạp có chọn lọc `references/` giúp Full Skill `C` thắng **`7–3`**, đặc biệt nâng `D2` (`3,708` vs `3,417`) và `D4` (`3,458` vs `3,250`). Ngược lại, **tổng độ trễ trung bình tăng từ `29,06s` (`C0`) lên `39,11s` (`C`)** và tổng prompt tĩnh+tham chiếu tăng từ `8.694 bytes` lên trung bình `14.491 bytes`.
 
 ---
 
-## 3. Bảng Theo dõi Trạng thái Nhận thức luận (Đã kiểm chứng vs Giả thuyết)
+## 3. Bảng Trạng thái Nhận thức luận (Cập nhật sau Round 2)
 
-| Nhận định / Giả thuyết | Trạng thái hiện tại | Bằng chứng / Ghi chú |
+| Nhận định / Giả thuyết | Trạng thái sau Round 2 | Bằng chứng & Phạm vi áp dụng |
 |---|---|---|
-| Cấu trúc Đề–Thuyết, giữ "được/bị" đúng sắc thái, chống danh từ hóa rỗng và mơ hồ phạm vi logic có cơ sở ngôn ngữ học cho tiếng Việt | **Có cơ sở lý thuyết vững** | Cao Xuân Hạo (1991), Trần Ngọc Thêm (1985), Đỗ Hữu Châu, Nguyễn Đức Dân, Berry et al. (2003). |
-| Skill giảm mạnh lỗi tự bịa dữ kiện (`HF-3/4`) và tăng mật độ thông tin/mạch lạc trên phân tích LLM mù hoán đổi vị trí | **Đã kiểm chứng trong phạm vi 1 họ model (`flash` / `pro`)** | Held-Out `n=24`: `20W / 1L / 3 Inconsistent`; `0/24` vs `11/24` HF; nhóm sạch `n=13` vẫn thắng `10/13` (`D6 +0.846`, `D5 +0.654`). |
-| Cơ chế Progressive Disclosure giữ nhẹ hội thoại hằng ngày (`refs=[]`) và chỉ nạp 1 reference cho tác vụ sâu | **Đã kiểm chứng thực tế trên runtime Antigravity** | `casual_chat` `0/3` nạp ref, `avg_words = 137,3`; `business_docs`/`technical_docs`/`editing_rewriting` `3/3` nạp đúng 1 ref. |
-| Skill giảm **Time to Correct Understanding (TtCU)** và giảm số lần phải hỏi lại trên người Việt thực tế | **Giả thuyết chưa kiểm chứng** | Đã thiết kế quy trình đo chuẩn tại `evaluation/human-eval-protocol.md`, chưa thực thi thực nghiệm trên người dùng. |
-| Hiệu quả của Skill giữ ổn định trên các họ LLM khác (GPT, Claude, model tiếng Việt nội địa) | **Giả thuyết chưa kiểm chứng** | Chưa chạy kiểm thử đa model để tránh phát sinh chi phí API ngoài. |
+| Cách tiếp cận Việt ngữ học (Đề–Thuyết, phân biệt `được`/`bị`, gỡ danh từ hóa rỗng, tránh mơ hồ phạm vi logic) phù hợp lý thuyết cho tiếng Việt | **Có cơ sở lý thuyết vững** | Cao Xuân Hạo (1991), Trần Ngọc Thêm (1985), Đỗ Hữu Châu, Nguyễn Đức Dân, Berry et al. (2003). |
+| Skill v4 vượt trội rõ rệt cả Neutral Baseline (`20–3`) lẫn Simple Prompt (`17–1`) và giảm mạnh Hard Fail trên nhiều ngữ cảnh mới | **Đã kiểm chứng trong phạm vi 1 họ mô hình (`flash` / `pro`)** | `held-out-v2.jsonl` (`n=24`): `C vs A = 20/3/1 inc` (`0` vs `8` HF); `C vs B = 17/1/6 inc` (`1` vs `8` HF). |
+| Không thể đánh đồng "viết gọn đầu ra hơn" với "tốn ít token / nhanh hơn" | **Đã kiểm chứng bằng số liệu đo** | `C` tốn TB `14.491 bytes` prompt đầu vào & `39,11s` độ trễ (vs `295 bytes` & `22,36s` ở A), nhưng đổi lấy giảm HF từ `33,3%` xuống `0–4%`. |
+| Khả năng kích hoạt đúng lúc (`trigger`) đạt chuẩn cao | **Đã kiểm chứng ở mức mô phỏng (`16/16`, `F1 = 1,00`)** | Bộ `trigger-eval.jsonl` (`flash`); chưa thu telemetry trên Claude Code/Cursor/Codex thật. |
+| Skill giảm thời gian hiểu đúng (**TtCU**) và giảm công sức trên người Việt thật | **Giả thuyết CHƯA kiểm chứng** | Chưa thực thi `evaluation/human-eval-protocol.md` trên người dùng thật. |
+| Hiệu quả giữ ổn định trên các họ LLM khác (Claude, GPT/Codex, model tiếng Việt nội địa) | **Giả thuyết CHƯA kiểm chứng** | Chỉ mới chạy thực nghiệm trên tier `flash` & `pro` của Antigravity. |
 
 ---
 
-## 4. Hạng mục Tồn đọng cho Phiên bản Tiếp theo (v3.1 / v4)
+## 4. Hạng mục Tồn đọng cho Round 3 (v4.1+)
 
-1. **Thực thi Human Evaluation (`evaluation/human-eval-protocol.md`):** Chạy thí nghiệm mù Latin Square trên 12–16 người Việt (BA, Dev, CSKH/Vận hành) để đo TtCU có cổng kiểm chứng hiểu đúng và đối chiếu xem kết quả có khớp với phán quyết của LLM Judge hay không.
-2. **Bổ sung hướng dẫn cân bằng chiều sâu đa trục cho Chế độ Chuyên gia (`information-architecture.md`):** Khắc phục bài học từ `TEST-05` — khi người dùng chuyên sâu hỏi so sánh ≥ 2 trụ cột kỹ thuật (ví dụ *cơ chế lưu trữ* và *bảo đảm thứ tự*), yêu cầu giữ đủ độ sâu cho **từng trục được nêu** và kiểm tra lại các trường hợp biên khi viết ngắn trong bảng (`R-04`).
-3. **Bổ sung nguyên tắc kiểm chứng lệnh thực thi phổ biến trong `casual_chat` (`TEST-02`):** Nhắc kiểm tra không gộp trường hợp *"Git bản cũ"* với *"repo chưa có commit"* khi đưa mẹo lệnh thao tác nhanh (`git reset HEAD` vs `git rm --cached`).
-4. **Kiểm thử chéo đa model & đa giám khảo:** Đánh giá lại 24 ca `held-out-test.jsonl` trên tối thiểu 2 họ mô hình sinh khác nhau và sử dụng giám khảo độc lập khác họ mô hình sinh để loại trừ Self-Enhancement Bias.
+1. **Khắc phục mâu thuẫn chéo giữa Bảng / Sơ đồ Mermaid và Mục Câu hỏi mở (`H2-19`):** Trong tài liệu lai (`hybrid_docs`), bổ sung bước đối soát chéo trước khi kết thúc câu trả lời: mọi nhánh quy trình chưa có quyết định nguồn (như luồng duyệt `> 50M`) **không được vẽ hoặc gán cứng cho một component cụ thể** trong Bảng thành phần hay Sơ đồ Mermaid trừ khi ghi rõ là *"Giả định đề xuất — cần chốt tại Mục X"*.
+2. **Siết chặt ranh giới *Phương án viết lại* ở câu đa mơ hồ (`H2-12`):** Khi đầu vào có ≥ 2 cụm mơ hồ lồng nhau (*"tối đa 30.000đ"* + *"không áp dụng kèm A hoặc B"*), mọi phương án viết lại minh họa phải giữ trọn toàn bộ biến thể tương ứng với câu hỏi chốt cho Business chứ không ngầm chốt một ngưỡng ở phương án đầu tiên.
+3. **Lưu ý độ chính xác thông số kỹ thuật sâu (`H2-06`):** Nhắc người viết/Agent tự rà lại lock mode hoặc hành vi đặc thù của engine (ví dụ `ALTER TABLE ... ADD CONSTRAINT CHECK NOT VALID` trên PostgreSQL vẫn xin `ACCESS EXCLUSIVE`, không phải `SHARE ROW EXCLUSIVE`) khi viết RFC vận hành chịu tải cao, vì khung trình bày Skill không tự ngăn được lỗi nhớ nhầm chi tiết engine của mô hình nền.
+4. **Trau chuốt sắc thái giao tiếp đời thường (`H2-14`):** Tránh các câu đùa mang hơi hướng sách vở/mô phạm (như *"bài khởi động não bộ miễn phí"*) khi người dùng dùng giọng tự sự/hài hước lập trình viên.
+5. **Thực thi Human Evaluation (`evaluation/human-eval-protocol.md`) & Kiểm thử chéo đa họ mô hình.**

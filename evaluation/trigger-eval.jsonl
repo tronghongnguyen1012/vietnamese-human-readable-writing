@@ -1,0 +1,16 @@
+{"id": "TRG-01", "expected_trigger": true, "category": "casual_chat_vi", "query": "Ê giải thích giúp mình sự khác nhau giữa `PUT` và `PATCH` trong REST API bằng tiếng Việt dễ hiểu đi, nói ngắn gọn thôi."}
+{"id": "TRG-02", "expected_trigger": true, "category": "editing_translationese_vi", "query": "Biên tập lại đoạn văn dịch máy này cho tự nhiên và rõ nghĩa hơn giúp mình: 'Hệ thống cung cấp năng lực thực hiện việc xử lý đồng bộ dữ liệu bởi tiến trình chạy nền nhằm đảm bảo tính tối ưu hóa.'"}
+{"id": "TRG-03", "expected_trigger": true, "category": "business_docs_vi", "query": "Viết giúp mình User Story và Acceptance Criteria bằng tiếng Việt cho tính năng giới hạn số lần nhập sai mã OTP."}
+{"id": "TRG-04", "expected_trigger": true, "category": "technical_docs_vi", "query": "Soạn thảo tài liệu đặc tả API Spec (IDD) bằng tiếng Việt cho endpoint tạo giao dịch hoàn tiền một phần."}
+{"id": "TRG-05", "expected_trigger": true, "category": "workplace_comms_vi", "query": "Viết tin nhắn Slack báo team vận hành sự cố cổng thanh toán chậm và phương án fallback hiện tại."}
+{"id": "TRG-06", "expected_trigger": true, "category": "problem_analysis_vi", "query": "Phân tích nguyên nhân tỷ lệ rớt đơn ở bước chọn phương thức thanh toán và đề xuất hướng xử lý theo mức độ ưu tiên."}
+{"id": "TRG-07", "expected_trigger": true, "category": "ambiguity_clarification_vi", "query": "Kiểm tra xem câu Business Rule tiếng Việt sau có chỗ nào mơ hồ hoặc dễ hiểu nhầm khi giao cho dev code không."}
+{"id": "TRG-08", "expected_trigger": true, "category": "reports_guides_vi", "query": "Viết hướng dẫn Runbook cho nhân viên CSKH và vận hành xử lý đơn hàng bị kẹt trạng thái chờ thanh toán."}
+{"id": "TRG-09", "expected_trigger": true, "category": "long_conversation_vi", "query": "Mình đang phân vân thiết kế hệ thống logging bằng Elasticsearch hay ClickHouse, bạn phân tích đánh đổi giúp mình nhé."}
+{"id": "TRG-10", "expected_trigger": true, "category": "hybrid_doc_vi", "query": "Viết tài liệu PRD có kèm API contract và Business Rule cho chức năng hủy đơn hàng trên app."}
+{"id": "TRG-11", "expected_trigger": false, "category": "pure_code_generation", "query": "Write a Python function to validate UUID v4 strings using regex and include pytest unit tests."}
+{"id": "TRG-12", "expected_trigger": false, "category": "pure_code_bugfix_en", "query": "Fix the off-by-one bug in `evaluation/scripts/analyze_results.py` and run pytest."}
+{"id": "TRG-13", "expected_trigger": false, "category": "english_essay_only", "query": "Draft a 500-word English cover letter applying for a Senior Backend Engineer position in Singapore."}
+{"id": "TRG-14", "expected_trigger": false, "category": "pure_math_calc", "query": "Solve the quadratic equation 3x^2 - 7x + 2 = 0 and show only the numerical roots."}
+{"id": "TRG-15", "expected_trigger": false, "category": "pure_git_cli", "query": "Run `git status` and show me the current branch commit hash."}
+{"id": "TRG-16", "expected_trigger": false, "category": "css_layout_only", "query": "Center this div vertically and horizontally using Tailwind CSS grid classes."}

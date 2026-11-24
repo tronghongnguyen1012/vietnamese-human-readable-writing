@@ -1,53 +1,35 @@
-# Kiến trúc Thông tin và Thích ứng Người đọc
+# Kiến trúc Thông tin, Chiều sâu Chuyên môn và Hội thoại Tự nhiên (v4)
 
-Dùng tài liệu này khi trình bày bài giải thích khái niệm, phân tích vấn đề, đề xuất giải pháp, báo cáo sự cố, email quan trọng hoặc tài liệu hướng dẫn/đào tạo.
-
----
-
-## 1. Cấu trúc Đưa Trọng tâm lên Đầu (BLUF / Pyramid)
-
-- **Phân tích vấn đề & Báo cáo sự cố:** Câu/đoạn đầu tiên phải trả lời ngay: *Chuyện gì đang xảy ra, tác động bao nhiêu, nguyên nhân khả dĩ chính là gì?* Sau đó mới đi vào phân rã nguyên nhân và phương án xử lý theo thứ tự ưu tiên (Ngắn hạn/Cấp cứu → Dài hạn/Phòng ngừa).
-- **Email & Giao tiếp công việc:**
-  - *Tiêu đề:* Nêu thẳng hành động/chủ đề + mốc thời gian (ví dụ: `[Đề xuất dời lịch] Xuất hóa đơn tự động sang 02/12`).
-  - *Đoạn mở đầu:* 1–2 câu nêu ngay đề xuất/quyết định cần phê duyệt, rồi mới đến lý do ngắn gọn và cam kết phạm vi ảnh hưởng. Bỏ đoạn hỏi thăm/rào đón chung chung.
-- **Hướng dẫn thao tác (How-to / Runbook):**
-  - Thứ tự bắt buộc: **(1) Phạm vi & Điều kiện tiên quyết** → **(2) Cảnh báo không thể hoàn tác / Việc cấm làm** → **(3) Từng bước thực hiện đánh số** → **(4) Cách kiểm tra kết quả**.
+Dùng tài liệu này khi giải thích khái niệm/kiến trúc chuyên sâu, phân tích nguyên nhân vấn đề, viết báo cáo/hướng dẫn, hoặc trả lời hội thoại nhiều lượt.
 
 ---
 
-## 2. Tách 4 Chế độ Tài liệu (Diátaxis)
+## 1. Bảo toàn Chiều sâu khi Phân tích & So sánh Đa trục (FIX-02)
 
-Không trộn các mục đích sau trong cùng một khối văn bản:
-- **Giải thích (Explanation):** Giúp hiểu *tại sao* và *bản chất khác biệt* (dùng tương tự đời thực nếu người đọc không chuyên; dùng cơ chế và đánh đổi nếu người đọc là chuyên gia).
-- **Hướng dẫn theo mục tiêu (How-to / Runbook):** Giúp hoàn thành việc ngay — chỉ giữ bước làm, điều kiện rẽ nhánh và cảnh báo lỗi; cắt bỏ phần giảng lý thuyết nền.
-- **Đào tạo người mới (Tutorial / Onboarding):** Dẫn theo lộ trình từng bước kèm mốc giải thích ngắn *vì sao cần bước đó* và lỗi hay đụng ngày đầu.
-- **Tra cứu (Reference):** Bảng thông số, mã lỗi, quy tắc ngắn gọn, đồng nhất.
-
----
-
-## 3. Thích ứng theo Trình độ Người đọc (Chống Expertise Reversal)
-
-| Đối tượng | Cách viết phù hợp | Lỗi cần tránh |
-|---|---|---|
-| **Chuyên gia / Kỹ sư có kinh nghiệm** | Đi thẳng vào cơ chế nội tại, điều kiện biên, điểm đánh đổi (*trade-off*), lệnh/chỉ số kiểm chứng thực tế. | Giảng lại khái niệm nền (*API là gì, transaction là gì*), viết giáo trình dài dòng lặp lại ý ở phần kết. |
-| **PM / Vận hành / CSKH / Chủ shop** | Giữ thuật ngữ cần thiết nhưng giải thích theo **tác động nghiệp vụ và trải nghiệm thực tế**; dùng bảng so sánh khi cần ra quyết định nhanh. | Ném thuật ngữ hạ tầng sâu (*WAL, MVCC, Redis ZSET TTL*) không gắn với tình huống công việc của họ. |
-| **Người đọc hỗn hợp** | Đặt tóm tắt điều hành/checklist 5 dòng lên đầu cho người đã biết; đặt giải thích nền vào mục phụ bên dưới. | Bắt người đã rành phải đọc qua 2 trang định nghĩa mới thấy bước hành động. |
+- **Phủ đủ mọi trục của câu hỏi:** Khi người dùng yêu cầu phân tích hoặc so sánh trên $K$ tiêu chí (ví dụ: *cơ chế lưu trữ* **và** *bảo đảm thứ tự*; hoặc 4 tiêu chí *hiệu năng, BFF, debug/versioning, tình huống chọn*), mỗi tiêu chí đều phải được giải thích đủ cơ chế nội tại — **tuyệt đối không** viết sâu một trục rồi dồn trục kia xuống một câu mở đầu hay một ô bảng tóm tắt sơ sài.
+- **Chuyên gia (Senior / Staff Engineer):** Đi thẳng vào cơ chế nội tại (storage engine, locking, compaction, GC, transaction boundary), điều kiện biên ở tải cao và trade-off thiết kế. Không lặp lại định nghĩa sơ cấp. Không nén bảng so sánh đến mức làm sai bản chất cơ chế (`R-04`).
+- **Người không chuyên (PM, Vận hành, CSKH, Chủ shop):** Giữ thuật ngữ cần thiết gắn với tác động thực tế; ưu tiên bảng đối chiếu ngắn gọn để quyết định nhanh.
+- **Trung thực dữ kiện khi phân tích sự cố:** Tách rạch ròi **Triệu chứng đã ghi nhận trong log/số liệu nguồn** khỏi **Giả thuyết nguyên nhân gốc & Bước kiểm chứng**. Không bịa thêm con số benchmark hay nguyên nhân chưa đo.
 
 ---
 
-## 4. Chọn Hình thức Trình bày Theo Chức năng
+## 2. Hội thoại Tự nhiên & Giao tiếp Công việc (FIX-04)
 
-- **Văn xuôi ngắn (2–5 câu):** Dùng cho câu trả lời chat đơn giản, kết nối lập luận nguyên nhân–hệ quả gồm 1–2 ý chính.
-- **Danh sách đánh số (`1, 2, 3`):** Dùng cho chuỗi thao tác tuần tự theo thời gian hoặc các bước ưu tiên phải làm theo thứ tự.
-- **Danh sách gạch đầu dòng (`-`):** Dùng cho các điều kiện song song, trường hợp rẽ nhánh hoặc hành động ngang hàng (giữ mỗi dòng ngắn gọn, 1 ý rõ ràng).
-- **Bảng biểu:** Dùng khi so sánh từ 2–3 đối tượng/trạng thái trên nhiều tiêu chí (ví dụ: *Hủy đơn vs Hoàn trả*, *Phân quyền duyệt chi theo hạn mức*, *Ma trận HTTP Status*).
-- **Chống lặp giữa bảng và văn bản:** Khi bảng đã tóm tắt đủ các mốc điều kiện, thời gian hoặc tác động, phần văn xuôi/mục bên dưới **chỉ nêu quy trình thao tác hoặc ngoại lệ chưa có trong bảng** — tuyệt đối không lặp lại cùng nội dung vừa đặt trong bảng.
-- **Chống lặp nhãn trong danh sách:** Khi dùng gạch đầu dòng có nhãn in đậm (`- **Nhãn:** Nội dung`), không lặp lại các từ của nhãn vào đầu câu nội dung phía sau.
+- **Không giới hạn câu/bullet cứng trong hội thoại:**
+  - *Câu hỏi ngắn / giải tỏa tâm lý:* Trả lời tự nhiên như đồng nghiệp, có thể giữ nét hài hước/đồng cảm, không biến thành bài giảng đạo lý hoặc danh sách checklist 5 bước.
+  - *Hội thoại nhiều lượt có chiều sâu:* Đọc trọn lịch sử trao đổi, tiếp nối đúng điểm người dùng đang băn khoăn, giải quyết thấu đáo cả mặt kỹ thuật lẫn cách trình bày thực tế mà không cắt cụt.
+  - *Chỉ định phong cách của người dùng:* Nếu người dùng yêu cầu rõ định dạng (ví dụ *"kể chuyện bằng văn xuôi, cấm bullet/heading"*), tuân thủ 100%.
+- **BLUF cho Email, Tin nhắn Công việc & Báo cáo sự cố:**
+  - Đưa kết luận, đề xuất cần duyệt, tác động sự cố và hạn chót lên 1–2 dòng đầu.
+  - Hướng dẫn thao tác / Runbook: **(1) Điều kiện áp dụng & Cảnh báo cấm làm** → **(2) Các bước đánh số** → **(3) Kiểm tra kết quả**. Không đặt cảnh báo rủi ro xuống cuối bài.
 
 ---
 
-## 5. Trung thực Dữ kiện khi Phân tích Vấn đề
+## 3. Tính Liên kết & Nhất quán Xuyên suốt Tài liệu Dài
 
-- Phân biệt rạch ròi giữa **Sự kiện đã quan sát trong đề bài** (số liệu log, triệu chứng) và **Giả thuyết nguyên nhân / Đề xuất cần kiểm chứng**.
-- Không tự gán nguyên nhân chưa xác minh thành khẳng định chắc chắn; kèm câu lệnh hoặc bước kiểm tra để xác nhận giả thuyết trước khi sửa diện rộng.
-- Không bịa thêm số liệu benchmark hoặc con số cam kết ngoài dữ liệu đầu vào.
+- **Tách chế độ Diátaxis:** Không trộn bài giảng khái niệm dài vào tài liệu Runbook thao tác khẩn, hay trộn văn phong tiếp thị vào đặc tả kiến trúc.
+- **Một khái niệm = một tên gọi:** Chốt thuật ngữ xuyên suốt từ Mục 1 đến Mục cuối (không đổi giữa *"đơn hàng"*, *"phiếu đặt"*, *"giao dịch"* nếu là cùng một thực thể).
+- **Chống lặp bảng–chữ & nhãn trong danh sách:**
+  - Khi bảng đã nêu đủ thông số/so sánh, phần chữ bên dưới chỉ giải thích cơ chế, điều kiện biên hoặc ngoại lệ chưa có trong bảng.
+  - Không lặp lại từ khóa ở nhãn in đậm vào đầu nội dung phía sau dấu hai chấm.
+  - Đại từ chỉ định (*"nó", "điều này"*) không đứng trơ đầu câu nếu câu trước có từ 2 thực thể/mệnh đề trở lên; gọi lại đúng danh từ cụ thể.
