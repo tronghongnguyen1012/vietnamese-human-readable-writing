@@ -1,5 +1,11 @@
 # Báo cáo Kiểm thử & Ổn định Round 2 (`Skill v4`)
 
+> [!NOTE]
+> **Đính chính Đánh giá v4.1 (Evaluation Correction):**
+> 1. **Phân loại Hard Fail 3 mức & Bất nhất giữa các cặp đấu:** Kết quả `0/24 HF` (`C vs A`), `1/24 HF` (`C vs B`: `H2-06`), và `2/12 HF` (`C vs C0`: `H2-12, H2-19`) của cùng tập đầu ra Group C cho thấy đánh giá cặp A/B bị ảnh hưởng bởi đối chứng ghép cặp. Kiểm định độc lập Gate 0 trước khi so sánh cặp ([standalone-hf-protocol.md](./standalone-hf-protocol.md), [v4.1-stabilization-report.md](./v4.1-stabilization-report.md)) xác định: `H2-06` là **Verified HF (`HF-2`)**, `H2-12` là **Judge-Disagreed / Unconfirmed** (`PASS_GATE_0` cả 2 lượt standalone), còn `H2-19` là **Judge-Disagreed (Boundary `Major` ở standalone nhưng xác thực có mâu thuẫn trạng thái giữa Bảng/Mermaid và Câu hỏi mở)**.
+> 2. **Tách bảng theo tập mẫu trùng khớp (`n = 24` vs `n = 12`):** Không so sánh trực tiếp `2/12` của `C0` với `8/24` của `A/B` như cùng tập mẫu. Trên đúng **12 ca trùng khớp** của `C0`: Judge ghi nhận `A: 5/12`, `B: 6/12`, `C0: 2/12`, `C: 0/12` (khi ghép A/B) và `2/12` (khi ghép C0).
+> 3. **Token Overhead:** Toàn bộ số token trong Mục 6.2 là **ước lượng heuristic** (`bytes / 3,8` hoặc `chars / 3,5`), không phải chỉ số billing token từ runtime.
+
 **Nhánh thực nghiệm:** `round-2/v4-stabilization` (tách từ baseline v3 commit [`cd5bba945886222d0ebd236b3c1ba92a60dd3155`](https://github.com/tronghongnguyen1012/vietnamese-human-readable-writing/commit/cd5bba945886222d0ebd236b3c1ba92a60dd3155))  
 **Nguyên tắc thực nghiệm:** Đóng băng [`SKILL.md` v4](../skills/vietnamese-human-readable-writing/SKILL.md) (SHA-256 `b418c737eef1f916bd1c3a9ce10abbd4448dd336118ddb0848f88dd9995764a5`) trước khi sinh bất kỳ đầu ra nào trên tập kiểm thử mới; bảo toàn nguyên vẹn toàn bộ dữ liệu và kết quả lịch sử v3 dưới [`evaluation/results/`](./results/); không xóa hoặc che giấu các ca thua, bất nhất vị trí hay Hard Fail.
 

@@ -1,4 +1,4 @@
-# Chuẩn Viết Tài liệu Nghiệp vụ (PRD, BRD, User Story, AC, Business Rule) (v4)
+# Chuẩn Viết Tài liệu Nghiệp vụ (PRD, BRD, User Story, AC, Business Rule) (v4.1)
 
 Dùng tài liệu này khi soạn thảo hoặc chuẩn hóa tài liệu nghiệp vụ để PO, BA, Dev và QA đọc hiểu thống nhất, triển khai và viết test case chính xác.
 
@@ -17,7 +17,7 @@ Dùng tài liệu này khi soạn thảo hoặc chuẩn hóa tài liệu nghiệ
 
 Khi ghi chú họp hoặc tài liệu nguồn thiếu thông số hay có mâu thuẫn:
 - **Không tự bịa ngưỡng hoặc chọn ngầm một phía:** Tuyệt đối không tự đặt tỷ lệ % phạt, ngưỡng tiền/ngày hay tự xóa bỏ một quy định khi hai phần tài liệu mâu thuẫn nhau (ví dụ Mục 1 ghi hoàn 3 ngày làm việc, Mục 3 ghi 5–7 ngày làm việc).
-- **Tách riêng rõ ràng:** Đặt toàn bộ các câu hỏi mở, phương án hiểu có điều kiện và mâu thuẫn phát hiện được vào mục **`Điểm cần xác nhận / Mâu thuẫn cần PO chốt trước khi dev`**.
+- **Tách riêng và giới hạn theo phạm vi:** Đặt câu hỏi mở ảnh hưởng trực tiếp mục tiêu/triển khai vào mục **`Điểm cần xác nhận / Mâu thuẫn cần PO chốt trước khi dev`**. Không mở rộng hỏi lan man ngoài phạm vi yêu cầu, và giữ nguyên trạng thái *"chưa chốt"* ở mọi phần Scope, BR, AC, State transition hoặc API đi kèm cho tới khi được xác nhận.
 - **Câu quy tắc đa nghĩa logic (`và/hoặc`, phạm vi loại trừ):** Nếu câu gốc có từ 2 cách hiểu hợp lý (ví dụ loại trừ cả đơn vs chỉ loại trừ dòng sản phẩm thuộc danh mục), trình bày tường minh cả hai phương án hiểu để Kinh doanh/PO chốt.
 
 ---

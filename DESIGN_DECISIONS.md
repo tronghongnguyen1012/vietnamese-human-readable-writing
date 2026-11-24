@@ -40,10 +40,14 @@ Thử nghiệm 4 nhóm (`A`, `B`, `C0`, `C`) trả lời thẳng hai câu hỏi 
 
 ---
 
-## 4. Hạng mục Tồn đọng cho Round 3 (v4.1+)
+## 4. Hạng mục Đã Xử lý ở `v4.1` & Tồn đọng cho Round 3
 
-1. **Khắc phục mâu thuẫn chéo giữa Bảng / Sơ đồ Mermaid và Mục Câu hỏi mở (`H2-19`):** Trong tài liệu lai (`hybrid_docs`), bổ sung bước đối soát chéo trước khi kết thúc câu trả lời: mọi nhánh quy trình chưa có quyết định nguồn (như luồng duyệt `> 50M`) **không được vẽ hoặc gán cứng cho một component cụ thể** trong Bảng thành phần hay Sơ đồ Mermaid trừ khi ghi rõ là *"Giả định đề xuất — cần chốt tại Mục X"*.
-2. **Siết chặt ranh giới *Phương án viết lại* ở câu đa mơ hồ (`H2-12`):** Khi đầu vào có ≥ 2 cụm mơ hồ lồng nhau (*"tối đa 30.000đ"* + *"không áp dụng kèm A hoặc B"*), mọi phương án viết lại minh họa phải giữ trọn toàn bộ biến thể tương ứng với câu hỏi chốt cho Business chứ không ngầm chốt một ngưỡng ở phương án đầu tiên.
-3. **Lưu ý độ chính xác thông số kỹ thuật sâu (`H2-06`):** Nhắc người viết/Agent tự rà lại lock mode hoặc hành vi đặc thù của engine (ví dụ `ALTER TABLE ... ADD CONSTRAINT CHECK NOT VALID` trên PostgreSQL vẫn xin `ACCESS EXCLUSIVE`, không phải `SHARE ROW EXCLUSIVE`) khi viết RFC vận hành chịu tải cao, vì khung trình bày Skill không tự ngăn được lỗi nhớ nhầm chi tiết engine của mô hình nền.
-4. **Trau chuốt sắc thái giao tiếp đời thường (`H2-14`):** Tránh các câu đùa mang hơi hướng sách vở/mô phạm (như *"bài khởi động não bộ miễn phí"*) khi người dùng dùng giọng tự sự/hài hước lập trình viên.
-5. **Thực thi Human Evaluation (`evaluation/human-eval-protocol.md`) & Kiểm thử chéo đa họ mô hình.**
+- **Đã xử lý ở `v4.1` (xem [v4.1-stabilization-report.md](./evaluation/v4.1-stabilization-report.md)):**
+  1. Đồng bộ hóa trạng thái xác nhận giữa Bảng, Sơ đồ Mermaid, Trình tự và Open Questions (`H2-19` từ bất nhất HF xuống `0 HF`, thắng `2–0` trước `v4`).
+  2. Quy tắc *Scope & Proportion* cho nguồn thiếu dữ kiện (`H2-12` đạt `0 HF`, `0 Major`, thắng `2–0` trước `v4`).
+  3. Thay kho lệnh cụ thể trong Skill bằng quy tắc *Technical Claim Verification* tách dữ kiện kiểm chứng vs giả định (`H2-06` sửa sạch khẳng định sai `SHARE ROW EXCLUSIVE`, đạt `0 HF`, `0 Major`, thắng `2–0`).
+  4. Audit sửa 4 ví dụ bảng trong `vietnamese-clarity-and-style.md` và tách Gate 0 standalone ([standalone-hf-protocol.md](./evaluation/standalone-hf-protocol.md)) trước khi so sánh cặp A/B.
+- **Còn tồn đọng cho tương lai:**
+  1. **Siết nhẹ ký hiệu bảng giao tiếp và nhánh timeout (`H2-22`, `H2-19`):** Kiểm tra quy ước chiều mũi tên trong bảng IDD khớp tiêu đề cột và nhắc xác minh trạng thái `capture` trước khi `rollback` điểm; không gán nhánh chưa chốt vào cột trách nhiệm xác nhận của bảng thành phần.
+  2. **Trau chuốt độ mượt câu văn ở hội thoại ẩn dụ (`H2-16`):** Giữ nhất quán từ khóa (`mã định danh`) khi kể chuyện hài hước không dùng bullet.
+  3. **Thực thi Human Evaluation (`evaluation/human-eval-protocol.md`) & Kiểm thử chéo đa họ mô hình.**

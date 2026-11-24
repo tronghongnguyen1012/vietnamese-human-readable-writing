@@ -4,6 +4,19 @@ Tài liệu ghi nhận quá trình tiến hóa của **Vietnamese Human-Readable
 
 ---
 
+## `v4.1` — Targeted Stabilization Patch (Nhánh `round-2/v4-stabilization`, từ `cf5f4e9`)
+
+Bản vá tập trung giải quyết 6 nhóm lỗi/bất nhất phát hiện sau Round 2 trước khi đưa Skill vào thử nghiệm sử dụng thực tế, giữ nguyên kiến trúc lõi v4 (`validate_datasets.py --check-skill` PASS, `82` dòng / `8.904 bytes`):
+
+- **Audit toàn bộ ví dụ trong Skill & `references/`:** Sửa 4 dòng ví dụ trước/sau trong bảng của `vietnamese-clarity-and-style.md` (đặc biệt sửa `"Các webhook sẽ tạm hoãn"` từ câu viết lại tự bịa *"trong lúc bảo trì và gửi lại sau khi hoàn tất"* sang diễn đạt giữ nguyên độ bất định cần xác nhận); gỡ các nhãn đánh dấu nội bộ (`FIX-*`, `HF-3`, `R-04`).
+- **Final Semantic & Consistency Check:** Thêm bước rà soát 6 điểm ở cuối `SKILL.md` Mục 4 cho tác vụ chuyên môn phức tạp / tài liệu nhiều phần (chủ đích **bỏ qua** cho hội thoại thường).
+- **Preserve Confirmation Status Across Documents (`H2-19`):** Bổ sung ràng buộc đồng bộ trạng thái *"chưa chốt / trung tính"* giữa văn xuôi, Business Rule, AC, bảng trách nhiệm, sơ đồ Sequence/Flowchart, API contract, chuyển trạng thái và Open Questions trong `SKILL.md`, `business-specs.md`, `technical-specs.md`.
+- **Scope & Proportion (`H2-12`):** Tách 3 mức khi nguồn thiếu dữ kiện (*ảnh hưởng trực tiếp mục đích* vs *cần chốt trước triển khai* vs *mở rộng tùy chọn*); chống lặp nội dung giữa phân tích–bảng–ví dụ–kết luận; không tối ưu số từ cứng.
+- **Technical Claim Verification (`H2-06`):** Thu gọn hướng dẫn Git/RabbitMQ chi tiết thành quy tắc kiểm chứng khẳng định có rủi ro dữ liệu/vận hành (ưu tiên kiểm tra mã nguồn/tài liệu hãng/công cụ nếu có; tách dữ kiện đã kiểm chứng vs giả định; không khẳng định chắc chắn quá mức khi chưa xác minh), tránh biến Writing Skill thành kho kiến thức công nghệ.
+- **Evaluation Correction & Kiểm thử Hồi quy Tập trung (`n = 9`):** Ban hành [standalone-hf-protocol.md](./evaluation/standalone-hf-protocol.md) (Gate 0 độc lập 1 output/lượt + phân loại HF 3 mức *Judge-Detected / Verified / Judge-Disagreed*); tách rạch ròi bảng so sánh tập `n = 12` trùng khớp khỏi `n = 24`; ghi rõ token là ước lượng heuristic; kiểm thử hồi quy tập trung trên 9 ca đã biết cho `0/9` HF (cả Standalone lẫn Blind A/B `v4.1 vs v4`, thắng `4` vs `3`, `2` bất nhất, khắc phục toàn bộ `H2-06, H2-12, H2-19`). Xem [v4.1-stabilization-report.md](./evaluation/v4.1-stabilization-report.md).
+
+---
+
 ## `v4.0` — Round 2 Stabilization & Multi-Arm Validation (Nhánh `round-2/v4-stabilization`)
 
 **Cơ sở đối chiếu:** Tách nhánh từ bản đóng băng v3 tại commit [`cd5bba945886222d0ebd236b3c1ba92a60dd3155`](https://github.com/tronghongnguyen1012/vietnamese-human-readable-writing/commit/cd5bba945886222d0ebd236b3c1ba92a60dd3155) trên `main`.

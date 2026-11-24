@@ -1,9 +1,9 @@
-# Vietnamese Human-Readable Writing Skill (`Skill v4`)
+# Vietnamese Human-Readable Writing Skill (`Skill v4.1`)
 
-Skill chuẩn [`agentskills.io`](https://agentskills.io) giúp AI truyền tải thông tin bằng tiếng Việt **rõ nghĩa ngay từ lần đọc đầu**, **đúng trình tự tiếp nhận của con người**, **giữ nguyên dữ kiện/điều kiện nghiệp vụ**, **không tự bịa để tạo độ rõ giả tạo (False Clarity)** và **thích ứng đúng ngữ cảnh** — từ hội thoại tự nhiên đến PRD, BRD, IDD, API Spec, SAD và biên tập tài liệu kỹ thuật.
+Skill chuẩn [`agentskills.io`](https://agentskills.io) giúp AI truyền tải thông tin bằng tiếng Việt **rõ nghĩa ngay từ lần đọc đầu**, **đúng trình tự tiếp nhận của con người**, **giữ nguyên dữ kiện/điều kiện nghiệp vụ**, **đồng nhất trạng thái xác nhận xuyên suốt tài liệu**, **không tự bịa để tạo độ rõ giả tạo (False Clarity)** và **thích ứng đúng ngữ cảnh** — từ hội thoại tự nhiên đến PRD, BRD, IDD, API Spec, SAD và biên tập tài liệu kỹ thuật.
 
 > [!NOTE]
-> Phiên bản hiện tại trên nhánh `round-2/v4-stabilization` là **Skill v4**, được nâng cấp và kiểm chứng độc lập sau vòng ổn định Round 2 đối chiếu với bản v3 lịch sử tại commit `cd5bba945886222d0ebd236b3c1ba92a60dd3155`.
+> Phiên bản hiện tại trên nhánh `round-2/v4-stabilization` là **Skill v4.1** (bản vá ổn định từ `v4.0` đối chiếu với baseline lịch sử `v3` tại commit `cd5bba945886222d0ebd236b3c1ba92a60dd3155`). Xem chi tiết bản vá mới nhất tại [v4.1-stabilization-report.md](./evaluation/v4.1-stabilization-report.md).
 
 ---
 
@@ -14,12 +14,12 @@ Phần **Skill cài đặt vào runtime** tách biệt hoàn toàn với phần 
 ```text
 Vi Writer/
 ├── README.md                                  # Hướng dẫn cài đặt, lựa chọn phương án & tổng quan kết quả
-├── CHANGELOG.md                               # Lịch sử thay đổi v1 -> v2 -> v3 -> v4
+├── CHANGELOG.md                               # Lịch sử thay đổi v1 -> v2 -> v3 -> v4 -> v4.1
 ├── REVIEW-FINDINGS.md                         # Xác minh 10 finding độc lập FIX-01..FIX-10
 ├── DESIGN_DECISIONS.md                        # Quyết định thiết kế, đối chứng Ablation & việc tồn đọng
 ├── skills/
 │   └── vietnamese-human-readable-writing/     # <-- CHỈ COPY THƯ MỤC NÀY ĐỂ CÀI ĐẶT
-│       ├── SKILL.md                           # Instruction cốt lõi (78 dòng, 9.132 bytes)
+│       ├── SKILL.md                           # Instruction cốt lõi (82 dòng, 8.904 bytes)
 │       └── references/                        # Progressive Disclosure linh hoạt (0, 1 hoặc tối đa 2 file)
 │           ├── vietnamese-clarity-and-style.md
 │           ├── information-architecture.md
@@ -40,7 +40,9 @@ Vi Writer/
     ├── judge-calibration.jsonl                # 6 ca kiểm chuẩn Judge v2
     ├── trigger-eval.jsonl                     # 16 truy vấn kiểm thử kích hoạt
     ├── evaluation-report.md                   # Báo cáo v3 lịch sử (kèm Errata Round 2)
-    ├── evaluation-report-v2.md                # Báo cáo Round 2 đầy đủ (4 nhóm A/B/C0/C + Overhead)
+    ├── evaluation-report-v2.md                # Báo cáo Round 2 đầy đủ (4 nhóm A/B/C0/C + Đính chính v4.1)
+    ├── standalone-hf-protocol.md              # Quy trình Gate 0 độc lập 1 output/lượt & HF 3 mức
+    ├── v4.1-stabilization-report.md           # Báo cáo bản vá v4.1 & kiểm thử hồi quy tập trung (n=9)
     ├── scripts/
     │   ├── validate_datasets.py               # Kiểm tra schema, chống leakage (Jaccard) & Skill v4
     │   ├── analyze_results.py                 # Thống kê Round 1 (lịch sử)
@@ -60,17 +62,21 @@ Sao chép nguyên thư mục `skills/vietnamese-human-readable-writing/` vào th
 - **Claude Code:** `~/.claude/skills/vietnamese-human-readable-writing/` hoặc `.claude/skills/vietnamese-human-readable-writing/`
 - **Cursor / Codex / harness chuẩn `agentskills.io`:** Đặt vào thư mục skills tương ứng của workspace hoặc cấu hình toàn cục.
 
-### Khi nào chỉ cần Simple Prompt vs `SKILL.md` độc lập vs Full Skill v4?
-Thực nghiệm đối chứng 4 nhóm trên `held-out-v2.jsonl` (`n = 24`) cho thấy rõ đánh đổi chi phí – chất lượng giữa 3 lựa chọn:
+### Khi nào chỉ cần Simple Prompt vs `SKILL.md` độc lập vs Full Skill (`v4.1`)?
+Thực nghiệm đối chứng Round 2 trên `held-out-v2.jsonl` (`v4.0`, trước bản vá `v4.1`) cho thấy rõ đánh đổi chi phí – chất lượng (lưu ý tách riêng tập `n = 24` và tập `n = 12` trùng khớp của `C0`; mọi số token là **ước lượng heuristic theo `bytes / 3,8`** vì runtime không cung cấp billing token usage thực tế):
 
-| Lựa chọn | Chi phí Prompt hệ thống | Tỷ lệ Hard Fail (`held-out-v2`) | Phù hợp nhất cho |
-|---|---:|---:|---|
-| **Simple Prompt 6 ý** (`Group B`) | `609 bytes` (`~160 tokens`), trễ TB `23,80s` | **`8 / 24 (33,3%)`** *(không giảm HF so với Neutral A)* | Hỏi đáp nhanh, trò chuyện tự nhiên đời thường không có rủi ro nghiệp vụ/kỹ thuật, cần phản hồi nhanh nhất. |
-| **Chỉ `SKILL.md` v4** (`Group C0`, host không đọc được `references/`) | `8.694 bytes` (`~2.288 tokens`), trễ TB `29,06s` | `2 / 12 (16,7%)` trên 12 ca khó | Harness giới hạn tool đọc file hoặc cần giảm mạnh bịa dữ kiện (`HF-3`) mà vẫn giữ 1 vòng gọi mô hình. |
-| **Full Skill v4** (`Group C`, `0–2` references) | `8.694 → 19.019 bytes` (TB `~3.814 tokens`), trễ TB `39,11s` | **`0 / 24 (0,0%)`** vs A; **`1 / 24 (4,2%)`** vs B *(17–1 thắng B)* | Đặc tả PRD/BRD/IDD/API/SAD, phân tích đánh đổi kỹ thuật đa trục, biên tập quy tắc/luồng dữ liệu nguồn thiếu chi tiết (*Trường hợp B*). |
+**Bảng A — Trên trọn bộ `held-out-v2.jsonl` (`n = 24`):**
+
+| Lựa chọn | Kích thước / Ước lượng token hệ thống | Độ trễ TB (`flash`) | Hard Fail (Judge cặp đấu `pro`) | Phù hợp nhất cho |
+|---|---:|---:|---:|---|
+| **Simple Prompt 6 ý** (`Group B`) | `609 bytes` *(~160 tokens ước lượng)* | `23,80s` | **`8 / 24 (33,3%)`** *(vs C)* | Hỏi đáp nhanh, trò chuyện tự nhiên không có rủi ro nghiệp vụ/kỹ thuật. |
+| **Full Skill** (`Group C`, bản v4 + `0–2` ref) | `8.694 → 19.019 bytes` *(TB ~3.814 tokens ước lượng)* | `39,11s` | **`0 / 24`** *(vs A)* \| **`1 / 24`** *(vs B: `H2-06`)* | Đặc tả PRD/BRD/IDD/API/SAD, phân tích kỹ thuật đa trục, biên tập nguồn thiếu chi tiết. |
+
+**Bảng B — Trên đúng 12 ca phức tạp trùng khớp của nhóm Ablation (`n = 12`):**
+`A: 5/12` HF \| `B: 6/12` HF \| `C0 (SKILL.md-only, 8.694 bytes / ~2.288 tokens ước lượng, 29,06s): 2/12` HF \| `C (Full Skill v4): 0/12` *(khi ghép vs A/B)* và `2/12` *(khi ghép vs C0 — `H2-12, H2-19`)*. Khi dùng kết hợp quy chuẩn kiểm định độc lập trong [standalone-hf-protocol.md](./evaluation/standalone-hf-protocol.md) trên `v4.1` cho 9 ca hồi quy tập trung, bản vá **v4.1 đạt `0/9` Hard Fail**.
 
 > [!TIP]
-> Trong **chế độ Nhẹ**, Full Skill v4 **không nạp thêm file tham chiếu** (`refs = []`), tránh tốn chi phí đọc file khi hội thoại ngắn, nhưng vẫn nạp cơ bản `SKILL.md` (`~2.288 tokens`) khi kích hoạt — vì vậy nếu cuộc trò chuyện thuần túy tán gẫu không liên quan kỹ thuật/tài liệu, `trigger` của Skill giữ kích hoạt đúng ngữ cảnh (`16/16`, `F1 = 1,00`).
+> Trong **chế độ Nhẹ**, Skill **không nạp thêm file tham chiếu** (`refs = []`), chỉ nạp phần `SKILL.md` (`~2.288 tokens` ước lượng) khi được kích hoạt (`trigger` `16/16`, `F1 = 1,00`). Chi tiết đánh giá bản vá xem [v4.1-stabilization-report.md](./evaluation/v4.1-stabilization-report.md).
 
 ---
 
@@ -86,8 +92,11 @@ Toàn bộ kết quả chấm mù thực hiện trên `flash` (sinh) và `pro` (
 3. **Bộ Kiểm thử Mới `held-out-v2.jsonl` (`n = 24`, gồm `technical_depth`, `ambiguity_no_fabrication`, `natural_conversation`, `hybrid_docs`, `real_world_long_docs` mô phỏng):**
    - **`C (Full v4)` vs `A (Neutral)`:** **`20 / 24 (83,3%)`** thắng đồng thuận (`3` thua `A`, `1` bất nhất), **`0/24` vs `8/24` HF**, nhóm sạch (`n=16`) thắng **`12/16` (`75%`)**.
    - **`C (Full v4)` vs `B (Simple Prompt)`:** **`17 / 24 (70,8%)`** thắng đồng thuận (`1` thua `B` tại `H2-14`, `6` bất nhất), **`1/24` (`H2-06: HF-2`) vs `8/24` HF**, nhóm sạch (`n=15`) thắng **`9/15`**.
-   - **`C (Full v4)` vs `C0 (SKILL-only Ablation, n = 12)`:** **`7 / 12` thắng `C`** vs `3` thắng `C0` (`H2-12, 19, 22`), `2` bất nhất.
-4. **Hạn chế chưa kiểm chứng:** Chưa chạy thực nghiệm đo thời gian hiểu đúng trên người đọc Việt Nam thật (`TtCU`, xem [human-eval-protocol.md](./evaluation/human-eval-protocol.md)); 4 ca `real_world_long_docs` là tài liệu mô phỏng sát thực tế; mới kiểm thử trong 1 họ mô hình (`flash` / `pro`) nên chưa kết luận độ ổn định chéo Claude/GPT/model khác.
+   - **`C (Full v4)` vs `C0 (SKILL-only Ablation, n = 12)`:** **`7 / 12` thắng `C`** vs `3` thắng `C0` (`H2-12, 19, 22`), `2` bất nhất *(trên đúng 12 ca này: `C0` và `C` cùng ghi nhận `2/12` HF theo Judge cặp đấu)*.
+4. **Bản vá `v4.1` & Kiểm thử Hồi quy Tập trung (`n = 9` ca đã biết, KHÔNG phải held-out benchmark mới):**
+   - Kiểm định Gate 0 độc lập 1 output/lượt ([standalone-hf-protocol.md](./evaluation/standalone-hf-protocol.md)) xác nhận `H2-06` là `Verified HF` (`2/2` lượt standalone) ở bản `v4`, còn `H2-12` và `H2-19` `PASS_GATE_0` ở standalone (`H2-19` có mâu thuẫn xác nhận giữa Bảng/Mermaid và Câu hỏi mở).
+   - Trên 9 ca hồi quy tập trung (`v4.1 vs v4`), **Skill v4.1 đạt `0/9` Hard Fail** ở cả Standalone Gate 0 lẫn Blind A/B (`v4.1` thắng **`4`** gồm `H2-06, H2-12, H2-19, TEST-05`; `v4` thắng **`3`**; `2` bất nhất; điểm `D1 +0,556`, `D4 +0,334`, `D9 +0,700`). Chi tiết tại [v4.1-stabilization-report.md](./evaluation/v4.1-stabilization-report.md).
+5. **Hạn chế chưa kiểm chứng:** Chưa chạy thực nghiệm đo thời gian hiểu đúng trên người đọc Việt Nam thật (`TtCU`, xem [human-eval-protocol.md](./evaluation/human-eval-protocol.md)); 4 ca `real_world_long_docs` là tài liệu mô phỏng sát thực tế; mới kiểm thử trong 1 họ mô hình (`flash` / `pro`) nên chưa kết luận độ ổn định chéo Claude/GPT/model khác.
 
 ---
 
