@@ -1,0 +1,382 @@
+{
+  "held_out_total": 24,
+  "overall": {
+    "final_verdicts": {
+      "experiment": 20,
+      "position_inconsistent": 3,
+      "baseline": 1
+    },
+    "experiment_win_rate": 0.8333,
+    "pass1_verdicts": {
+      "experiment": 20,
+      "baseline": 4
+    },
+    "pass2_verdicts": {
+      "experiment": 23,
+      "baseline": 1
+    },
+    "position_consistent_cases": 21,
+    "position_consistency_rate": 0.875,
+    "avg_base_words": 794.292,
+    "avg_exp_words": 573.208,
+    "avg_word_ratio": 0.78
+  },
+  "hard_fails": {
+    "baseline_hf_cases": 11,
+    "experiment_hf_cases": 0,
+    "baseline_hf_codes": {
+      "HF-5": 1,
+      "HF-3": 10,
+      "HF-4": 2,
+      "HF-2": 1,
+      "HF-1": 1
+    },
+    "experiment_hf_codes": {}
+  },
+  "criteria_means_all": {
+    "baseline": {
+      "D1": 2.0,
+      "D2": 3.542,
+      "D3": 3.083,
+      "D4": 3.146,
+      "D5": 3.229,
+      "D6": 2.792,
+      "D7": 3.104,
+      "D8": 2.917,
+      "D9": 2.625
+    },
+    "experiment": {
+      "D1": 3.708,
+      "D2": 3.75,
+      "D3": 3.542,
+      "D4": 3.708,
+      "D5": 3.875,
+      "D6": 3.729,
+      "D7": 3.667,
+      "D8": 3.688,
+      "D9": 3.406
+    },
+    "delta": {
+      "D1": 1.708,
+      "D2": 0.208,
+      "D3": 0.459,
+      "D4": 0.562,
+      "D5": 0.646,
+      "D6": 0.937,
+      "D7": 0.563,
+      "D8": 0.771,
+      "D9": 0.781
+    }
+  },
+  "non_hf_subgroup": {
+    "n": 13,
+    "verdicts": {
+      "experiment": 10,
+      "baseline": 1,
+      "position_inconsistent": 2
+    },
+    "baseline": {
+      "D1": 3.269,
+      "D2": 3.692,
+      "D3": 3.231,
+      "D4": 3.346,
+      "D5": 3.308,
+      "D6": 2.923,
+      "D7": 3.077,
+      "D8": 3.192,
+      "D9": 3.417
+    },
+    "experiment": {
+      "D1": 3.654,
+      "D2": 3.808,
+      "D3": 3.462,
+      "D4": 3.769,
+      "D5": 3.962,
+      "D6": 3.769,
+      "D7": 3.692,
+      "D8": 3.731,
+      "D9": 3.75
+    },
+    "delta": {
+      "D1": 0.385,
+      "D2": 0.116,
+      "D3": 0.231,
+      "D4": 0.423,
+      "D5": 0.654,
+      "D6": 0.846,
+      "D7": 0.615,
+      "D8": 0.539,
+      "D9": 0.333
+    }
+  },
+  "by_context": {
+    "casual_chat": {
+      "n": 3,
+      "verdicts": {
+        "experiment": 2,
+        "position_inconsistent": 1
+      },
+      "baseline_hf_cases": 1,
+      "experiment_hf_cases": 0,
+      "avg_base_words": 154.0,
+      "avg_exp_words": 137.333,
+      "avg_word_ratio": 0.914,
+      "refs_loaded_cases": 0,
+      "refs_loaded_rate": 0.0,
+      "ref_files_used": {}
+    },
+    "concept_explanation": {
+      "n": 3,
+      "verdicts": {
+        "experiment": 2,
+        "baseline": 1
+      },
+      "baseline_hf_cases": 0,
+      "experiment_hf_cases": 0,
+      "avg_base_words": 647.0,
+      "avg_exp_words": 533.0,
+      "avg_word_ratio": 0.869,
+      "refs_loaded_cases": 3,
+      "refs_loaded_rate": 1.0,
+      "ref_files_used": {
+        "information-architecture.md": 3
+      }
+    },
+    "problem_analysis": {
+      "n": 3,
+      "verdicts": {
+        "experiment": 3
+      },
+      "baseline_hf_cases": 2,
+      "experiment_hf_cases": 0,
+      "avg_base_words": 1314.0,
+      "avg_exp_words": 1107.333,
+      "avg_word_ratio": 0.86,
+      "refs_loaded_cases": 3,
+      "refs_loaded_rate": 1.0,
+      "ref_files_used": {
+        "information-architecture.md": 3
+      }
+    },
+    "workplace_communication": {
+      "n": 3,
+      "verdicts": {
+        "experiment": 3
+      },
+      "baseline_hf_cases": 1,
+      "experiment_hf_cases": 0,
+      "avg_base_words": 276.0,
+      "avg_exp_words": 173.0,
+      "avg_word_ratio": 0.614,
+      "refs_loaded_cases": 2,
+      "refs_loaded_rate": 0.667,
+      "ref_files_used": {
+        "information-architecture.md": 2
+      }
+    },
+    "business_docs": {
+      "n": 3,
+      "verdicts": {
+        "experiment": 3
+      },
+      "baseline_hf_cases": 3,
+      "experiment_hf_cases": 0,
+      "avg_base_words": 1900.333,
+      "avg_exp_words": 1403.0,
+      "avg_word_ratio": 0.85,
+      "refs_loaded_cases": 3,
+      "refs_loaded_rate": 1.0,
+      "ref_files_used": {
+        "business-specs.md": 3
+      }
+    },
+    "technical_docs": {
+      "n": 3,
+      "verdicts": {
+        "experiment": 3
+      },
+      "baseline_hf_cases": 3,
+      "experiment_hf_cases": 0,
+      "avg_base_words": 1446.0,
+      "avg_exp_words": 837.0,
+      "avg_word_ratio": 0.576,
+      "refs_loaded_cases": 3,
+      "refs_loaded_rate": 1.0,
+      "ref_files_used": {
+        "technical-specs.md": 3
+      }
+    },
+    "reports_guides_training": {
+      "n": 3,
+      "verdicts": {
+        "experiment": 2,
+        "position_inconsistent": 1
+      },
+      "baseline_hf_cases": 1,
+      "experiment_hf_cases": 0,
+      "avg_base_words": 504.667,
+      "avg_exp_words": 291.0,
+      "avg_word_ratio": 0.64,
+      "refs_loaded_cases": 3,
+      "refs_loaded_rate": 1.0,
+      "ref_files_used": {
+        "information-architecture.md": 3
+      }
+    },
+    "editing_rewriting": {
+      "n": 3,
+      "verdicts": {
+        "experiment": 2,
+        "position_inconsistent": 1
+      },
+      "baseline_hf_cases": 0,
+      "experiment_hf_cases": 0,
+      "avg_base_words": 112.333,
+      "avg_exp_words": 104.0,
+      "avg_word_ratio": 0.917,
+      "refs_loaded_cases": 3,
+      "refs_loaded_rate": 1.0,
+      "ref_files_used": {
+        "vietnamese-clarity-and-style.md": 3
+      }
+    }
+  },
+  "variance_check": {
+    "n": 8,
+    "run2_verdicts": {
+      "experiment": 8
+    },
+    "same_as_run1_final_count": 8,
+    "consistency_rate": 1.0,
+    "run2_baseline_hf_cases": 3,
+    "run2_experiment_hf_cases": 0,
+    "avg_run2_base_words": 823.5,
+    "avg_run2_exp_words": 499.25,
+    "details": [
+      {
+        "id": "TEST-01",
+        "context": "casual_chat",
+        "run1_final_verdict": "experiment",
+        "run1_pass1_verdict": "experiment",
+        "run2_verdict": "experiment",
+        "same_as_run1_final": true,
+        "run1_exp_words": 139,
+        "run2_exp_words": 129,
+        "run2_refs_loaded": [],
+        "run2_base_hf": [],
+        "run2_exp_hf": []
+      },
+      {
+        "id": "TEST-04",
+        "context": "concept_explanation",
+        "run1_final_verdict": "experiment",
+        "run1_pass1_verdict": "experiment",
+        "run2_verdict": "experiment",
+        "same_as_run1_final": true,
+        "run1_exp_words": 537,
+        "run2_exp_words": 530,
+        "run2_refs_loaded": [
+          "information-architecture.md"
+        ],
+        "run2_base_hf": [],
+        "run2_exp_hf": []
+      },
+      {
+        "id": "TEST-07",
+        "context": "problem_analysis",
+        "run1_final_verdict": "experiment",
+        "run1_pass1_verdict": "experiment",
+        "run2_verdict": "experiment",
+        "same_as_run1_final": true,
+        "run1_exp_words": 848,
+        "run2_exp_words": 823,
+        "run2_refs_loaded": [
+          "information-architecture.md"
+        ],
+        "run2_base_hf": [],
+        "run2_exp_hf": []
+      },
+      {
+        "id": "TEST-10",
+        "context": "workplace_communication",
+        "run1_final_verdict": "experiment",
+        "run1_pass1_verdict": "experiment",
+        "run2_verdict": "experiment",
+        "same_as_run1_final": true,
+        "run1_exp_words": 88,
+        "run2_exp_words": 67,
+        "run2_refs_loaded": [],
+        "run2_base_hf": [],
+        "run2_exp_hf": []
+      },
+      {
+        "id": "TEST-13",
+        "context": "business_docs",
+        "run1_final_verdict": "experiment",
+        "run1_pass1_verdict": "experiment",
+        "run2_verdict": "experiment",
+        "same_as_run1_final": true,
+        "run1_exp_words": 1455,
+        "run2_exp_words": 1402,
+        "run2_refs_loaded": [
+          "business-specs.md"
+        ],
+        "run2_base_hf": [
+          "HF-2",
+          "HF-3",
+          "HF-4"
+        ],
+        "run2_exp_hf": []
+      },
+      {
+        "id": "TEST-16",
+        "context": "technical_docs",
+        "run1_final_verdict": "experiment",
+        "run1_pass1_verdict": "experiment",
+        "run2_verdict": "experiment",
+        "same_as_run1_final": true,
+        "run1_exp_words": 752,
+        "run2_exp_words": 645,
+        "run2_refs_loaded": [
+          "technical-specs.md"
+        ],
+        "run2_base_hf": [
+          "HF-3"
+        ],
+        "run2_exp_hf": []
+      },
+      {
+        "id": "TEST-19",
+        "context": "reports_guides_training",
+        "run1_final_verdict": "experiment",
+        "run1_pass1_verdict": "experiment",
+        "run2_verdict": "experiment",
+        "same_as_run1_final": true,
+        "run1_exp_words": 338,
+        "run2_exp_words": 305,
+        "run2_refs_loaded": [
+          "information-architecture.md"
+        ],
+        "run2_base_hf": [
+          "HF-3"
+        ],
+        "run2_exp_hf": []
+      },
+      {
+        "id": "TEST-22",
+        "context": "editing_rewriting",
+        "run1_final_verdict": "experiment",
+        "run1_pass1_verdict": "experiment",
+        "run2_verdict": "experiment",
+        "same_as_run1_final": true,
+        "run1_exp_words": 90,
+        "run2_exp_words": 93,
+        "run2_refs_loaded": [
+          "vietnamese-clarity-and-style.md"
+        ],
+        "run2_base_hf": [],
+        "run2_exp_hf": []
+      }
+    ]
+  }
+}
