@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 190" width="840" height="190" role="img" aria-label="ViWrite — AI writes. Humans understand.">
+  <defs>
+    <linearGradient id="bed-teal" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0D9488"/>
+      <stop offset="100%" stop-color="#2DD4BF"/>
+    </linearGradient>
+    <linearGradient id="bed-coral" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F97316"/>
+      <stop offset="100%" stop-color="#FDBA74"/>
+    </linearGradient>
+  </defs>
+  <rect x="1" y="1" width="838" height="188" rx="18" fill="#0F172A" stroke="#334155" stroke-width="2"/>
+  <rect x="1" y="1" width="838" height="6" rx="3" fill="url(#bed-teal)"/>
+
+  <g transform="translate(46, 39)">
+    <rect x="0" y="0" width="112" height="112" rx="26" fill="url(#bed-teal)"/>
+    <rect x="14" y="14" width="84" height="84" rx="16" fill="#0F172A"/>
+    <rect x="24" y="29" width="42" height="8" rx="4" fill="#2DD4BF"/>
+    <rect x="24" y="45" width="64" height="7" rx="3.5" fill="#E2E8F0" fill-opacity="0.9"/>
+    <rect x="24" y="59" width="48" height="7" rx="3.5" fill="#94A3B8" fill-opacity="0.8"/>
+    <path d="M77 23 L88 34 L68 54 L57 43 Z" fill="url(#bed-coral)"/>
+    <circle cx="82" cy="78" r="6.5" fill="#2DD4BF"/>
+    <path d="M24 78 H67" stroke="#14B8A6" stroke-width="5.5" stroke-linecap="round"/>
+  </g>
+
+  <text x="190" y="76" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="38" font-weight="800" fill="#F8FAFC">ViWrite</text>
+  <rect x="342" y="49" width="108" height="28" rx="14" fill="#134E4A" stroke="#2DD4BF"/>
+  <text x="396" y="68" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#5EEAD4">v4.1.0-beta</text>
+
+  <text x="190" y="112" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="22" font-weight="700" fill="#2DD4BF">AI writes. Humans understand.</text>
+  <text x="190" y="143" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="500" fill="#94A3B8">Clear, natural Vietnamese for technical &amp; business work · vietnamese-human-readable-writing</text>
+</svg>

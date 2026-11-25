@@ -18,8 +18,8 @@
   ],
   "skills": "./skills/",
   "interface": {
-    "displayName": "ViWrite (Vietnamese Human-Readable Writing)",
-    "shortDescription": "AI writes. Humans understand. Natural, verifiable Vietnamese specs & prose.",
+    "displayName": "ViWrite",
+    "shortDescription": "AI writes. Humans understand. Clear, natural Vietnamese specs & prose.",
     "longDescription": "Guides AI agents to write clear, context-adapted Vietnamese that preserves business logic, technical depth, and confirmation status without fabricating missing details.",
     "developerName": "tronghongnguyen1012",
     "category": "Productivity",

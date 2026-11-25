@@ -1,14 +1,14 @@
 {
   "name": "vietnamese-human-readable-writing",
   "interface": {
-    "displayName": "ViWrite (Vietnamese Human-Readable Writing)"
+    "displayName": "ViWrite"
   },
   "plugins": [
     {
       "name": "vietnamese-human-readable-writing",
       "source": {
-        "source": "url",
-        "url": "./"
+        "source": "local",
+        "path": "./"
       },
       "policy": {
         "installation": "AVAILABLE",

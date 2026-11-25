@@ -1,61 +1,83 @@
-# Báo cáo Tương thích, Cài đặt Thực tế & Đề xuất Giấy phép (`compatibility-and-smoke-test.md`)
+# Báo cáo Tương thích 6 Tầng, Smoke Test Windows & Đề xuất Giấy phép (`compatibility-and-smoke-test.md`)
 
-Tài liệu tổng hợp: (1) phân tích 4 repository tham chiếu, (2) ma trận tương thích 4 tầng trên các runtime AI phổ biến, (3) nhật ký smoke test thực tế trên Windows với `skills` CLI (`skills.sh`), và (4) đề xuất giấy phép mã nguồn mở cho chủ repository lựa chọn.
+Tài liệu ghi nhận kết quả thực tế (chỉ báo cáo những gì đã kiểm chứng trực tiếp trên môi trường test, không suy đoán phần chưa chạy live):
+1. Phân tích 4 repository tham chiếu.
+2. Ma trận tương thích **6 tầng độc lập** trên các runtime AI.
+3. Kết quả kiểm tra schema/cấu trúc của 6 tệp plugin manifest.
+4. Nhật ký smoke test thực tế trên Windows (project-local, cập nhật `-p`, global cô lập `-g`, cài thủ công lặp lại).
+5. Kiểm toán quyền sở hữu nội dung & đề xuất **MIT License** chờ chủ repository xác nhận.
 
 ---
 
-## 1. Kết quả Phân tích 4 Repository Tham chiếu
+## 1. Phân tích 4 Repository Tham chiếu
 
-| Repository | Giấy phép | Mô hình trình bày & phân phối áp dụng | Phần chủ động KHÔNG sao chép |
+| Repository | Giấy phép | Điểm học hỏi về đóng gói & DX | Phần chủ động KHÔNG sao chép |
 |---|---|---|---|
-| `vercel-labs/skills` (`skills.sh`) | MIT | Cấu trúc chuẩn `skills/<name>/SKILL.md` để `npx skills add <owner>/<repo>` quét tự động; hỗ trợ bảng `--agent`, `--copy`, `list`, `update`, `remove`. | Hệ thống monorepo workspace TypeScript phức tạp (`bin/`, `src/`, telemetry). |
-| `obra/superpowers` | MIT | Bố cục rõ ràng cho người dùng cuối; tách manifest tối giản cho `.claude-plugin/`, `.codex-plugin/`, `.agents/plugins/marketplace.json`, `.cursor-plugin/`, `.antigravity-plugin/`. | Bộ thư viện đa skill lớn, `hooks` tự động inject, logo thương hiệu riêng. |
-| `tronghongnguyen1012/ponytail` | MIT | Hero branding gọn (logo + tagline + badge tối giản + banner Dark/Light qua `<picture>`); tách riêng `INSTALL.md` gọn gàng. | Bộ `hooks` / telemetry CSV / script đa IDE (>15 thư mục plugin) không cần thiết cho Writing Skill thuần túy. |
-| `cloudflare/security-audit-skill` | MIT | Phong cách giải thích cơ chế theo pha ngắn gọn, trực diện cho kỹ sư; gắn chặt `skills/<name>/SKILL.md` + `LICENSE` ở root. | Cấu trúc đặc thù audit bảo mật đa tác nhân (`coverage-ledger`). |
+| `vercel-labs/skills` (`skills.sh`) | MIT | Cấu trúc chuẩn `skills/<name>/SKILL.md` để `npx skills add <owner>/<repo>` quét tự động; lệnh `--list`, `--copy`, `-g`, `-p`, `update`, `remove`. | Monorepo TypeScript & CLI source code. |
+| `obra/superpowers` | MIT | Phân tách mục cài đặt gọn theo từng runtime (`Claude Code`, `Codex`, `Cursor`); manifest tối giản theo chuẩn từng hãng. | Thư viện đa skill, lifecycle `hooks`, tài sản nhận diện thương hiệu. |
+| `tronghongnguyen1012/ponytail` | MIT | Hero branding gọn (logo + tagline ngắn + banner Light/Dark qua `<picture>`); bảng so sánh trực diện và tách riêng `INSTALL.md`. | Bộ `hooks`, telemetry CSV, script đa IDE phức tạp. |
+| `cloudflare/security-audit-skill` | MIT | Giải thích cơ chế theo pha ngắn gọn cho kỹ sư, giữ cấu trúc repo dễ quét. | Kiến trúc đa tác nhân audit bảo mật đặc thù. |
 
-**Nguyên tắc áp dụng cho `vietnamese-human-readable-writing`:** Giữ trọn gói thực thi gọn nhẹ ở `skills/vietnamese-human-readable-writing/`, không thêm `hooks`, `MCP server`, daemon hay gói npm riêng, chỉ thêm các file manifest JSON tối giản tương thích các plugin/repository loader chính.
-
----
-
-## 2. Ma trận Tương thích Native 4 Tầng (Phân tách Trung thực)
-
-> **Lưu ý quan trọng:** Skill hiện tại **chưa được nộp hoặc xuất bản trên các curated marketplace chính thức của bên thứ ba** (như Anthropic Official Directory, OpenAI Codex Official Catalog, Cursor Directory hay Antigravity Public Marketplace). Việc cài qua GitHub/CLI hoạt động trực tiếp từ repository này.
-
-| Runtime / Hệ sinh thái | 1. Tương thích định dạng (`Spec`) | 2. Cài đặt thử nghiệm (`Install`) | 3. Nạp danh sách (`Discovery`) | 4. Kích hoạt sinh (`Activation`) | Cơ chế phân phối hiện có |
-|---|---|---|---|---|---|
-| **Antigravity IDE / CLI** | Đạt (`SKILL.md` 82 dòng + `references/`) + `.antigravity-plugin/plugin.json` | **Đã kiểm thử thực tế trên Windows** (`npx.cmd skills add --copy`) | **Đã xác minh** (`skills add --list` + `skills list --json`) | **Đã kiểm thử toàn bộ Round 2 & v4.1** trên tier `flash` / `pro` | `skills.sh`, `.antigravity-plugin/plugin.json`, copy vào `.agents\skills\` hoặc `%USERPROFILE%\.gemini\config\skills\` |
-| **Claude Code & Claude Code Desktop** | Đạt (`SKILL.md` chuẩn YAML + `.claude-plugin/{plugin,marketplace}.json`) | **Đã kiểm thử copy file trên Windows** vào `.claude\skills\` qua `skills` CLI (`SHA-256` khớp 100%) | Chưa kiểm chứng live trong ứng dụng Claude Code CLI/Desktop | **Chưa kiểm chứng trên model Claude** | `skills.sh` (`-a claude-code`), `/plugin marketplace add`, hoặc copy vào `.claude\skills\` |
-| **OpenAI Codex CLI, App & IDE Extension** | Đạt (`SKILL.md` + `.codex-plugin/plugin.json` + `.agents/plugins/marketplace.json`) | **Đã kiểm thử copy file trên Windows** vào `.agents\skills\` (`SHA-256` khớp 100%) | Chưa kiểm chứng live trong app Codex / `/skills` | **Chưa kiểm chứng trên model GPT/Codex** | `skills.sh` (`-a codex`), `.codex-plugin/plugin.json`, `.agents/plugins/marketplace.json`, hoặc copy vào `.codex\skills\` |
-| **Cursor** | Đạt (`SKILL.md` + `.cursor-plugin/plugin.json`) | **Đã kiểm thử copy file trên Windows** vào `.agents\skills\` (`SHA-256` khớp 100%) | Chưa kiểm chứng live trong Cursor IDE | **Chưa kiểm chứng live trong Cursor** | `skills.sh` (`-a cursor`), `.cursor-plugin/plugin.json`, copy vào `.agents\skills\` |
-| **Agent Skills CLI (`skills.sh`)** | Đạt (quét 1 skill duy nhất ở `skills/`, không trùng lặp khi có plugin manifest) | **Đã kiểm thử đầy đủ** (cài mới, cài lại, `list`, `update`, `remove`) | **Đã kiểm thử cả local lẫn GitHub remote** | Tùy runtime đích | `npx skills add tronghongnguyen1012/vietnamese-human-readable-writing` |
+**Phạm vi giữ nguyên của ViWrite:** Chỉ đóng gói skill thuần túy trong [`skills/vietnamese-human-readable-writing/`](../skills/vietnamese-human-readable-writing/) + các tệp manifest JSON tối giản — **không** tạo custom installer, hook, MCP server hay background service.
 
 ---
 
-## 3. Nhật ký Smoke Test Thực tế trên Windows
+## 2. Ma trận Tương thích 6 Tầng (Tách bạch Trung thực)
 
-- **Môi trường test:** Windows 11, Node `v24.18.0`, `npx.cmd` (`11.16.0`), thư mục cô lập `%TEMP%\viwrite-smoke-test` (đã dọn sạch sau khi test, không đụng cấu hình toàn cục của người dùng).
-- **Phát hiện môi trường Windows thực tế:** Khi `PowerShell ExecutionPolicy` mặc định chặn chạy `npx.ps1` (`PSSecurityException`), dùng **`npx.cmd`** chạy trơn tru 100%.
+Để tránh nhầm lẫn giữa việc *có tệp manifest / đã chạy thử qua subagent* với *runtime gốc đã tự nạp và tự kích hoạt ngoài thực tế*, toàn bộ khả năng tương thích được tách rõ thành **6 tầng độc lập**:
 
-| Bước kiểm tra | Lệnh thực thi (`%TEMP%\viwrite-smoke-test`) | Kết quả thực tế |
+| Runtime | 1. Manifest / Schema hợp lệ | 2. Skills CLI Discovery (`--list`) | 3. File Installation (`--copy`) | 4. Native Runtime Discovery | 5. Native Auto Activation | 6. Đánh giá Chất lượng Model |
+|---|---|---|---|---|---|---|
+| **Antigravity (IDE / App / CLI)** | **Đạt Schema chính thức** (`antigravity.google/schemas/v1/plugin.json`) | **Đã xác minh** (`1 skill`) | **Đã kiểm thử Windows** (project-local & sandbox `-g` vào `.gemini\config\skills\`) | Chưa kiểm chứng live (`agy` CLI/App chưa cài trên máy test) | **Chưa kiểm chứng live** | **Đã đánh giá qua Antigravity Subagent** (Round 1, Round 2 & v4.1 trên `flash`/`pro`)\* |
+| **Claude Code & Claude Code Desktop** | `marketplace.json` **đạt SchemaStore**; `plugin.json` hợp lệ cấu trúc | **Đã xác minh** (`1 skill`) | **Đã kiểm thử Windows** (project-local & sandbox `-g` vào `.claude\skills\`) | Chưa kiểm chứng live (`claude` CLI/Desktop chưa cài trên máy test) | Chưa kiểm chứng live | Chưa đánh giá trên model Claude |
+| **OpenAI Codex (CLI / App / IDE Ext)** | **Hợp lệ cấu trúc** (`.agents/plugins/marketplace.json` dùng `source: local, path: "./"`) | **Đã xác minh** (`1 skill`) | **Đã kiểm thử Windows** (project-local & sandbox `-g` vào `.agents\skills\`) | Chưa kiểm chứng live (`codex` CLI/App chưa cài trên máy test) | Chưa kiểm chứng live | Chưa đánh giá trên model GPT/Codex |
+| **Cursor** | **Hợp lệ cấu trúc** (`.cursor-plugin/plugin.json`) | **Đã xác minh** (`1 skill`) | **Đã kiểm thử Windows** (project-local & sandbox `-g` vào `.agents\skills\` & manual `.cursor\skills\`) | Chưa kiểm chứng live (Cursor chưa cài trên máy test) | Chưa kiểm chứng live | Chưa đánh giá trong Cursor Agent |
+
+> [!IMPORTANT]
+> **Ghi chú minh bạch về Antigravity (Tầng 4–5 vs Tầng 6):** Các đánh giá chất lượng văn bản (`eval-experiment-v4b`, `eval-trigger-tester`, `v4.1` targeted regression) được chạy qua **Antigravity subagent** với prompt test kiểm soát — tức chỉ là bằng chứng cho **Tầng 6 (Model Quality Evaluation)**, **KHÔNG** dùng để kết luận **Tầng 4 (Native Runtime Discovery)** hay **Tầng 5 (Native Automatic Activation)** trên Antigravity App/CLI thật. Skill cũng chưa đăng ký trên các curated marketplace chính thức của các hãng.
+
+---
+
+## 3. Kiểm tra Schema & Cấu trúc 6 Tệp Manifest
+
+Máy kiểm thử hiện tại **không cài sẵn** `claude`, `codex`, `cursor` hay `agy` binary nên chưa chạy được `claude plugin validate` hay `agy plugin validate` trực tiếp. Tuy nhiên, đã chạy script Python kiểm tra từng tệp với các schema JSON công khai truy cập được và bộ quy tắc cấu trúc tài liệu chính thức:
+
+| Tệp Manifest | Nguồn đối chiếu & Phương pháp | Kết quả kiểm tra |
 |---|---|---|
-| **1. Discovery từ GitHub remote** | `npx.cmd --yes skills add tronghongnguyen1012/vietnamese-human-readable-writing --list` | Exit `0` · Tìm thấy `1 skill`: `vietnamese-human-readable-writing` |
-| **2. Discovery từ repo local (sau khi thêm 6 plugin manifest)** | `npx.cmd --yes skills add . --list` | Exit `0` · Tìm thấy đúng `1 skill` (xác nhận không bị trùng lặp do `.claude-plugin/marketplace.json`) |
-| **3. Cài project-local đa agent (`--copy`)** | `npx.cmd --yes skills add <repo> --skill vietnamese-human-readable-writing -a antigravity claude-code codex cursor --copy -y` | Exit `0` · Tạo đủ `.agents\skills\vietnamese-human-readable-writing\` và `.claude\skills\vietnamese-human-readable-writing\` |
-| **4. Đối chiếu SHA-256 trọn gói 5 file** | `Get-FileHash -Algorithm SHA256` trên cả 10 file đã copy ở 2 thư mục | **Khớp 100%** với `v4.1.0-beta`: `SKILL.md` (`77e02eb...`), `business-specs.md` (`3190ce2...`), `information-architecture.md` (`d57d2fe...`), `technical-specs.md` (`056a22e...`), `vietnamese-clarity-and-style.md` (`1c7972f...`) |
-| **5. Liệt kê (`list`) & Cài lại idempotent** | `npx.cmd --yes skills list --json` · chạy lại lệnh `add ... --copy -y` | Exit `0` · Báo `status: "tracked"`; cài lại hiển thị `overwrites: Antigravity, Claude Code`, exit `0` |
-| **6. Gỡ bỏ (`remove`)** | `npx.cmd --yes skills remove vietnamese-human-readable-writing -y` | Exit `0` · Xóa sạch cả `.agents\skills\...` và `.claude\skills\...` (giữ `skills-lock.json` ở project root) |
-| **7. Cài từ GitHub remote & Kiểm tra `update`** | `npx.cmd --yes skills add tronghongnguyen1012/vietnamese-human-readable-writing --skill vietnamese-human-readable-writing -a antigravity --copy -y` → `npx.cmd --yes skills update -p -y` → `remove -y` | Exit `0` cả 3 bước · `update -p -y` kiểm tra remote và báo `✓ All project skills are up to date` |
+| `.antigravity-plugin/plugin.json` | Fetch trực tiếp schema chính thức `https://antigravity.google/schemas/v1/plugin.json` (`additionalProperties: false`) | **Đạt** — đủ trường `name`, chỉ chứa trường hợp lệ (`displayName`, `version`, `description`, `logo`, `suggestedPrompts` gồm 3 câu, `author`, `homepage`, `repository`), `assets/logo.svg` tồn tại. |
+| `.claude-plugin/marketplace.json` | Fetch trực tiếp SchemaStore `https://json.schemastore.org/claude-code-marketplace.json` | **Đạt** — đủ `name`, `owner.name`, `plugins[].source` khớp regex `^\.\/.*` (`"./"`). |
+| `.claude-plugin/plugin.json` | Kiểm tra cấu trúc JSON (SchemaStore URL tạm trả `503 Service Unavailable` lúc test) | Hợp lệ cấu trúc (`name` kebab-case, `version` semver, `author`, không `hooks`/`mcpServers`). |
+| `.agents/plugins/marketplace.json` | Đối chiếu cấu trúc tài liệu OpenAI Codex (`plugins`) | **Đã sửa lỗi P0** — đổi từ `"source": "url"` sang `"source": { "source": "local", "path": "./" }` trỏ đúng gốc repo chứa `skills/`. |
+| `.codex-plugin/plugin.json` | Đối chiếu cấu trúc tài liệu OpenAI Codex (`skills`, `interface`) | Hợp lệ cấu trúc (`skills: "./skills/"`, `interface.displayName: "ViWrite"`, đủ `defaultPrompt`). |
+| `.cursor-plugin/plugin.json` | Đối chiếu cấu trúc tài liệu Cursor (`skills` relative path; URL `cursor.com/schemas/plugin.schema.json` không trả JSON lúc test) | Hợp lệ cấu trúc (`name`, `displayName: "ViWrite"`, `version`, `skills: "./skills/"`). |
 
 ---
 
-## 4. Đề xuất Giấy phép Mã nguồn mở (`LICENSE` Proposal)
+## 4. Nhật ký Smoke Test Thực tế trên Windows
 
-Kiểm tra tại nhánh hiện tại: **repository hiện chưa có tệp `LICENSE`**. Theo chuẩn pháp lý mã nguồn mở và yêu cầu chủ động không tự ý quyết định thay chủ sở hữu, dưới đây là 3 phương án đề xuất để chủ repository xem xét chọn khi tạo tệp `LICENSE`:
+- **Môi trường:** Windows 11 · Node `v24.18.0` · `npx.cmd` `11.16.0` · Thư mục cô lập trong `%TEMP%` (đã dọn sạch sau khi test).
+- **Xác minh an toàn profile thật:** Đã chụp snapshot trước & sau test toàn bộ 4 đường dẫn trong `%USERPROFILE%` thật (`C:\Users\Ztayrong440z\...`) — tất cả đều giữ nguyên trạng thái `exists=False`, không ghi chạm vào cấu hình thật của máy.
 
-| Giấy phép | Điểm mạnh | Hạn chế cần cân nhắc | Mức khuyến nghị |
-|---|---|---|---|
-| **MIT License** | Cực kỳ ngắn gọn; cho phép cá nhân/doanh nghiệp cài đặt vào IDE nội bộ, fork, sửa và dùng thương mại với rào cản pháp lý thấp nhất; **khớp cả 4/4 repo tham chiếu** (`ponytail`, `superpowers`, `security-audit-skill`, `skills.sh`). | Không có điều khoản cấp quyền bằng sáng chế tường minh như Apache-2.0. | **Khuyên dùng (Phù hợp nhất cho Agent Skill)** |
-| **Apache-2.0** | Bảo vệ mạnh hơn về bằng sáng chế (*explicit patent grant*) và bắt buộc giữ thông báo sửa đổi khi phân phối lại. | Dài và nặng tính pháp lý hơn mức cần thiết cho bộ prompt/markdown nhỏ. | Tốt nếu dự án nhắm tới chuẩn doanh nghiệp lớn |
-| **CC-BY-4.0** | Phù hợp cho tài liệu nghiên cứu/báo cáo văn bản thuần túy. | Không khuyến nghị dùng chung cho mã nguồn (`evaluation/scripts/*.py`, JSON manifests) vì quy định tương thích phần mềm kém thuận tiện. | Chỉ nên cân nhắc riêng cho thư mục `research/` |
+| Hạng mục kiểm thử | Lệnh & Phạm vi | Kết quả thực tế quan sát được |
+|---|---|---|
+| **1. Discovery local & remote** | `npx.cmd --yes skills add . --list` và `... tronghongnguyen1012/vietnamese-human-readable-writing --list` | Exit `0` · Tìm thấy đúng **1 skill** (`vietnamese-human-readable-writing`), không trùng lặp do 6 tệp manifest. |
+| **2. Cài Project-local đa agent (`--copy`) & kiểm tra SHA-256** | `npx.cmd --yes skills add <repo> -a antigravity claude-code codex cursor --copy -y` | Exit `0` · Copy đủ 5 file vào `.agents\skills\...` và `.claude\skills\...` · SHA-256 khớp 100% `v4.1.0-beta`. |
+| **3. Cập nhật riêng Project-local (`-p`) từ GitHub** | Cài từ GitHub remote vào sandbox dự án → `npx.cmd --yes skills update -p -y` → `skills remove ... -y` | Exit `0` · `skills.sh` đánh giá repo `Gen: Safe`, `Socket: 0 alerts`, `Snyk: Low Risk`; `update -p -y` báo `✓ All project skills are up to date`. |
+| **4. Cài Global cô lập (`-g --copy`)** | Đặt tạm `USERPROFILE`/`HOME`/`XDG_*`/`CODEX_HOME` vào `%TEMP%\viwrite-global-sandbox` → `npx.cmd --yes skills add <repo> -a antigravity claude-code codex cursor -g --copy -y` → `skills list -g --json` → `remove -g -y` | `add -g` Exit `0`, ghi đủ 15 file (5 file × 3 thư mục `~\.agents\skills\`, `~\.claude\skills\`, `~\.gemini\config\skills\`); `list -g --json` trả `status: "tracked"`. *(Ghi nhận trung thực: lệnh `remove -a ... -g -y` báo `Successfully removed 1 skill(s)` nhưng còn sót 1 thư mục `SKILL.md` trong sandbox — người dùng muốn gỡ sạch global hoàn toàn trên Windows có thể chạy `skills remove vietnamese-human-readable-writing -g -y` không giới hạn `-a` hoặc xóa thư mục thủ công).* |
+| **5. Copy thủ công PowerShell lặp lại 2 lần (`idempotent reinstall`)** | Chạy vòng lặp xóa thư mục đích nếu tồn tại rồi `Copy-Item -Recurse -Force` từ `INSTALL.md` **2 lần liên tiếp** cho cả 4 đích Global trong `%TEMP%\viwrite-manual-sandbox` | Cả 4 đích đều đạt `files=5`, `nested=False` (không lồng `vietnamese-human-readable-writing\vietnamese-human-readable-writing\`), `SKILL.md` SHA-256 khớp `77e02eb0...c3911c`. |
 
-*Khi chủ repository chốt giấy phép (ví dụ MIT), chỉ cần thêm tệp `LICENSE` ở gốc repo và điền trường `"license"` tương ứng vào các tệp `.claude-plugin/plugin.json`, `.codex-plugin/plugin.json`, `.cursor-plugin/plugin.json`.*
+---
+
+## 5. Kiểm toán Nguồn Gốc Tài sản & Đề xuất Giấy phép (`MIT License`)
+
+Theo yêu cầu chỉ áp dụng giấy phép khi chủ repository xác nhận, **tệp `LICENSE` cố ý chưa được tạo**. Kết quả kiểm toán quyền sử dụng toàn bộ tệp hiện có trong repository:
+
+| Thành phần trong Repository | Nguồn gốc & Tình trạng Bản quyền | Khả năng áp dụng MIT License |
+|---|---|---|
+| `skills/vietnamese-human-readable-writing/*` (`SKILL.md` + 4 `references/*.md`) | Tự thiết kế & biên soạn 100% cho dự án; các thuật ngữ chuyên môn chung và tham chiếu tài liệu công khai được diễn giải độc lập, không copy nguyên văn nội dung có bản quyền hạn chế. | Sẵn sàng |
+| `research/*.md`, `docs/*.md`, `INSTALL.md`, `README*.md`, `examples/*.md` | Tự biên soạn cho dự án; `4` repo tham chiếu (`vercel-labs/skills`, `obra/superpowers`, `tronghongnguyen1012/ponytail`, `cloudflare/security-audit-skill`) đều dùng **MIT License** và dự án chỉ tham khảo cách tổ chức cấu trúc phân phối, không sao chép mã nguồn hay nhận diện thương hiệu. | Sẵn sàng |
+| `evaluation/*` (`datasets`, `scripts/*.py`, `results*`, `reports`) | Dữ liệu ca kiểm thử mô phỏng và kịch bản tự viết cho dự án, cùng log benchmark tự sinh trong các vòng R&D. | Sẵn sàng |
+| `assets/*.svg` (`logo`, `banner*`, `before-after*`, `benchmark-chart*`) | Đồ họa SVG vector tự tạo mới 100%, chỉ dùng bảng màu tự chọn và font hệ thống (`system-ui`, `Segoe UI`, `Roboto`, `Helvetica`, `Arial`), không nhúng font hay icon thương mại bên thứ ba. | Sẵn sàng |
+| `.claude-plugin/`, `.codex-plugin/`, `.agents/plugins/`, `.cursor-plugin/`, `.antigravity-plugin/` | Manifest JSON tự viết theo đặc tả cấu trúc công khai của từng nền tảng. | Sẵn sàng |
+
+**Đề xuất cho chủ repository:** **MIT License** phù hợp nhất vì toàn bộ tài sản đều là nội dung tự biên soạn, tương thích đồng bộ với cả 4 repository tham chiếu và giữ rào cản thấp nhất cho người cài đặt vào IDE/CI nội bộ. Sau khi chủ repository xác nhận, chỉ cần tạo tệp `LICENSE` ở gốc repo (năm bản quyền + tên chủ sở hữu) và bổ sung `"license": "MIT"` vào các manifest tương ứng nếu muốn.

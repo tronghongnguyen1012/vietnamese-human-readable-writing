@@ -1,6 +1,6 @@
 {
   "name": "vietnamese-human-readable-writing",
-  "displayName": "ViWrite (Vietnamese Human-Readable Writing)",
+  "displayName": "ViWrite",
   "version": "4.1.0-beta",
   "description": "Write clear, structured, natural Vietnamese without fabricating missing facts across chat, workplace messages, business specs, and technical documentation.",
   "logo": "assets/logo.svg",

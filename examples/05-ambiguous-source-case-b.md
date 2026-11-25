@@ -1,29 +1,63 @@
-# Ví dụ 5: Nguồn Thiếu Dữ kiện — Chống "Độ Rõ Giả Tạo" (`H2-07`)
+# Ví dụ 5: Nguồn Thiếu Tham số — Không Tự Điền Quy tắc Ngoài Nguồn (`H2-10`)
 
-- **Nguồn dữ liệu:** Ca `H2-07` ([held-out-v2.jsonl](../evaluation/held-out-v2.jsonl)), đối chiếu giữa `Group A` ([held-out-v2-gen-A.jsonl](../evaluation/results-v2/held-out-v2-gen-A.jsonl)) và `Group C Skill v4` ([held-out-v2-gen-C.jsonl](../evaluation/results-v2/held-out-v2-gen-C.jsonl)).
-- **Mục tiêu kiểm chứng:** Khi văn bản nguồn mơ hồ hoặc khuyết tác thể/giao thức (**Trường hợp B**), Skill **không** tự bịa tên phân hệ hay cơ chế truyền dẫn mà tách phần đã biết khỏi danh sách câu hỏi chốt trước khi viết đặc tả.
+- **Nguồn dữ liệu:** Ca `H2-10` ([held-out-v2.jsonl](../evaluation/held-out-v2.jsonl)), đối chiếu giữa `Group A` ([held-out-v2-gen-A.jsonl](../evaluation/results-v2/held-out-v2-gen-A.jsonl)) và `Group C Skill v4` ([held-out-v2-gen-C.jsonl](../evaluation/results-v2/held-out-v2-gen-C.jsonl)).
+- **Kết quả Blind Judge (`pro`, 2 lượt hoán đổi vị trí):** **ViWrite thắng đồng thuận `2–0`** ([held-out-v2-judge-C-vs-A.jsonl](../evaluation/results-v2/held-out-v2-judge-C-vs-A.jsonl)). `Group A` mắc lỗi **Hard Fail `HF-3`** cả 2/2 lượt; `Group C` đạt `0 HF`.
 
 ## Prompt đầu vào
-> Biên tập hoặc làm rõ câu tài liệu sau để kỹ sư và BA không hiểu nhầm (TUYỆT ĐỐI không tự bịa thêm tên hệ thống hay cơ chế không có trong câu gốc): 'Hệ thống thực hiện đồng bộ trạng thái giao dịch giữa các phân hệ liên quan nhằm đảm bảo tính nhất quán.'
+> Rà soát và viết lại rõ ràng quy tắc tính phí bên dưới; nếu thiếu công thức hoặc ngưỡng thì giữ trung thực và liệt kê điểm cần chốt: 'Đối tác giao trễ tiến độ cam kết sẽ bị áp dụng mức phạt hợp lý tương ứng với mức độ trễ và giá trị đơn hàng.'
 
 ## So sánh Đầu ra Thực tế
 
-- **`AI Mặc định` (`Group A` — bị Blind Judge gắn `HF-5`):**
-  Trong Mục 1 có liệt kê các điểm dễ hiểu nhầm, nhưng tới **Phương án B** lại không chỉ rõ câu gốc còn khuyết điều kiện gì và đặt mẫu điền khuyết lẫn lộn với bản viết lại tổng quát khiến người đọc thiếu bức tranh tách bạch phần an toàn vs phần chặn triển khai (`[...]` trong [held-out-v2-gen-A.jsonl](../evaluation/results-v2/held-out-v2-gen-A.jsonl)).
-  *(Lưu ý: ở các ca thiếu dữ kiện tự nhiên không có cảnh báo `TUYỆT ĐỐI` trong prompt như `H2-09`, `H2-10`, `H2-17`, `H2-18`, `H2-19`, cả AI mặc định lẫn Simple Prompt đều tự bịa thẳng tên hệ thống/giao thức/field API — lỗi `HF-3`.)*
+### `AI Mặc định` (`Group A` — Dính `HF-3` cả 2/2 lượt)
+Ngay trong **Mục 2 (`Bản viết lại rõ ràng (giữ nguyên phần chưa có dữ liệu để chờ chốt)`)**, AI mặc định viết nguyên văn như sau:
 
-- **`ViWrite` (`Skill v4`, thắng `2–0` trước cả Group A, B và C0):**
-> Câu gốc đang **thiếu dữ kiện cốt lõi**, không chỉ là vấn đề diễn đạt. Dù có chỉnh lại câu chữ mượt hơn, kỹ sư và BA vẫn chưa thể dựa vào đây để chốt đặc tả hay thiết kế nếu chưa xác định rõ các tham số còn khuyết.
+> **Quy tắc phạt giao hàng trễ tiến độ:**
+> Trường hợp Đối tác giao hàng chậm so với thời hạn cam kết được xác nhận trên đơn hàng/hợp đồng (sau khi trừ thời gian ân hạn, nếu có `[cần chốt]`), Đối tác sẽ chịu khoản phí phạt trễ tiến độ. Mức phạt được xác định căn cứ trên **thời gian giao trễ thực tế** *(tính theo `[đơn vị thời gian cần chốt]`)* và **`[toàn bộ giá trị đơn hàng / giá trị phần hàng giao trễ - cần chốt]`** theo công thức/biểu mức phạt `[công thức hoặc bảng mức phạt cần chốt]`, nhưng không vượt quá mức phạt tối đa là `[ngưỡng trần cần chốt]`.
 >
-> ### 1. Bản rút gọn an toàn (giữ đúng phạm vi câu gốc)
-> > *"Hệ thống đồng bộ trạng thái giao dịch giữa các phân hệ liên quan để giữ dữ liệu nhất quán."*
+> **Quy định này không áp dụng nếu việc chậm trễ phát sinh do sự kiện bất khả kháng, do lỗi từ phía Bên đặt hàng, hoặc đã được hai bên thống nhất gia hạn bằng văn bản trước thời điểm đến hạn.**
+
+**Vì sao Giám khảo gắn lỗi `HF-3`:** Dù đặt tiêu đề *"giữ nguyên phần chưa có dữ liệu để chờ chốt"*, AI mặc định lại tự khẳng định thêm nguyên một đoạn điều khoản miễn trừ (kể cả điều kiện *"thống nhất gia hạn bằng văn bản trước thời điểm đến hạn"*) không có trong câu gốc mà không gắn nhãn `[cần chốt]` hay `[Giả định]`, mâu thuẫn với danh sách câu hỏi mở ở Mục 3.6; đồng thời mặc định tồn tại ngưỡng trần theo quy tắc chung.
+
+---
+
+### `ViWrite` (`Skill v4`, `Group C` — `0 HF`, thắng `2–0`)
+> ### 1. Rà soát câu quy tắc gốc
 >
-> ### 2. Điểm chưa xác định / cần chốt trước khi đưa vào tài liệu đặc tả
-> 1. **Tác thể và hướng đồng bộ:** `"Hệ thống"` và `"các phân hệ liên quan"` là những phân hệ cụ thể nào? Phân hệ nào giữ dữ liệu chuẩn (nguồn phát), phân hệ nào nhận cập nhật, hay đồng bộ hai chiều?
-> 2. **Phạm vi dữ liệu:** Áp dụng cho loại giao dịch nào, và đồng bộ toàn bộ vòng đời trạng thái hay chỉ một số trạng thái nhất định?
-> 3. **Điều kiện kích hoạt:** Đồng bộ ngay khi trạng thái giao dịch thay đổi, theo một sự kiện cụ thể khác, hay chạy gom định kỳ?
-> 4. **Mức độ "nhất quán":** Yêu cầu đồng bộ tức thời ngay trong cùng luồng xử lý, hay chấp nhận độ trễ (nếu có thì độ trễ tối đa cho phép là bao nhiêu)?
-> 5. **Cơ chế và xử lý ngoại lệ:** Các phân hệ giao tiếp qua giao thức/cơ chế nào? Khi đồng bộ thất bại hoặc lệch dữ liệu thì hệ thống xử lý ra sao (thử lại, đối soát bù, ghi nhận lỗi hay hoàn tác)?
+> Câu gốc (*"Đối tác giao trễ tiến độ cam kết sẽ bị áp dụng mức phạt hợp lý tương ứng với mức độ trễ và giá trị đơn hàng."*) chưa đủ điều kiện để triển khai hệ thống hoặc viết ca kiểm thử (test case) vì các lý do sau:
+> - **Tính từ mơ hồ, không kiểm chứng được:** Cụm *"mức phạt hợp lý"* không nêu công thức, tỷ lệ hay bảng ngưỡng cụ thể.
+> - **Thiếu định nghĩa biến đầu vào và biên áp dụng:** Chưa xác định cách đo *"mức độ trễ"* (mốc đối chiếu, đơn vị tính, thời gian ân hạn nếu có) và cơ sở tính *"giá trị đơn hàng"*.
+> - **Thiếu chủ thể thực thi và ngoại lệ:** Chưa rõ bên/hệ thống nào tính và khấu trừ phạt, cũng như các trường hợp miễn trừ khi trễ không do lỗi đối tác.
 >
-> ### 3. Khung câu chuẩn hóa (điền sau khi chốt thông tin)
-> > *"Khi `[điều kiện kích hoạt]`, `[phân hệ nguồn]` gửi trạng thái `[phạm vi trạng thái]` của `[loại giao dịch]` sang `[phân hệ đích]` qua `[giao thức/cơ chế]`, đảm bảo dữ liệu khớp nhau trong `[ngưỡng thời gian / yêu cầu nhất quán]`. Nếu đồng bộ thất bại, hệ thống thực hiện `[cơ chế xử lý lỗi / đối soát]`."*
+> ---
+>
+> ### 2. Viết lại rõ ràng phần đã xác định từ nguồn
+>
+> > **Quy tắc áp dụng phạt giao trễ (Bản nháp — chưa đủ tham số tính toán):**
+> > - **Điều kiện kích hoạt:** Đối tác giao hàng muộn hơn tiến độ đã cam kết.
+> > - **Hệ quả:** Đối tác bị tính phí phạt dựa trên **mức độ trễ** và **giá trị đơn hàng**, theo công thức và bảng ngưỡng **[Điểm chưa xác định / cần chốt]**.
+>
+> *(Lưu ý: Phần định lượng mức phạt hiện bỏ trống có chủ đích để tránh tạo thông số giả ngoài tài liệu nguồn.)*
+>
+> ---
+>
+> ### 3. Các điểm chưa xác định / cần chốt trước khi triển khai
+>
+> 1. **Cách xác định "mức độ trễ":**
+>    - Thời gian trễ được tính từ mốc cam kết nào (mốc ban đầu trên đơn hay mốc gia hạn đã được duyệt)?
+>    - Đơn vị tính độ trễ là phút, giờ hay ngày; làm tròn như thế nào?
+>    - Có thời gian ân hạn (grace period) trước khi bắt đầu tính phạt không, và biên điều kiện là `>` hay `>=` ngưỡng quy định?
+> 2. **Cơ sở xác định "giá trị đơn hàng":**
+>    - Tính trên giá trị hàng hóa trước hay sau khuyến mãi/thuế, có bao gồm phí vận chuyển hoặc phụ phí khác không?
+>    - Trường hợp đơn giao làm nhiều đợt và chỉ trễ một phần, mức phạt áp dụng trên toàn đơn hay chỉ phần hàng giao trễ?
+> 3. **Công thức tính và giới hạn mức phạt:**
+>    - Phạt tính theo số tiền cố định, theo phần trăm (`%`) giá trị đơn hàng, hay lũy tiến theo từng bậc trễ (cần bảng phân tầng cụ thể)?
+>    - Có mức phạt tối thiểu (sàn) hoặc tối đa (trần) cho mỗi đơn hàng không?
+> 4. **Cơ chế xử lý và trường hợp ngoại lệ:**
+>    - Phí phạt do hệ thống tự động tính hay cần nhân sự vận hành duyệt; khấu trừ trực tiếp vào kỳ đối soát công nợ của đối tác hay thu riêng?
+>    - Các tình huống nào được miễn phạt (ví dụ: bất khả kháng, khách hàng hẹn lại giờ nhận, hoặc lỗi từ phía đơn vị đặt hàng/điều phối)?
+
+---
+
+### Tham chiếu thêm trong cùng nhóm Trường hợp B
+- **`H2-09` (Quy định chống spam `3 lần vi phạm liên tiếp`):** `Group A` cũng mắc `HF-3` (tự điền chủ thể `"Hệ thống"` vào luồng và chốt `"đồng thời gửi cảnh báo"` dù mục câu hỏi mở vẫn đang hỏi thứ tự thực hiện), còn `Skill v4` thắng `2–0` và đạt `0 HF`. Xem nguyên văn tại [`held-out-v2-gen-A.jsonl`](../evaluation/results-v2/held-out-v2-gen-A.jsonl) và [`held-out-v2-gen-C.jsonl`](../evaluation/results-v2/held-out-v2-gen-C.jsonl).
+- **`H2-07` (Đồng bộ trạng thái giao dịch giữa các phân hệ):** Cả hai nhóm không bịa tên hệ thống cụ thể vì prompt gốc ghi lệnh cấm tường minh (`TUYỆT ĐỐI không tự bịa thêm tên hệ thống`), nhưng `Group A` mắc lỗi **Hard Fail `HF-5`** vì bỏ sót yếu tố `"cách truyền"` (cơ chế/giao thức giao tiếp), còn `Skill v4` chỉ rõ đủ 5 tham số khuyết và thắng `2–0`.

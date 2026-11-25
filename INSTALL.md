@@ -1,107 +1,170 @@
 # Hướng dẫn Cài đặt, Cập nhật & Gỡ bỏ (`INSTALL.md`)
 
-Tài liệu hướng dẫn chi tiết 3 cách cài đặt Skill **`vietnamese-human-readable-writing`** (bản phát hành `v4.1.0-beta`, tên thương hiệu đề xuất: **ViWrite**) trên Windows và macOS/Linux.
+Hướng dẫn chi tiết cài đặt **ViWrite** (Skill ID: `vietnamese-human-readable-writing`, bản phát hành `v4.1.0-beta`) theo từng runtime, không dùng custom installer, hook hay dịch vụ nền.
+
+> **Phương thức khuyến nghị trên mọi runtime:** Dùng **Universal Skills CLI (`skills.sh`)** — đã kiểm thử thực tế trên Windows (cả project-local lẫn sandbox global `-g`). Các cách nạp **Native Plugin** bên dưới đang đánh dấu **`experimental`** vì máy kiểm thử chưa cài sẵn CLI/app gốc của từng hãng để xác minh live.
 
 ---
 
-## Cách 1: Cài nhanh qua Skills CLI (`skills.sh`) — Khuyên dùng
+## 1. Universal Skills CLI (`skills.sh`) — Khuyến nghị
 
-Yêu cầu: **Node.js ≥ 22.20** (đã kiểm thử thực tế trên Windows 11 với Node `v24.18.0`).
+Yêu cầu **Node.js ≥ 22.20** (đã test trên Windows 11 với Node `v24.18.0`, `npx.cmd` `11.16.0`).
 
 > [!NOTE]
-> **Mẹo quan trọng trên Windows PowerShell:** Nếu PowerShell chặn chạy `npx` với lỗi `npx.ps1 cannot be loaded because running scripts is disabled`, hãy dùng **`npx.cmd`** thay cho `npx`. Khi máy Windows chưa bật Developer Mode để tạo symlink, thêm cờ **`--copy`** để sao chép file trực tiếp.
+> Trên **Windows PowerShell**, nếu hệ thống chặn `npx.ps1` (`PSSecurityException`), chạy **`npx.cmd`** thay cho `npx`. Khi máy Windows chưa bật Developer Mode để tạo symlink, thêm **`--copy`** để copy file trực tiếp.
 
-### 1. Xem trước và cài đặt
+### Xem trước & Cài đặt
 
 ```powershell
-# Kiểm tra danh sách skill tìm thấy từ GitHub (không cài)
+# Kiểm tra skill tìm thấy từ GitHub (không ghi file)
 npx.cmd --yes skills add tronghongnguyen1012/vietnamese-human-readable-writing --list
 
-# Cài cho dự án hiện tại (mặc định tạo trong .agents/skills/ hoặc thư mục agent tương ứng)
-npx.cmd --yes skills add tronghongnguyen1012/vietnamese-human-readable-writing --copy
+# Cài Project-local (chia sẻ theo repo dự án)
+npx.cmd --yes skills add tronghongnguyen1012/vietnamese-human-readable-writing --copy -y
 
-# Cài toàn cục (Global - dùng cho mọi dự án trên máy)
-npx.cmd --yes skills add tronghongnguyen1012/vietnamese-human-readable-writing -g --copy
+# Cài Global (dùng cho mọi dự án của bạn)
+npx.cmd --yes skills add tronghongnguyen1012/vietnamese-human-readable-writing -g --copy -y
 
-# Ghim đúng tag phát hành Beta (khuyến nghị khi chia sẻ cho team)
+# Ghim đúng tag phát hành Beta hiện tại
 npx.cmd --yes skills add tronghongnguyen1012/vietnamese-human-readable-writing@v4.1.0-beta --skill vietnamese-human-readable-writing -g --copy -y
-```
 
-### 2. Chọn AI IDE / Agent cụ thể (`--agent`)
-
-| Agent | Cờ `--agent` | Thư mục Project-local | Thư mục Global |
-|---|---|---|---|
-| **Antigravity IDE / CLI** | `-a antigravity` | `.agents/skills/` | `~/.gemini/config/skills/` |
-| **Claude Code / Desktop** | `-a claude-code` | `.claude/skills/` | `~/.claude/skills/` |
-| **OpenAI Codex (CLI / App)** | `-a codex` | `.agents/skills/` | `~/.agents/skills/` |
-| **Cursor** | `-a cursor` | `.agents/skills/` | `~/.cursor/skills/` |
-| **Tất cả agent đã phát hiện** | `-a *` | Theo từng agent | Theo từng agent |
-
-Ví dụ cài cùng lúc cho cả Antigravity, Claude Code, Codex và Cursor vào thư mục dự án:
-
-```powershell
+# Cài một lúc cho cả Antigravity, Claude Code, Codex và Cursor (Project-local)
 npx.cmd --yes skills add tronghongnguyen1012/vietnamese-human-readable-writing --skill vietnamese-human-readable-writing -a antigravity claude-code codex cursor --copy -y
 ```
 
-### 3. Liệt kê, Cập nhật và Gỡ bỏ
+### Liệt kê, Cập nhật & Gỡ bỏ
 
 ```powershell
-# Liệt kê skill đã cài trong dự án hiện tại (thêm -g để xem danh sách global)
+# Liệt kê skill đã cài (project-local và global)
 npx.cmd --yes skills list
 npx.cmd --yes skills list -g
 
-# Cập nhật phiên bản mới nhất (bỏ -g nếu chỉ cập nhật cho dự án)
+# Cập nhật riêng Project-local (-p) hoặc toàn cục (-g)
+npx.cmd --yes skills update -p -y
 npx.cmd --yes skills update -g -y
 
-# Gỡ bỏ skill khỏi dự án hoặc global
+# Gỡ bỏ hoàn toàn khỏi Project-local hoặc Global
 npx.cmd --yes skills remove vietnamese-human-readable-writing -y
 npx.cmd --yes skills remove vietnamese-human-readable-writing -g -y
 ```
 
-*(Tham khảo thêm nhật ký smoke test từng lệnh trên Windows tại [docs/compatibility-and-smoke-test.md](./docs/compatibility-and-smoke-test.md).)*
+---
+
+## 2. Claude Code & Claude Code Desktop
+
+- **Đường dẫn Skill chính thức:**
+  - Project-local: `.claude/skills/vietnamese-human-readable-writing/`
+  - Global: `~/.claude/skills/vietnamese-human-readable-writing/`
+
+### Cách khuyên dùng (`skills.sh`)
+```powershell
+npx.cmd --yes skills add tronghongnguyen1012/vietnamese-human-readable-writing --skill vietnamese-human-readable-writing -a claude-code --copy -y
+# Thêm -g để cài Global:
+npx.cmd --yes skills add tronghongnguyen1012/vietnamese-human-readable-writing --skill vietnamese-human-readable-writing -a claude-code -g --copy -y
+```
+
+### Native Plugin (`experimental` — chưa kiểm chứng live)
+Repository đã kèm [`.claude-plugin/marketplace.json`](./.claude-plugin/marketplace.json) (khớp SchemaStore) và [`.claude-plugin/plugin.json`](./.claude-plugin/plugin.json). Trong phiên tương tác Claude Code, chạy 2 lệnh:
+```text
+/plugin marketplace add tronghongnguyen1012/vietnamese-human-readable-writing
+/plugin install vietnamese-human-readable-writing@vietnamese-human-readable-writing
+```
+*(Skill chưa phát hành lên danh mục Official Plugins của Anthropic; chỉ mới xác minh manifest & copy file, chưa chạy live trên `claude` CLI/Desktop.)*
 
 ---
 
-## Cách 2: Plugin Manifest Cấp Repository
+## 3. OpenAI Codex (CLI, App & IDE Extension)
 
-Repository đã đính kèm các manifest tối giản (không chứa `hooks`, không cài `MCP Server`) để hỗ trợ nạp trực tiếp dưới dạng plugin từ GitHub URL/repository:
-- **Claude Code:** Hỗ trợ `.claude-plugin/marketplace.json` và `.claude-plugin/plugin.json` (cài từ repo bằng `/plugin marketplace add tronghongnguyen1012/vietnamese-human-readable-writing` trong Claude Code nếu bật plugin repository).
-- **Codex:** Có sẵn `.codex-plugin/plugin.json` và `.agents/plugins/marketplace.json` trỏ tới `./skills/`.
-- **Cursor / Antigravity:** Có sẵn `.cursor-plugin/plugin.json` và `.antigravity-plugin/plugin.json`.
+- **Đường dẫn Skill chính thức theo tài liệu OpenAI Codex:**
+  - Project-local: `.agents/skills/vietnamese-human-readable-writing/`
+  - Global: `~/.agents/skills/vietnamese-human-readable-writing/`
+  - *(Lưu ý: `$CODEX_HOME/skills/` hay `~/.codex/skills/` vẫn tồn tại làm đường dẫn tương thích cho cấu hình Codex cũ, nhưng đường dẫn chuẩn ưu tiên là `.agents/skills/` và `~/.agents/skills/`.)*
 
-> **Lưu ý trung thực:** Skill hiện **chưa được xuất bản lên các curated marketplace chính thức** của Anthropic, OpenAI Codex, Cursor hay Antigravity. Trên các nền tảng chưa kiểm chứng live plugin loader, nên dùng **Cách 1 (`skills.sh`)** hoặc **Cách 3 (Copy thủ công)** bên dưới để bảo đảm ổn định.
+### Cách khuyên dùng (`skills.sh`)
+```powershell
+npx.cmd --yes skills add tronghongnguyen1012/vietnamese-human-readable-writing --skill vietnamese-human-readable-writing -a codex --copy -y
+# Thêm -g để cài Global:
+npx.cmd --yes skills add tronghongnguyen1012/vietnamese-human-readable-writing --skill vietnamese-human-readable-writing -a codex -g --copy -y
+```
+
+### Native Plugin (`experimental` — chưa kiểm chứng live)
+Repository đã kèm [`.codex-plugin/plugin.json`](./.codex-plugin/plugin.json) và [`.agents/plugins/marketplace.json`](./.agents/plugins/marketplace.json) với `"source": { "source": "local", "path": "./" }`. Khi clone hoặc mở repository trong Codex:
+1. Đảm bảo thư mục repo chứa `.agents/plugins/marketplace.json` đang mở hoặc có mặt trong cấu hình workspace.
+2. Mở bộ quản lý plugin bằng lệnh `/plugins` trong Codex và cài `vietnamese-human-readable-writing` (**ViWrite**).
+*(Chưa có `codex` CLI/App trên máy kiểm thử nên luồng `/plugins` mới kiểm chứng ở mức cấu trúc manifest, chưa xác minh runtime loader trực tiếp.)*
 
 ---
 
-## Cách 3: Cài Thủ công (Fallback Không Cần Node.js)
+## 4. Antigravity (IDE, App & CLI)
 
-Clone repository và **chỉ copy thư mục `skills/vietnamese-human-readable-writing/`** (tên thư mục đích bắt buộc là `vietnamese-human-readable-writing` khớp với trường `name` trong `SKILL.md`).
+- **Đường dẫn Skill chính thức:**
+  - Project-local: `.agents/skills/vietnamese-human-readable-writing/`
+  - Global: `~/.gemini/config/skills/vietnamese-human-readable-writing/`
 
-### Windows PowerShell
+### Cách khuyên dùng (`skills.sh`)
+```powershell
+npx.cmd --yes skills add tronghongnguyen1012/vietnamese-human-readable-writing --skill vietnamese-human-readable-writing -a antigravity --copy -y
+# Thêm -g để cài Global:
+npx.cmd --yes skills add tronghongnguyen1012/vietnamese-human-readable-writing --skill vietnamese-human-readable-writing -a antigravity -g --copy -y
+```
+
+### Native Plugin (`experimental` — chưa kiểm chứng live)
+Repository đã kèm [`.antigravity-plugin/plugin.json`](./.antigravity-plugin/plugin.json) (đã kiểm tra khớp schema `https://antigravity.google/schemas/v1/plugin.json`). Theo tài liệu chính thức của Antigravity (`antigravity.google/docs/plugins`):
+```bash
+agy plugin install https://github.com/tronghongnguyen1012/vietnamese-human-readable-writing
+```
+*(Chưa có binary `agy` trên máy kiểm thử nên chưa chạy kiểm tra lệnh `agy plugin validate` / `agy plugin install` live.)*
+
+---
+
+## 5. Cursor
+
+- **Đường dẫn Skill chính thức:**
+  - Project-local: `.agents/skills/vietnamese-human-readable-writing/`
+  - Global: `~/.cursor/skills/vietnamese-human-readable-writing/`
+
+### Cách khuyên dùng (`skills.sh`)
+```powershell
+npx.cmd --yes skills add tronghongnguyen1012/vietnamese-human-readable-writing --skill vietnamese-human-readable-writing -a cursor --copy -y
+# Thêm -g để cài Global:
+npx.cmd --yes skills add tronghongnguyen1012/vietnamese-human-readable-writing --skill vietnamese-human-readable-writing -a cursor -g --copy -y
+```
+
+### Native Plugin (`experimental` — chưa kiểm chứng live)
+Repository có sẵn [`.cursor-plugin/plugin.json`](./.cursor-plugin/plugin.json) khai báo `"skills": "./skills/"` để nạp từ repo trong phần mở rộng/tùy chỉnh plugin của Cursor (chưa kiểm chứng live trong Cursor IDE).
+
+---
+
+## 6. Cài Thủ công Không Cần Node.js (An toàn khi Cài lại)
+
+Clone repo và **chỉ copy duy nhất thư mục `skills/vietnamese-human-readable-writing/`** (tuyệt đối không copy `research/` hay `evaluation/` vào thư mục Skill).
+
+> [!IMPORTANT]
+> Khi cài lại bằng `Copy-Item -Recurse` trên PowerShell nếu thư mục đích đã tồn tại, PowerShell sẽ chép lồng thêm một lớp `...\vietnamese-human-readable-writing\vietnamese-human-readable-writing\`. **Luôn xóa thư mục đích cũ trước khi copy** như đoạn lệnh chuẩn dưới đây.
+
+### Windows PowerShell (Global — chạy cài lại nhiều lần vẫn sạch)
 
 ```powershell
 git clone https://github.com/tronghongnguyen1012/vietnamese-human-readable-writing.git
 cd vietnamese-human-readable-writing
 $src = ".\skills\vietnamese-human-readable-writing"
 
-# Antigravity (Global)
-New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.gemini\config\skills" | Out-Null
-Copy-Item -Recurse -Force $src "$env:USERPROFILE\.gemini\config\skills\vietnamese-human-readable-writing"
+# Giữ hoặc bỏ bớt dòng ứng với các Agent bạn đang dùng:
+$targets = @(
+    "$env:USERPROFILE\.gemini\config\skills\vietnamese-human-readable-writing", # Antigravity
+    "$env:USERPROFILE\.claude\skills\vietnamese-human-readable-writing",        # Claude Code
+    "$env:USERPROFILE\.agents\skills\vietnamese-human-readable-writing",        # OpenAI Codex (chuẩn chính thức)
+    "$env:USERPROFILE\.cursor\skills\vietnamese-human-readable-writing"         # Cursor
+)
 
-# Claude Code (Global)
-New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude\skills" | Out-Null
-Copy-Item -Recurse -Force $src "$env:USERPROFILE\.claude\skills\vietnamese-human-readable-writing"
-
-# OpenAI Codex (Global — hỗ trợ cả .agents\skills và .codex\skills)
-New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.codex\skills" | Out-Null
-Copy-Item -Recurse -Force $src "$env:USERPROFILE\.codex\skills\vietnamese-human-readable-writing"
-
-# Cursor (Project hoặc Global)
-New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.cursor\skills" | Out-Null
-Copy-Item -Recurse -Force $src "$env:USERPROFILE\.cursor\skills\vietnamese-human-readable-writing"
+foreach ($dest in $targets) {
+    New-Item -ItemType Directory -Force -Path (Split-Path $dest -Parent) | Out-Null
+    if (Test-Path $dest) { Remove-Item -Recurse -Force $dest }
+    Copy-Item -Recurse -Force $src $dest
+}
 ```
 
-*(Nếu cài Project-local, copy vào `<project-root>\.agents\skills\vietnamese-human-readable-writing\` cho Antigravity/Codex/Cursor hoặc `<project-root>\.claude\skills\vietnamese-human-readable-writing\` cho Claude Code.)*
+*(Nếu cài **Project-local** trong thư mục dự án `<project-root>`, đặt `$targets` thành `<project-root>\.agents\skills\vietnamese-human-readable-writing` cho Antigravity/Codex/Cursor và `<project-root>\.claude\skills\vietnamese-human-readable-writing` cho Claude Code.)*
 
 ### macOS / Linux
 
@@ -110,24 +173,22 @@ git clone https://github.com/tronghongnguyen1012/vietnamese-human-readable-writi
 cd vietnamese-human-readable-writing
 SRC="./skills/vietnamese-human-readable-writing"
 
-# Antigravity (Global)
-mkdir -p ~/.gemini/config/skills && cp -R "$SRC" ~/.gemini/config/skills/
-
-# Claude Code (Global)
-mkdir -p ~/.claude/skills && cp -R "$SRC" ~/.claude/skills/
-
-# OpenAI Codex (Global)
-mkdir -p ~/.agents/skills && cp -R "$SRC" ~/.agents/skills/
-
-# Cursor (Global)
-mkdir -p ~/.cursor/skills && cp -R "$SRC" ~/.cursor/skills/
+for DEST in \
+  "$HOME/.gemini/config/skills/vietnamese-human-readable-writing" \
+  "$HOME/.claude/skills/vietnamese-human-readable-writing" \
+  "$HOME/.agents/skills/vietnamese-human-readable-writing" \
+  "$HOME/.cursor/skills/vietnamese-human-readable-writing"; do
+  mkdir -p "$(dirname "$DEST")"
+  rm -rf "$DEST"
+  cp -R "$SRC" "$DEST"
+done
 ```
 
 ---
 
-## Kiểm tra Sau khi Cài đặt
+## 7. Kiểm tra Sau khi Cài đặt
 
-1. **Đủ đúng 5 tệp trong thư mục đích** (không copy nhầm `research/` hay `evaluation/`):
+1. **Đủ đúng 5 tệp trong thư mục đích** (không lồng thư mục, không lẫn file ngoài):
    ```text
    vietnamese-human-readable-writing/
    ├── SKILL.md
@@ -137,8 +198,7 @@ mkdir -p ~/.cursor/skills && cp -R "$SRC" ~/.cursor/skills/
        ├── technical-specs.md
        └── vietnamese-clarity-and-style.md
    ```
-2. **Mở một phiên làm việc mới** trên IDE/CLI để runtime nạp lại danh sách skill.
-3. **Xác nhận Discovery:** Gõ `/skills` trong Codex hoặc Claude Code (hoặc kiểm tra danh sách available skills trong Antigravity) và thấy `vietnamese-human-readable-writing`.
-4. **Kiểm tra kích hoạt thực tế (2 câu thử nhanh):**
-   - *Nên kích hoạt:* *"Biên tập câu Business Rule sau cho rõ nghĩa hơn mà không tự thêm dữ kiện: Sau 3 lần vi phạm liên tiếp, thực hiện khóa tạm thời tài khoản và gửi thông báo cho quản trị viên."* → Skill kích hoạt sẽ tách phần đã biết và chỉ rõ các điểm khuyết (`thời hạn khóa`, `kênh gửi thông báo`) thay vì tự đoán bừa.
-   - *Không nên kích hoạt:* *"Write a Python pytest unit test for binary search"* → Câu lệnh code tiếng Anh thuần không bị Skill can thiệp.
+2. **Mở phiên mới** trên IDE/CLI để runtime nạp lại danh sách skill (Level 4 — *Native Runtime Discovery*).
+3. **Thử kích hoạt thực tế (2 câu kiểm tra nhanh trên runtime của bạn):**
+   - *Nên kích hoạt:* `"Biên tập câu Business Rule sau cho rõ nghĩa hơn mà không tự thêm dữ kiện: Sau 3 lần vi phạm liên tiếp, thực hiện khóa tạm thời trong 24 giờ và gửi cảnh báo."` → Kỳ vọng agent tách phần chắc chắn và chỉ rõ điểm khuyết (`đối tượng bị khóa`, `người nhận cảnh báo`, `cách tính liên tiếp`).
+   - *Không nên kích hoạt:* `"Write a Python pytest unit test for binary search"` → Lệnh code tiếng Anh thuần không bị Skill can thiệp.
