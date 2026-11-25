@@ -1,0 +1,829 @@
+{
+  "description": "Sealed blind decoding key for ViWrite V5 Layer 2 Human Blind Evaluation. Do NOT inspect before completing human scoring.",
+  "total_cases": 13,
+  "position_1_counts": {
+    "A": 3,
+    "B": 3,
+    "C": 3,
+    "E": 2,
+    "F": 2
+  },
+  "position_counts_1_to_5": {
+    "pos_1": {
+      "A": 3,
+      "B": 3,
+      "C": 3,
+      "E": 2,
+      "F": 2
+    },
+    "pos_2": {
+      "B": 3,
+      "C": 2,
+      "E": 3,
+      "F": 3,
+      "A": 2
+    },
+    "pos_3": {
+      "C": 2,
+      "E": 3,
+      "F": 3,
+      "A": 3,
+      "B": 2
+    },
+    "pos_4": {
+      "F": 3,
+      "A": 3,
+      "B": 1,
+      "C": 3,
+      "E": 2
+    },
+    "pos_5": {
+      "E": 3,
+      "A": 2,
+      "B": 4,
+      "C": 3,
+      "F": 1
+    }
+  },
+  "leak_check_terms_tested": 23,
+  "leak_check_hits": 0,
+  "cases": [
+    {
+      "case_id": "SR-01",
+      "category": "Thông báo dịch vụ",
+      "split": "regression_sr",
+      "order_groups": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "samples": [
+        {
+          "sample": "Mẫu 1",
+          "position": 1,
+          "group": "A",
+          "arm": "Baseline",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 345,
+          "subagent_id": "154363df-fde1-494a-bc70-06b017b9cbf6"
+        },
+        {
+          "sample": "Mẫu 2",
+          "position": 2,
+          "group": "B",
+          "arm": "v4.1",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 427,
+          "subagent_id": "a73a7a10-2e6b-44b8-873c-7e74d8ac3582"
+        },
+        {
+          "sample": "Mẫu 3",
+          "position": 3,
+          "group": "C",
+          "arm": "v4.1+SR",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 293,
+          "subagent_id": "4d1e2750-a29b-4103-9bc5-a15ad46f696f"
+        },
+        {
+          "sample": "Mẫu 4",
+          "position": 4,
+          "group": "D",
+          "arm": "GPT-6.2",
+          "model": "GPT-6.2 Instant (default, user-provided)",
+          "word_count": 277,
+          "subagent_id": null
+        },
+        {
+          "sample": "Mẫu 5",
+          "position": 5,
+          "group": "E",
+          "arm": "V5-A",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 281,
+          "subagent_id": "31934717-3d72-445d-8b6b-1723e7d144a4"
+        },
+        {
+          "sample": "Mẫu 6",
+          "position": 6,
+          "group": "F",
+          "arm": "V5-B",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 314,
+          "subagent_id": "375945f4-894c-4458-ba07-50f24c447358"
+        }
+      ]
+    },
+    {
+      "case_id": "SR-02",
+      "category": "Thông báo dịch vụ",
+      "split": "regression_sr",
+      "order_groups": [
+        "B",
+        "C",
+        "E",
+        "F",
+        "A"
+      ],
+      "samples": [
+        {
+          "sample": "Mẫu 1",
+          "position": 1,
+          "group": "B",
+          "arm": "v4.1",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 315,
+          "subagent_id": "64781350-7ed3-4abb-ae0f-bccf73850c62"
+        },
+        {
+          "sample": "Mẫu 2",
+          "position": 2,
+          "group": "C",
+          "arm": "v4.1+SR",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 332,
+          "subagent_id": "97391563-7b52-4d04-ba36-a86ed8159927"
+        },
+        {
+          "sample": "Mẫu 3",
+          "position": 3,
+          "group": "E",
+          "arm": "V5-A",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 269,
+          "subagent_id": "0d87541e-222c-4b79-a9e2-a025678a4468"
+        },
+        {
+          "sample": "Mẫu 4",
+          "position": 4,
+          "group": "F",
+          "arm": "V5-B",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 263,
+          "subagent_id": "c32d0782-4831-4543-be84-98c76f7ad3e4"
+        },
+        {
+          "sample": "Mẫu 5",
+          "position": 5,
+          "group": "A",
+          "arm": "Baseline",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 302,
+          "subagent_id": "2075fc6c-079e-43e9-b61f-56110d04d81b"
+        }
+      ]
+    },
+    {
+      "case_id": "SR-03",
+      "category": "Giao tiếp công việc",
+      "split": "regression_sr",
+      "order_groups": [
+        "C",
+        "E",
+        "F",
+        "A",
+        "B"
+      ],
+      "samples": [
+        {
+          "sample": "Mẫu 1",
+          "position": 1,
+          "group": "C",
+          "arm": "v4.1+SR",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 236,
+          "subagent_id": "19d190f1-0d4f-47f6-930b-ba357219d751"
+        },
+        {
+          "sample": "Mẫu 2",
+          "position": 2,
+          "group": "E",
+          "arm": "V5-A",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 241,
+          "subagent_id": "c8887a41-1623-49d6-9af2-823c0f75d53c"
+        },
+        {
+          "sample": "Mẫu 3",
+          "position": 3,
+          "group": "F",
+          "arm": "V5-B",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 232,
+          "subagent_id": "ecf39a73-15f0-4ca1-9111-a269a13faef2"
+        },
+        {
+          "sample": "Mẫu 4",
+          "position": 4,
+          "group": "A",
+          "arm": "Baseline",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 256,
+          "subagent_id": "969cb235-ee40-46d6-90a2-1f950151587c"
+        },
+        {
+          "sample": "Mẫu 5",
+          "position": 5,
+          "group": "B",
+          "arm": "v4.1",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 275,
+          "subagent_id": "e7b52007-faf0-48fd-b9f0-2203d2dcb7c4"
+        }
+      ]
+    },
+    {
+      "case_id": "SR-04",
+      "category": "Giải thích khái niệm",
+      "split": "regression_sr",
+      "order_groups": [
+        "E",
+        "F",
+        "A",
+        "B",
+        "C"
+      ],
+      "samples": [
+        {
+          "sample": "Mẫu 1",
+          "position": 1,
+          "group": "E",
+          "arm": "V5-A",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 417,
+          "subagent_id": "427f04a1-ea90-4a16-8d21-45e28928ea1e"
+        },
+        {
+          "sample": "Mẫu 2",
+          "position": 2,
+          "group": "F",
+          "arm": "V5-B",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 370,
+          "subagent_id": "9e49255b-f710-4576-ba1a-410d7428bc4e"
+        },
+        {
+          "sample": "Mẫu 3",
+          "position": 3,
+          "group": "A",
+          "arm": "Baseline",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 488,
+          "subagent_id": "93d45e8b-bf75-4b08-b0e4-a170b03fd852"
+        },
+        {
+          "sample": "Mẫu 4",
+          "position": 4,
+          "group": "B",
+          "arm": "v4.1",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 515,
+          "subagent_id": "7ebf1025-2469-4116-b738-76bee1769ac9"
+        },
+        {
+          "sample": "Mẫu 5",
+          "position": 5,
+          "group": "C",
+          "arm": "v4.1+SR",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 403,
+          "subagent_id": "49db0c37-411b-4d74-b9b8-d94bad912b2a"
+        }
+      ]
+    },
+    {
+      "case_id": "SR-05",
+      "category": "Business Rule",
+      "split": "regression_sr",
+      "order_groups": [
+        "F",
+        "A",
+        "B",
+        "C",
+        "E"
+      ],
+      "samples": [
+        {
+          "sample": "Mẫu 1",
+          "position": 1,
+          "group": "F",
+          "arm": "V5-B",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 961,
+          "subagent_id": "713a69a1-d39d-49ec-8472-fc4dbc43aff0"
+        },
+        {
+          "sample": "Mẫu 2",
+          "position": 2,
+          "group": "A",
+          "arm": "Baseline",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 784,
+          "subagent_id": "0c1296d3-1025-42b1-a2b6-cd330357847b"
+        },
+        {
+          "sample": "Mẫu 3",
+          "position": 3,
+          "group": "B",
+          "arm": "v4.1",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 846,
+          "subagent_id": "1cee5c0c-c83a-4718-ada2-8ea47933596c"
+        },
+        {
+          "sample": "Mẫu 4",
+          "position": 4,
+          "group": "C",
+          "arm": "v4.1+SR",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 675,
+          "subagent_id": "decdc68e-938e-4112-b7f9-bcf9588af96e"
+        },
+        {
+          "sample": "Mẫu 5",
+          "position": 5,
+          "group": "E",
+          "arm": "V5-A",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 1033,
+          "subagent_id": "1b52425f-a931-4ebb-98f5-8c7d9797814f"
+        }
+      ]
+    },
+    {
+      "case_id": "SR-06",
+      "category": "Tài liệu kỹ thuật",
+      "split": "regression_sr",
+      "order_groups": [
+        "A",
+        "E",
+        "B",
+        "F",
+        "C"
+      ],
+      "samples": [
+        {
+          "sample": "Mẫu 1",
+          "position": 1,
+          "group": "A",
+          "arm": "Baseline",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 334,
+          "subagent_id": "436d9735-8a86-42bb-9b2a-afc876bd0b2c"
+        },
+        {
+          "sample": "Mẫu 2",
+          "position": 2,
+          "group": "E",
+          "arm": "V5-A",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 285,
+          "subagent_id": "e353d176-7cb7-4835-8a7e-202ed312981e"
+        },
+        {
+          "sample": "Mẫu 3",
+          "position": 3,
+          "group": "B",
+          "arm": "v4.1",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 310,
+          "subagent_id": "3b4fcbc3-8355-44c0-a725-f1c1599a92b2"
+        },
+        {
+          "sample": "Mẫu 4",
+          "position": 4,
+          "group": "F",
+          "arm": "V5-B",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 288,
+          "subagent_id": "625f120c-b020-4386-942d-3a26a4e45282"
+        },
+        {
+          "sample": "Mẫu 5",
+          "position": 5,
+          "group": "C",
+          "arm": "v4.1+SR",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 311,
+          "subagent_id": "33f54136-5e53-4318-9ea9-29f199458aff"
+        }
+      ]
+    },
+    {
+      "case_id": "SR-07",
+      "category": "Văn bản dài nhiều thông tin liên quan",
+      "split": "regression_sr",
+      "order_groups": [
+        "B",
+        "F",
+        "C",
+        "A",
+        "E"
+      ],
+      "samples": [
+        {
+          "sample": "Mẫu 1",
+          "position": 1,
+          "group": "B",
+          "arm": "v4.1",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 627,
+          "subagent_id": "90cac635-8ba8-4d6f-bc19-9ca9fd0e6d64"
+        },
+        {
+          "sample": "Mẫu 2",
+          "position": 2,
+          "group": "F",
+          "arm": "V5-B",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 416,
+          "subagent_id": "2fda81b0-2f57-42c7-961e-8d8fcead8f29"
+        },
+        {
+          "sample": "Mẫu 3",
+          "position": 3,
+          "group": "C",
+          "arm": "v4.1+SR",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 392,
+          "subagent_id": "f59d53ca-ceb0-4bd8-b592-c5690b302550"
+        },
+        {
+          "sample": "Mẫu 4",
+          "position": 4,
+          "group": "A",
+          "arm": "Baseline",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 453,
+          "subagent_id": "5925cc1f-f88c-471c-b933-dd4bda8cdb99"
+        },
+        {
+          "sample": "Mẫu 5",
+          "position": 5,
+          "group": "E",
+          "arm": "V5-A",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 569,
+          "subagent_id": "b7be343b-1f24-42b7-9e40-a9cbb7f731d5"
+        }
+      ]
+    },
+    {
+      "case_id": "V5-01",
+      "category": "Hội thoại tự nhiên",
+      "split": "unseen_v5",
+      "order_groups": [
+        "C",
+        "A",
+        "F",
+        "E",
+        "B"
+      ],
+      "samples": [
+        {
+          "sample": "Mẫu 1",
+          "position": 1,
+          "group": "C",
+          "arm": "v4.1+SR",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 273,
+          "subagent_id": "388c6534-a865-411a-8390-cf79e4aa0d0e"
+        },
+        {
+          "sample": "Mẫu 2",
+          "position": 2,
+          "group": "A",
+          "arm": "Baseline",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 208,
+          "subagent_id": "de05b276-8d31-4935-87ac-ab3f74303e82"
+        },
+        {
+          "sample": "Mẫu 3",
+          "position": 3,
+          "group": "F",
+          "arm": "V5-B",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 157,
+          "subagent_id": "add5149c-8b58-4cc8-b6a5-fae3c8dc7fd2"
+        },
+        {
+          "sample": "Mẫu 4",
+          "position": 4,
+          "group": "E",
+          "arm": "V5-A",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 178,
+          "subagent_id": "395011bc-e13c-4bed-9a5b-f2ee6d4983e3"
+        },
+        {
+          "sample": "Mẫu 5",
+          "position": 5,
+          "group": "B",
+          "arm": "v4.1",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 181,
+          "subagent_id": "e66a769e-078f-4415-b42c-fe98bfc965d7"
+        }
+      ]
+    },
+    {
+      "case_id": "V5-02",
+      "category": "Thông báo cho người dùng cuối",
+      "split": "unseen_v5",
+      "order_groups": [
+        "E",
+        "C",
+        "A",
+        "F",
+        "B"
+      ],
+      "samples": [
+        {
+          "sample": "Mẫu 1",
+          "position": 1,
+          "group": "E",
+          "arm": "V5-A",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 159,
+          "subagent_id": "c5f601b6-9834-47f0-af47-092516130522"
+        },
+        {
+          "sample": "Mẫu 2",
+          "position": 2,
+          "group": "C",
+          "arm": "v4.1+SR",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 170,
+          "subagent_id": "12bb4383-767a-4f6d-97a0-8eb9e97fa255"
+        },
+        {
+          "sample": "Mẫu 3",
+          "position": 3,
+          "group": "A",
+          "arm": "Baseline",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 161,
+          "subagent_id": "77fd87dc-9e44-4a8a-ac9d-53faee5513e6"
+        },
+        {
+          "sample": "Mẫu 4",
+          "position": 4,
+          "group": "F",
+          "arm": "V5-B",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 162,
+          "subagent_id": "7ee4113f-33f4-4c6f-a722-8c83a7a56a24"
+        },
+        {
+          "sample": "Mẫu 5",
+          "position": 5,
+          "group": "B",
+          "arm": "v4.1",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 167,
+          "subagent_id": "500eecc0-efaa-48ca-87a1-11b55c1bfde1"
+        }
+      ]
+    },
+    {
+      "case_id": "V5-03",
+      "category": "Giao tiếp công việc",
+      "split": "unseen_v5",
+      "order_groups": [
+        "F",
+        "B",
+        "E",
+        "A",
+        "C"
+      ],
+      "samples": [
+        {
+          "sample": "Mẫu 1",
+          "position": 1,
+          "group": "F",
+          "arm": "V5-B",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 360,
+          "subagent_id": "571ffc50-62a6-4eb2-a9d5-f8a30c18caf0"
+        },
+        {
+          "sample": "Mẫu 2",
+          "position": 2,
+          "group": "B",
+          "arm": "v4.1",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 329,
+          "subagent_id": "db50a837-736d-471a-9634-645f84e9550f"
+        },
+        {
+          "sample": "Mẫu 3",
+          "position": 3,
+          "group": "E",
+          "arm": "V5-A",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 340,
+          "subagent_id": "f7aa5cfc-b59a-42c9-8c59-80b71f8cd93a"
+        },
+        {
+          "sample": "Mẫu 4",
+          "position": 4,
+          "group": "A",
+          "arm": "Baseline",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 354,
+          "subagent_id": "4eece4b2-c21d-47ac-9bc0-6b47b40c7c37"
+        },
+        {
+          "sample": "Mẫu 5",
+          "position": 5,
+          "group": "C",
+          "arm": "v4.1+SR",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 366,
+          "subagent_id": "34160cfc-b73e-4ada-8fc8-f8702a389fd7"
+        }
+      ]
+    },
+    {
+      "case_id": "V5-04",
+      "category": "Giải thích kỹ thuật",
+      "split": "unseen_v5",
+      "order_groups": [
+        "A",
+        "F",
+        "E",
+        "C",
+        "B"
+      ],
+      "samples": [
+        {
+          "sample": "Mẫu 1",
+          "position": 1,
+          "group": "A",
+          "arm": "Baseline",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 620,
+          "subagent_id": "6f7bab4f-8bae-41fc-8b96-56b00e949494"
+        },
+        {
+          "sample": "Mẫu 2",
+          "position": 2,
+          "group": "F",
+          "arm": "V5-B",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 519,
+          "subagent_id": "e32006ed-d561-4ded-9d0b-33e4ea8275d5"
+        },
+        {
+          "sample": "Mẫu 3",
+          "position": 3,
+          "group": "E",
+          "arm": "V5-A",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 600,
+          "subagent_id": "6bb8a69d-bbb1-43aa-9f30-c3c06967c6e2"
+        },
+        {
+          "sample": "Mẫu 4",
+          "position": 4,
+          "group": "C",
+          "arm": "v4.1+SR",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 628,
+          "subagent_id": "91d4685c-469b-4a58-ae97-aa46a8bdc6d9"
+        },
+        {
+          "sample": "Mẫu 5",
+          "position": 5,
+          "group": "B",
+          "arm": "v4.1",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 718,
+          "subagent_id": "6138784c-dd5c-48bb-b034-48530a95200b"
+        }
+      ]
+    },
+    {
+      "case_id": "V5-05",
+      "category": "Business Rule phức tạp",
+      "split": "unseen_v5",
+      "order_groups": [
+        "B",
+        "E",
+        "A",
+        "C",
+        "F"
+      ],
+      "samples": [
+        {
+          "sample": "Mẫu 1",
+          "position": 1,
+          "group": "B",
+          "arm": "v4.1",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 2041,
+          "subagent_id": "f1d2b5a5-8513-4d86-bcc5-0afa35690504"
+        },
+        {
+          "sample": "Mẫu 2",
+          "position": 2,
+          "group": "E",
+          "arm": "V5-A",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 2202,
+          "subagent_id": "6e795f38-f09f-4925-8201-0de019da63be"
+        },
+        {
+          "sample": "Mẫu 3",
+          "position": 3,
+          "group": "A",
+          "arm": "Baseline",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 1614,
+          "subagent_id": "4e433f46-f103-4b2f-aabe-5ff4ff54ff36"
+        },
+        {
+          "sample": "Mẫu 4",
+          "position": 4,
+          "group": "C",
+          "arm": "v4.1+SR",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 1680,
+          "subagent_id": "e3a0898f-be53-49af-96be-5fe3afa14fd9"
+        },
+        {
+          "sample": "Mẫu 5",
+          "position": 5,
+          "group": "F",
+          "arm": "V5-B",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 1455,
+          "subagent_id": "550471f3-f457-4570-840d-e89c6b512928"
+        }
+      ]
+    },
+    {
+      "case_id": "V5-06",
+      "category": "Tài liệu dài cần tổ chức lại",
+      "split": "unseen_v5",
+      "order_groups": [
+        "C",
+        "B",
+        "F",
+        "E",
+        "A"
+      ],
+      "samples": [
+        {
+          "sample": "Mẫu 1",
+          "position": 1,
+          "group": "C",
+          "arm": "v4.1+SR",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 335,
+          "subagent_id": "d9338b00-a8cc-43cd-860a-a4c00d694bb1"
+        },
+        {
+          "sample": "Mẫu 2",
+          "position": 2,
+          "group": "B",
+          "arm": "v4.1",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 365,
+          "subagent_id": "f646e975-ff9e-43a1-ae94-c0de6795668e"
+        },
+        {
+          "sample": "Mẫu 3",
+          "position": 3,
+          "group": "F",
+          "arm": "V5-B",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 267,
+          "subagent_id": "36530cc9-11fd-4a96-b082-e46356b57eea"
+        },
+        {
+          "sample": "Mẫu 4",
+          "position": 4,
+          "group": "E",
+          "arm": "V5-A",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 351,
+          "subagent_id": "3a804367-23bd-4f52-93f7-2648b5e18ea8"
+        },
+        {
+          "sample": "Mẫu 5",
+          "position": 5,
+          "group": "A",
+          "arm": "Baseline",
+          "model": "Gemini 4 Neon (inherit)",
+          "word_count": 620,
+          "subagent_id": "6e975352-2426-40f0-9e86-d13ad6f6be47"
+        }
+      ]
+    }
+  ]
+}

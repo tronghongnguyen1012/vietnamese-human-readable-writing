@@ -1,0 +1,406 @@
+{
+  "total_records": 67,
+  "by_group": {
+    "A": {
+      "arm": "Baseline",
+      "n_total": 13,
+      "n_sr": 7,
+      "n_unseen": 6,
+      "avg_words_all": 503.0,
+      "avg_words_sr": 423.1,
+      "avg_words_unseen": 596.2,
+      "avg_chars_all": 2376.2,
+      "avg_latency_sec": 32.15,
+      "min_latency_sec": 14.0,
+      "max_latency_sec": 69.0,
+      "avg_input_tokens_sum": 18123.1,
+      "avg_output_tokens_sum": 5621.1,
+      "refs_read_count": 13,
+      "refs_read_details": [
+        [
+          "SR-01",
+          [
+            "SKILL.md",
+            "vietnamese-clarity-and-style.md"
+          ]
+        ],
+        [
+          "SR-02",
+          [
+            "SKILL.md",
+            "vietnamese-clarity-and-style.md"
+          ]
+        ],
+        [
+          "SR-03",
+          [
+            "SKILL.md"
+          ]
+        ],
+        [
+          "SR-04",
+          [
+            "SKILL.md",
+            "vietnamese-clarity-and-style.md"
+          ]
+        ],
+        [
+          "SR-05",
+          [
+            "SKILL.md",
+            "business-specs.md",
+            "vietnamese-clarity-and-style.md"
+          ]
+        ],
+        [
+          "SR-06",
+          [
+            "SKILL.md",
+            "vietnamese-clarity-and-style.md"
+          ]
+        ],
+        [
+          "SR-07",
+          [
+            "SKILL.md",
+            "vietnamese-clarity-and-style.md",
+            "information-architecture.md"
+          ]
+        ],
+        [
+          "V5-01",
+          [
+            "SKILL.md"
+          ]
+        ],
+        [
+          "V5-02",
+          [
+            "SKILL.md"
+          ]
+        ],
+        [
+          "V5-03",
+          [
+            "SKILL.md"
+          ]
+        ],
+        [
+          "V5-04",
+          [
+            "SKILL.md",
+            "vietnamese-clarity-and-style.md"
+          ]
+        ],
+        [
+          "V5-05",
+          [
+            "SKILL.md",
+            "business-specs.md",
+            "vietnamese-clarity-and-style.md"
+          ]
+        ],
+        [
+          "V5-06",
+          [
+            "SKILL.md",
+            "vietnamese-clarity-and-style.md"
+          ]
+        ]
+      ],
+      "multi_send_runs": [
+        [
+          "V5-05",
+          2
+        ]
+      ]
+    },
+    "B": {
+      "arm": "v4.1",
+      "n_total": 13,
+      "n_sr": 7,
+      "n_unseen": 6,
+      "avg_words_all": 547.4,
+      "avg_words_sr": 473.6,
+      "avg_words_unseen": 633.5,
+      "avg_chars_all": 2574.4,
+      "avg_latency_sec": 30.92,
+      "min_latency_sec": 9.0,
+      "max_latency_sec": 54.0,
+      "avg_input_tokens_sum": 17737.4,
+      "avg_output_tokens_sum": 5382.6,
+      "refs_read_count": 9,
+      "refs_read_details": [
+        [
+          "SR-01",
+          [
+            "vietnamese-clarity-and-style.md"
+          ]
+        ],
+        [
+          "SR-02",
+          [
+            "vietnamese-clarity-and-style.md"
+          ]
+        ],
+        [
+          "SR-04",
+          [
+            "vietnamese-clarity-and-style.md"
+          ]
+        ],
+        [
+          "SR-05",
+          [
+            "business-specs.md",
+            "vietnamese-clarity-and-style.md"
+          ]
+        ],
+        [
+          "SR-06",
+          [
+            "technical-specs.md",
+            "vietnamese-clarity-and-style.md"
+          ]
+        ],
+        [
+          "SR-07",
+          [
+            "information-architecture.md",
+            "vietnamese-clarity-and-style.md"
+          ]
+        ],
+        [
+          "V5-04",
+          [
+            "vietnamese-clarity-and-style.md",
+            "information-architecture.md"
+          ]
+        ],
+        [
+          "V5-05",
+          [
+            "business-specs.md",
+            "vietnamese-clarity-and-style.md"
+          ]
+        ],
+        [
+          "V5-06",
+          [
+            "vietnamese-clarity-and-style.md",
+            "information-architecture.md"
+          ]
+        ]
+      ],
+      "multi_send_runs": []
+    },
+    "C": {
+      "arm": "v4.1+SR",
+      "n_total": 13,
+      "n_sr": 7,
+      "n_unseen": 6,
+      "avg_words_all": 468.8,
+      "avg_words_sr": 377.4,
+      "avg_words_unseen": 575.3,
+      "avg_chars_all": 2193.4,
+      "avg_latency_sec": 26.77,
+      "min_latency_sec": 10.0,
+      "max_latency_sec": 46.0,
+      "avg_input_tokens_sum": 16108.2,
+      "avg_output_tokens_sum": 4374.8,
+      "refs_read_count": 10,
+      "refs_read_details": [
+        [
+          "SR-01",
+          [
+            "vietnamese-clarity-and-style.md"
+          ]
+        ],
+        [
+          "SR-02",
+          [
+            "vietnamese-clarity-and-style.md"
+          ]
+        ],
+        [
+          "SR-04",
+          [
+            "vietnamese-clarity-and-style.md"
+          ]
+        ],
+        [
+          "SR-05",
+          [
+            "business-specs.md"
+          ]
+        ],
+        [
+          "SR-06",
+          [
+            "technical-specs.md"
+          ]
+        ],
+        [
+          "SR-07",
+          [
+            "vietnamese-clarity-and-style.md",
+            "information-architecture.md"
+          ]
+        ],
+        [
+          "V5-03",
+          [
+            "vietnamese-clarity-and-style.md"
+          ]
+        ],
+        [
+          "V5-04",
+          [
+            "vietnamese-clarity-and-style.md",
+            "information-architecture.md"
+          ]
+        ],
+        [
+          "V5-05",
+          [
+            "business-specs.md"
+          ]
+        ],
+        [
+          "V5-06",
+          [
+            "vietnamese-clarity-and-style.md"
+          ]
+        ]
+      ],
+      "multi_send_runs": []
+    },
+    "E": {
+      "arm": "V5-A",
+      "n_total": 13,
+      "n_sr": 7,
+      "n_unseen": 6,
+      "avg_words_all": 532.7,
+      "avg_words_sr": 442.1,
+      "avg_words_unseen": 638.3,
+      "avg_chars_all": 2529.8,
+      "avg_latency_sec": 24.31,
+      "min_latency_sec": 11.0,
+      "max_latency_sec": 68.0,
+      "avg_input_tokens_sum": 13764.4,
+      "avg_output_tokens_sum": 4307.2,
+      "refs_read_count": 3,
+      "refs_read_details": [
+        [
+          "SR-05",
+          [
+            "business-specs.md"
+          ]
+        ],
+        [
+          "V5-05",
+          [
+            "business-specs.md"
+          ]
+        ],
+        [
+          "V5-06",
+          [
+            "vietnamese-clarity-and-style.md"
+          ]
+        ]
+      ],
+      "multi_send_runs": []
+    },
+    "F": {
+      "arm": "V5-B",
+      "n_total": 13,
+      "n_sr": 7,
+      "n_unseen": 6,
+      "avg_words_all": 443.4,
+      "avg_words_sr": 406.3,
+      "avg_words_unseen": 486.7,
+      "avg_chars_all": 2088.4,
+      "avg_latency_sec": 21.46,
+      "min_latency_sec": 9.0,
+      "max_latency_sec": 40.0,
+      "avg_input_tokens_sum": 12885.9,
+      "avg_output_tokens_sum": 3739.7,
+      "refs_read_count": 3,
+      "refs_read_details": [
+        [
+          "SR-05",
+          [
+            "business-specs.md"
+          ]
+        ],
+        [
+          "SR-07",
+          [
+            "information-architecture.md"
+          ]
+        ],
+        [
+          "V5-05",
+          [
+            "business-specs.md"
+          ]
+        ]
+      ],
+      "multi_send_runs": []
+    },
+    "D": {
+      "arm": "GPT-6.2",
+      "n_total": 1,
+      "n_sr": 1,
+      "n_unseen": 0,
+      "avg_words_all": 277.0,
+      "avg_words_sr": 277.0,
+      "avg_words_unseen": null,
+      "avg_chars_all": 1244.0,
+      "avg_latency_sec": null,
+      "min_latency_sec": null,
+      "max_latency_sec": null,
+      "avg_input_tokens_sum": null,
+      "avg_output_tokens_sum": null,
+      "refs_read_count": 0,
+      "refs_read_details": [],
+      "multi_send_runs": []
+    },
+    "B_prior": {
+      "arm": "v4.1_prior",
+      "n_total": 1,
+      "n_sr": 1,
+      "n_unseen": 0,
+      "avg_words_all": 255.0,
+      "avg_words_sr": 255.0,
+      "avg_words_unseen": null,
+      "avg_chars_all": 1117.0,
+      "avg_latency_sec": null,
+      "min_latency_sec": null,
+      "max_latency_sec": null,
+      "avg_input_tokens_sum": null,
+      "avg_output_tokens_sum": null,
+      "refs_read_count": 0,
+      "refs_read_details": [],
+      "multi_send_runs": []
+    }
+  },
+  "instruction_footprint": {
+    "v4.1_SKILL.md": {
+      "bytes": 8986,
+      "chars": 7048,
+      "lines": 82
+    },
+    "v5-a_SKILL.md": {
+      "bytes": 6674,
+      "chars": 5253,
+      "lines": 63
+    },
+    "v5-b_SKILL.md": {
+      "bytes": 4413,
+      "chars": 3536,
+      "lines": 47
+    }
+  }
+}
