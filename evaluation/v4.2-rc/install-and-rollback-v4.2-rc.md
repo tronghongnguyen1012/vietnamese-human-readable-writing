@@ -1,6 +1,8 @@
 # Hướng dẫn Cài thử `ViWrite v4.2-rc` trên Antigravity & Rollback về `v4.1.0-beta`
 
-Tài liệu này dành riêng cho việc **cài thử nghiệm nhánh `release/v4.2-rc`** trong môi trường Antigravity thực tế và **khôi phục nhanh về bản ổn định `v4.1.0-beta`** nếu cần. Cấu trúc Skill giữ nguyên 5 tệp chuẩn (`SKILL.md` + `references/*.md`).
+> **Cập nhật phát hành:** Phiên bản RC này đã được nghiệm thu, merge vào `main` và phát hành dưới tag **`v4.2.0-beta`** (nhánh `release/v4.2-rc` đã được dọn sau khi merge). Với người dùng cài mới hoặc cập nhật bản phát hành chính thức, xem **[INSTALL.md](../../INSTALL.md)**. Tài liệu dưới đây được giữ lại làm hồ sơ thử nghiệm của giai đoạn RC.
+
+Tài liệu này mô tả quy trình **cài thử nghiệm trong giai đoạn `v4.2-rc`** trên Antigravity và **khôi phục nhanh về bản ổn định `v4.1.0-beta`**. Cấu trúc Skill giữ nguyên 5 tệp chuẩn (`SKILL.md` + `references/*.md`).
 
 ---
 
@@ -36,10 +38,10 @@ Mở phiên mới — Antigravity sẽ tự nạp lại bản `v4.1.0-beta` từ
 
 Chỉ dùng nếu bạn muốn thử `v4.2-rc` trên mọi workspace trên máy:
 
-### Windows PowerShell (Copy trực tiếp từ nhánh `release/v4.2-rc` đã checkout)
+### Windows PowerShell (Copy trực tiếp từ tag `v4.2.0-beta` hoặc nhánh `main`)
 ```powershell
-git fetch origin
-git checkout release/v4.2-rc
+git fetch origin --tags
+git checkout v4.2.0-beta
 
 $src = ".\skills\vietnamese-human-readable-writing"
 $dest = "$env:USERPROFILE\.gemini\config\skills\vietnamese-human-readable-writing"
@@ -49,9 +51,9 @@ if (Test-Path $dest) { Remove-Item -Recurse -Force $dest }
 Copy-Item -Recurse -Force $src $dest
 ```
 
-### Hoặc qua `skills.sh` từ GitHub branch `release/v4.2-rc`
+### Hoặc qua `skills.sh` từ GitHub tag `v4.2.0-beta`
 ```powershell
-npx.cmd --yes skills add "https://github.com/tronghongnguyen1012/vietnamese-human-readable-writing/tree/release/v4.2-rc" --skill vietnamese-human-readable-writing -a antigravity -g --copy -y
+npx.cmd --yes skills add tronghongnguyen1012/vietnamese-human-readable-writing@v4.2.0-beta --skill vietnamese-human-readable-writing -a antigravity -g --copy -y
 ```
 
 ### Rollback Global về `v4.1.0-beta`

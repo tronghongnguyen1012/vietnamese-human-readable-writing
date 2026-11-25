@@ -1,6 +1,6 @@
 {
   "name": "vietnamese-human-readable-writing",
-  "version": "4.1.0-beta",
+  "version": "4.2.0-beta",
   "license": "MIT",
   "description": "Write clear, structured, natural Vietnamese without fabricating missing facts across casual chat, workplace messages, business specs (PRD/BRD/AC), and technical specs (IDD/SAD/API).",
   "author": {

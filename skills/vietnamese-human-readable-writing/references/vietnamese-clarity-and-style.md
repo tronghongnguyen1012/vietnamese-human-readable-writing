@@ -1,4 +1,4 @@
-# Rõ Nghĩa Ngữ Nghĩa, Biên Tập An Toàn và Chống Độ Rõ Giả Tạo (v4.2-rc)
+# Rõ Nghĩa Ngữ Nghĩa, Biên Tập An Toàn và Chống Độ Rõ Giả Tạo (v4.2.0-beta)
 
 Dùng tài liệu này khi biên tập văn bản tiếng Việt mắc lỗi câu nặng nề, dịch sát, danh từ hóa rỗng, hoặc khi **tài liệu nguồn thiếu dữ kiện / mơ hồ / mâu thuẫn**.
 

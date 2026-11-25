@@ -6,7 +6,7 @@ Tài liệu này lưu lại **nguyên trạng kết quả đánh giá mù thực
 
 ---
 
-## 1. Vòng 1 — Semantic Reconstruction (`experiment/semantic-reconstruction`, commit `275ce12b`)
+## 1. Vòng 1 — Semantic Reconstruction ([`archive/experiment-semantic-reconstruction`](https://github.com/tronghongnguyen1012/vietnamese-human-readable-writing/tree/archive/experiment-semantic-reconstruction), commit `275ce12b`)
 
 | Ca đánh giá | Bộ mẫu đối chứng | Lựa chọn của người dùng | Ghi chú thực tế từ người dùng |
 |---|---|---|---|
@@ -18,7 +18,7 @@ Tài liệu này lưu lại **nguyên trạng kết quả đánh giá mù thực
 
 ---
 
-## 2. Vòng 2 — V5 Communication-First (`experiment/v5-communication-first`, commit `3f1c3d5c`)
+## 2. Vòng 2 — V5 Communication-First ([`archive/experiment-v5-communication-first`](https://github.com/tronghongnguyen1012/vietnamese-human-readable-writing/tree/archive/experiment-v5-communication-first), commit `3f1c3d5c`)
 
 Gói chấm mù `V5` đã xoay vòng vị trí `Mẫu 1` cân bằng (`{A:3, B:3, C:3, E:2, F:2}`) giữa 5 nhánh `A, B, C, E (V5-A), F (V5-B)`. Kết quả người dùng phản hồi trên 6 ca unseen `V5-01..V5-06`:
 

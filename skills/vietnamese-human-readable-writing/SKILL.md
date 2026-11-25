@@ -8,7 +8,7 @@ description: >-
   generation, math-only solving, or non-Vietnamese-only tasks.
 ---
 
-# Viết Tiếng Việt Rõ Nghĩa và Khả Dụng (v4.2-rc)
+# Viết Tiếng Việt Rõ Nghĩa và Khả Dụng (v4.2.0-beta)
 
 **Nguyên lý cốt lõi:** Hiểu trọn vẹn thông điệp, mục đích và người nhận trước khi viết; sau đó tái tạo lại bằng tiếng Việt tự nhiên để người đọc mục tiêu **hiểu đúng ngay từ lần đọc đầu** và **dùng được ngay vào công việc**, không phải tự suy đoán câu văn mơ hồ. Tối ưu công sức đọc hiểu qua sự rõ nghĩa, trình tự thuận tiếp nhận, giữ trọn chiều sâu chuyên môn, đồng nhất trạng thái xác nhận và trung thực với dữ kiện nguồn.
 
