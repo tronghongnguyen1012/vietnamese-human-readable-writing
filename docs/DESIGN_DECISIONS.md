@@ -42,11 +42,11 @@ Thử nghiệm 4 nhóm (`A`, `B`, `C0`, `C`) trả lời thẳng hai câu hỏi 
 
 ## 4. Hạng mục Đã Xử lý ở `v4.1` & Tồn đọng cho Round 3
 
-- **Đã xử lý ở `v4.1` (xem [v4.1-stabilization-report.md](./evaluation/v4.1-stabilization-report.md)):**
+- **Đã xử lý ở `v4.1` (xem [v4.1-stabilization-report.md](../evaluation/v4.1-stabilization-report.md)):**
   1. Đồng bộ hóa trạng thái xác nhận giữa Bảng, Sơ đồ Mermaid, Trình tự và Open Questions (`H2-19` từ bất nhất HF xuống `0 HF`, thắng `2–0` trước `v4`).
   2. Quy tắc *Scope & Proportion* cho nguồn thiếu dữ kiện (`H2-12` đạt `0 HF`, `0 Major`, thắng `2–0` trước `v4`).
   3. Thay kho lệnh cụ thể trong Skill bằng quy tắc *Technical Claim Verification* tách dữ kiện kiểm chứng vs giả định (`H2-06` sửa sạch khẳng định sai `SHARE ROW EXCLUSIVE`, đạt `0 HF`, `0 Major`, thắng `2–0`).
-  4. Audit sửa 4 ví dụ bảng trong `vietnamese-clarity-and-style.md` và tách Gate 0 standalone ([standalone-hf-protocol.md](./evaluation/standalone-hf-protocol.md)) trước khi so sánh cặp A/B.
+  4. Audit sửa 4 ví dụ bảng trong `vietnamese-clarity-and-style.md` và tách Gate 0 standalone ([standalone-hf-protocol.md](../evaluation/standalone-hf-protocol.md)) trước khi so sánh cặp A/B.
 - **Còn tồn đọng cho tương lai:**
   1. **Siết nhẹ ký hiệu bảng giao tiếp và nhánh timeout (`H2-22`, `H2-19`):** Kiểm tra quy ước chiều mũi tên trong bảng IDD khớp tiêu đề cột và nhắc xác minh trạng thái `capture` trước khi `rollback` điểm; không gán nhánh chưa chốt vào cột trách nhiệm xác nhận của bảng thành phần.
   2. **Trau chuốt độ mượt câu văn ở hội thoại ẩn dụ (`H2-16`):** Giữ nhất quán từ khóa (`mã định danh`) khi kể chuyện hài hước không dùng bullet.

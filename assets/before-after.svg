@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 378" width="840" height="378" role="img" aria-label="Before and After Verbatim Case H2-10 Light">
+  <rect x="1" y="1" width="838" height="376" rx="16" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+
+  <!-- Source strip -->
+  <rect x="20" y="18" width="800" height="82" rx="10" fill="#F1F5F9" stroke="#CBD5E1"/>
+  <text x="36" y="39" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#475569">NGUỒN GỐC THIẾU THAM SỐ (Ca thực tế H2-10 · evaluation/held-out-v2.jsonl)</text>
+  <text x="36" y="62" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="600" fill="#0F172A">"Đối tác giao trễ tiến độ cam kết sẽ bị áp dụng mức phạt hợp lý tương ứng với</text>
+  <text x="36" y="83" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="600" fill="#0F172A">mức độ trễ và giá trị đơn hàng."</text>
+
+  <!-- Left: Default AI (Group A verbatim excerpt) -->
+  <rect x="20" y="114" width="390" height="244" rx="12" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1.5"/>
+  <rect x="36" y="130" width="230" height="24" rx="12" fill="#FEE2E2"/>
+  <text x="151" y="146" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#B91C1C">AI Mặc định (Group A) · Dính HF-3</text>
+  <text x="36" y="174" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#7F1D1D">Trích nguyên văn Mục 2 ("Bản viết lại rõ ràng"):</text>
+
+  <rect x="36" y="184" width="358" height="122" rx="8" fill="#FFFFFF" fill-opacity="0.85" stroke="#FECACA"/>
+  <text x="48" y="203" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" fill="#1E293B">"[...] nhưng không vượt quá mức phạt tối đa là</text>
+  <text x="48" y="220" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" fill="#1E293B">[ngưỡng trần cần chốt].</text>
+  <text x="48" y="240" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="600" fill="#991B1B">Quy định này không áp dụng nếu việc chậm trễ</text>
+  <text x="48" y="257" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="600" fill="#991B1B">phát sinh do sự kiện bất khả kháng, do lỗi từ</text>
+  <text x="48" y="274" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="600" fill="#991B1B">phía Bên đặt hàng, hoặc đã được hai bên thống</text>
+  <text x="48" y="291" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="600" fill="#991B1B">nhất gia hạn bằng văn bản trước thời điểm đến hạn."</text>
+
+  <text x="36" y="326" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="600" fill="#991B1B">Kết quả Blind Judge (2/2 lượt): Tự khẳng định quy</text>
+  <text x="36" y="343" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="600" fill="#991B1B">tắc miễn trừ &amp; gia hạn ngoài nguồn, không gắn [cần chốt].</text>
+
+  <!-- Right: ViWrite (Group C verbatim excerpt) -->
+  <rect x="430" y="114" width="390" height="244" rx="12" fill="#F0FDFA" stroke="#5EEAD4" stroke-width="1.5"/>
+  <rect x="446" y="130" width="234" height="24" rx="12" fill="#CCFBF1"/>
+  <text x="563" y="146" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#0F766E">ViWrite (Skill v4) · 0 HF · Thắng 2–0</text>
+  <text x="446" y="174" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#115E59">Trích nguyên văn Mục 2 ("Phần xác định từ nguồn"):</text>
+
+  <rect x="446" y="184" width="358" height="122" rx="8" fill="#FFFFFF" fill-opacity="0.9" stroke="#99F6E4"/>
+  <text x="458" y="203" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" fill="#1E293B">"Điều kiện kích hoạt: Đối tác giao hàng muộn</text>
+  <text x="458" y="220" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" fill="#1E293B">hơn tiến độ đã cam kết.</text>
+  <text x="458" y="240" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" fill="#1E293B">Hệ quả: Đối tác bị tính phí phạt dựa trên mức</text>
+  <text x="458" y="257" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" fill="#1E293B">độ trễ và giá trị đơn hàng, theo công thức và</text>
+  <text x="458" y="274" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="600" fill="#0F766E">bảng ngưỡng [Điểm chưa xác định / cần chốt]."</text>
+  <text x="458" y="294" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-style="italic" fill="#475569">[...] Bỏ trống có chủ đích để tránh tạo thông số giả.</text>
+
+  <text x="446" y="326" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="600" fill="#0F766E">Mục 3 tách đủ 4 nhóm cần chốt: mốc &amp; biên (&gt; / &gt;=),</text>
+  <text x="446" y="343" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="600" fill="#0F766E">căn cứ thuế/VAT, sàn–trần và ngoại lệ miễn phạt.</text>
+</svg>

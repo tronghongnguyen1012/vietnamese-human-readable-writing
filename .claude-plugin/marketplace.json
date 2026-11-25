@@ -1,0 +1,21 @@
+{
+  "name": "vietnamese-human-readable-writing",
+  "description": "Repository plugin distribution for Vietnamese Human-Readable Writing Skill (v4.1.0-beta).",
+  "owner": {
+    "name": "tronghongnguyen1012",
+    "url": "https://github.com/tronghongnguyen1012"
+  },
+  "plugins": [
+    {
+      "name": "vietnamese-human-readable-writing",
+      "description": "Write clear, structured, natural Vietnamese without fabricating missing facts across chat, workplace comms, business specs, and technical docs.",
+      "version": "4.1.0-beta",
+      "license": "MIT",
+      "source": "./",
+      "author": {
+        "name": "tronghongnguyen1012",
+        "url": "https://github.com/tronghongnguyen1012"
+      }
+    }
+  ]
+}

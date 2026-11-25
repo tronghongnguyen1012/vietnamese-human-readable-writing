@@ -1,0 +1,36 @@
+{
+  "name": "vietnamese-human-readable-writing",
+  "version": "4.1.0-beta",
+  "description": "Write clear, structured, natural Vietnamese without fabricating missing facts across chat, workplace messages, business specs, and technical documentation.",
+  "author": {
+    "name": "tronghongnguyen1012",
+    "url": "https://github.com/tronghongnguyen1012"
+  },
+  "homepage": "https://github.com/tronghongnguyen1012/vietnamese-human-readable-writing",
+  "repository": "https://github.com/tronghongnguyen1012/vietnamese-human-readable-writing",
+  "license": "MIT",
+  "keywords": [
+    "vietnamese",
+    "writing",
+    "clarity",
+    "technical-writing",
+    "prd",
+    "agent-skills"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "ViWrite",
+    "shortDescription": "AI writes. Humans understand. Clear, natural Vietnamese specs & prose.",
+    "longDescription": "Guides AI agents to write clear, context-adapted Vietnamese that preserves business logic, technical depth, and confirmation status without fabricating missing details.",
+    "developerName": "tronghongnguyen1012",
+    "category": "Productivity",
+    "capabilities": [
+      "Read"
+    ],
+    "defaultPrompt": [
+      "Làm rõ câu Business Rule tiếng Việt sau mà không tự bịa dữ kiện.",
+      "Soạn đặc tả API Spec / IDD tiếng Việt kèm danh sách điểm cần chốt.",
+      "Biên tập đoạn văn tiếng Việt dịch máy cho tự nhiên và giữ nguyên ý gốc."
+    ]
+  }
+}
