@@ -1,0 +1,20 @@
+{
+  "name": "vietnamese-human-readable-writing",
+  "version": "4.1.0-beta",
+  "description": "Write clear, structured, natural Vietnamese without fabricating missing facts across casual chat, workplace messages, business specs (PRD/BRD/AC), and technical specs (IDD/SAD/API).",
+  "author": {
+    "name": "tronghongnguyen1012",
+    "url": "https://github.com/tronghongnguyen1012"
+  },
+  "homepage": "https://github.com/tronghongnguyen1012/vietnamese-human-readable-writing",
+  "repository": "https://github.com/tronghongnguyen1012/vietnamese-human-readable-writing",
+  "keywords": [
+    "vietnamese",
+    "writing",
+    "technical-writing",
+    "clarity",
+    "prd",
+    "api-spec",
+    "agent-skills"
+  ]
+}

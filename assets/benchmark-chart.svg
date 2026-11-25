@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 278" width="840" height="278" role="img" aria-label="Verified LLM Blind Judge Highlights">
+  <rect x="1" y="1" width="838" height="276" rx="16" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+  <text x="28" y="36" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="17" font-weight="700" fill="#0F172A">Kết quả Thực nghiệm Kiểm chứng (LLM Blind Judge, hoán đổi 2 lượt)</text>
+  <text x="28" y="57" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12.5" fill="#475569">Model sinh: flash · Giám khảo độc lập: pro · Không sử dụng số liệu ước đoán</text>
+
+  <!-- Row 1: C vs A win rate -->
+  <text x="28" y="96" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="700" fill="#1E293B">Tập mới 24 ca: Skill v4 vs AI Mặc định</text>
+  <text x="28" y="114" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" fill="#475569">Thắng đồng thuận: 20/24 · Thua: 3 · Bất nhất: 1 · Hard Fail: 0/24 vs 8/24</text>
+  <rect x="435" y="84" width="290" height="26" rx="6" fill="#E2E8F0"/>
+  <rect x="435" y="84" width="241.6" height="26" rx="6" fill="#0F766E"/>
+  <text x="738" y="102" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="700" fill="#0F766E">83,3%</text>
+
+  <!-- Row 2: C vs B win rate -->
+  <text x="28" y="152" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="700" fill="#1E293B">Tập mới 24 ca: Skill v4 vs Prompt 6 quy tắc</text>
+  <text x="28" y="170" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" fill="#475569">Thắng đồng thuận: 17/24 · Thua: 1 · Bất nhất: 6 · Hard Fail: 1/24* vs 8/24</text>
+  <rect x="435" y="140" width="290" height="26" rx="6" fill="#E2E8F0"/>
+  <rect x="435" y="140" width="205.4" height="26" rx="6" fill="#14B8A6"/>
+  <text x="738" y="158" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="700" fill="#0F766E">70,8%</text>
+
+  <!-- Row 3: v4.1 regression HF drop -->
+  <text x="28" y="208" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="700" fill="#1E293B">Hồi quy tập trung v4.1 (9 ca đã biết)</text>
+  <text x="28" y="226" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" fill="#475569">Đạt Gate 0: 9/9 (0 HF Standalone &amp; A/B) · Thắng v4.1: 4 · v4: 3 · Bất nhất: 2</text>
+  <rect x="435" y="196" width="290" height="26" rx="6" fill="#E2E8F0"/>
+  <rect x="435" y="196" width="290" height="26" rx="6" fill="#F97316"/>
+  <text x="738" y="214" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="700" fill="#C2410C">0/9 HF</text>
+
+  <!-- Footer -->
+  <line x1="28" y1="244" x2="812" y2="244" stroke="#E2E8F0"/>
+  <text x="28" y="263" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" fill="#64748B">*H2-06 đã được vá ở v4.1 (xem evaluation/v4.1-stabilization-report.md). Chưa chạy Human Evaluation đo thời gian hiểu đúng (TtCU) trên người thật.</text>
+</svg>

@@ -1,0 +1,20 @@
+{
+  "name": "vietnamese-human-readable-writing",
+  "interface": {
+    "displayName": "ViWrite (Vietnamese Human-Readable Writing)"
+  },
+  "plugins": [
+    {
+      "name": "vietnamese-human-readable-writing",
+      "source": {
+        "source": "url",
+        "url": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

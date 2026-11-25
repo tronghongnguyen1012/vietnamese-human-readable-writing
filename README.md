@@ -1,153 +1,128 @@
-# Vietnamese Human-Readable Writing Skill (`v4.1.0-beta`)
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/banner-dark.svg">
+    <img src="assets/banner-light.svg" alt="ViWrite — AI viết. Con người hiểu." width="840">
+  </picture>
+</p>
 
-Skill chuẩn [`agentskills.io`](https://agentskills.io) giúp AI truyền tải thông tin bằng tiếng Việt **rõ nghĩa ngay từ lần đọc đầu**, **đúng trình tự tiếp nhận của con người**, **giữ nguyên dữ kiện/điều kiện nghiệp vụ**, **đồng nhất trạng thái xác nhận xuyên suốt tài liệu**, **không tự bịa để tạo độ rõ giả tạo (False Clarity)** và **thích ứng đúng ngữ cảnh** — từ hội thoại tự nhiên đến PRD, BRD, IDD, API Spec, SAD và biên tập tài liệu kỹ thuật.
+<p align="center">
+  <a href="https://github.com/tronghongnguyen1012/vietnamese-human-readable-writing/releases/tag/v4.1.0-beta"><img src="https://img.shields.io/badge/release-v4.1.0--beta-0F766E?style=flat-square" alt="Release v4.1.0-beta"></a>
+  <a href="https://agentskills.io"><img src="https://img.shields.io/badge/spec-agentskills.io-1E293B?style=flat-square" alt="Agent Skills Spec"></a>
+  <a href="https://skills.sh"><img src="https://img.shields.io/badge/CLI-skills.sh-0D9488?style=flat-square" alt="skills.sh"></a>
+  <img src="https://img.shields.io/badge/SKILL.md-82%20lines-334155?style=flat-square" alt="82 lines">
+  <a href="./docs/compatibility-and-smoke-test.md#4-%C4%91%E1%BB%81-xu%E1%BA%A5t-gi%E1%BA%A5y-ph%C3%A9p-m%C3%A3-ngu%E1%BB%93n-m%E1%BB%9F-license-proposal"><img src="https://img.shields.io/badge/license-pending%20selection-64748B?style=flat-square" alt="License Pending"></a>
+</p>
 
-> [!NOTE]
-> Phiên bản phát hành chính thức trên `main` là **Skill v4.1 Beta** (tag `v4.1.0-beta`), đã hoàn tất Independent Review và sẵn sàng cài đặt thử nghiệm thực tế có kiểm soát. Xem chi tiết bản vá tại [v4.1-stabilization-report.md](./evaluation/v4.1-stabilization-report.md) và lịch sử phiên bản tại [CHANGELOG.md](./CHANGELOG.md).
-
----
-
-## 1. Cấu trúc Dự án
-
-Phần **Skill cài đặt vào runtime** tách biệt hoàn toàn với phần **Nghiên cứu**, **Kiểm toán** và **Kiểm thử**:
-
-```text
-Vi Writer/
-├── README.md                                  # Hướng dẫn cài đặt Beta, lựa chọn phương án & tổng quan kết quả
-├── CHANGELOG.md                               # Lịch sử thay đổi v1 -> v2 -> v3 -> v4 -> v4.1
-├── REVIEW-FINDINGS.md                         # Xác minh 10 finding độc lập FIX-01..FIX-10
-├── DESIGN_DECISIONS.md                        # Quyết định thiết kế, đối chứng Ablation & việc tồn đọng
-├── skills/
-│   └── vietnamese-human-readable-writing/     # <-- CHỈ COPY THƯ MỤC NÀY ĐỂ CÀI ĐẶT
-│       ├── SKILL.md                           # Instruction cốt lõi (82 dòng, 8.904 bytes)
-│       └── references/                        # Progressive Disclosure linh hoạt (0, 1 hoặc tối đa 2 file)
-│           ├── vietnamese-clarity-and-style.md
-│           ├── information-architecture.md
-│           ├── business-specs.md
-│           └── technical-specs.md
-├── research/
-│   ├── research-report.md                     # Cơ sở Việt ngữ học & Thiết kế thông tin
-│   ├── sources.md
-│   ├── error-taxonomy.md
-│   └── competitive-research-report.md         # Đối chiếu trực tiếp 8 GitHub repo công khai
-└── evaluation/
-    ├── rubric.md / rubric-v2.md               # Rubric v1 (lịch sử) & Rubric v2 (Round 2)
-    ├── judge-instructions.md / ...-v2.md      # Hướng dẫn Judge mù 2 lượt hoán đổi
-    ├── human-eval-protocol.md                 # Quy trình đo TtCU trên người thật (CHƯA thực thi)
-    ├── development.jsonl                      # 16 ca phát triển
-    ├── held-out-test.jsonl                    # Bộ Regression v3 (24 ca, hạ cấp từ Round 1)
-    ├── held-out-v2.jsonl                      # Bộ kiểm thử mới 24 ca (gồm 4 ca dài mô phỏng)
-    ├── judge-calibration.jsonl                # 6 ca kiểm chuẩn Judge v2
-    ├── trigger-eval.jsonl                     # 16 truy vấn kiểm thử kích hoạt
-    ├── evaluation-report.md                   # Báo cáo v3 lịch sử (kèm Errata Round 2)
-    ├── evaluation-report-v2.md                # Báo cáo Round 2 đầy đủ (4 nhóm A/B/C0/C + Đính chính v4.1)
-    ├── standalone-hf-protocol.md              # Quy trình Gate 0 độc lập 1 output/lượt & HF 3 mức
-    ├── v4.1-stabilization-report.md           # Báo cáo bản vá v4.1 & kiểm thử hồi quy tập trung (n=9)
-    ├── scripts/
-    │   ├── validate_datasets.py               # Kiểm tra schema, chống leakage (Jaccard) & Skill v4.1
-    │   ├── analyze_results.py                 # Thống kê Round 1 (lịch sử)
-    │   └── analyze_results_v2.py              # Thống kê Round 2 -> results-v2/summary-stats-v2.json
-    ├── results/                               # Dữ liệu thô v3 lịch sử (giữ nguyên)
-    ├── results-v2/                            # Run manifest, calibration, re-audit v3 & kết quả 4 nhóm v4
-    └── results-v4.1/                          # Audit Gate 0 độc lập & hồi quy tập trung v4.1 (n=9)
-```
+<p align="center">
+  <strong>Tiếng Việt</strong> · <a href="./README.en.md">English</a> · <a href="./INSTALL.md">Cài đặt chi tiết</a> · <a href="./examples/README.md">Ví dụ thực tế</a>
+</p>
 
 ---
 
-## 2. Hướng dẫn Cài đặt & Chọn Phương án Sử dụng
+**ViWrite** *(tên thương hiệu đề xuất cho gói skill `vietnamese-human-readable-writing`)* giúp AI IDE và Coding Agent viết tiếng Việt **rõ nghĩa ngay từ lần đọc đầu**, **đúng trình tự tiếp nhận**, **giữ trọn chiều sâu chuyên môn** và **tuyệt đối không tự bịa chi tiết khi nguồn thiếu dữ kiện**.
 
-### Cài đặt Skill v4.1 Beta trên Windows
-Chỉ cần sao chép thư mục `skills\vietnamese-human-readable-writing\` vào đúng thư mục skills của runtime bạn sử dụng (tên thư mục đích bắt buộc là `vietnamese-human-readable-writing` khớp trường `name` trong `SKILL.md`):
+## Quick Start
 
-| Công cụ AI | Cài cho từng dự án (Project-local) | Cài toàn cục (Global trên Windows) |
-|---|---|---|
-| **Antigravity** | `<project-root>\.agents\skills\vietnamese-human-readable-writing\` | `%USERPROFILE%\.gemini\config\skills\vietnamese-human-readable-writing\` |
-| **Claude Code** | `<project-root>\.claude\skills\vietnamese-human-readable-writing\` | `%USERPROFILE%\.claude\skills\vietnamese-human-readable-writing\` |
-| **OpenAI Codex** | `<project-root>\.agents\skills\vietnamese-human-readable-writing\` *(hoặc `.\.codex\skills\...`)* | `%USERPROFILE%\.agents\skills\vietnamese-human-readable-writing\` *(hoặc `%USERPROFILE%\.codex\skills\...`)* |
-
-**Lệnh PowerShell cài đặt nhanh từ thư mục gốc của repo:**
-
-```powershell
-# Chạy tại thư mục gốc của repo (nơi chứa thư mục skills\)
-$src = ".\skills\vietnamese-human-readable-writing"
-
-# 1. Antigravity (Global trên Windows)
-$destAgy = "$env:USERPROFILE\.gemini\config\skills\vietnamese-human-readable-writing"
-New-Item -ItemType Directory -Force -Path (Split-Path $destAgy) | Out-Null
-Copy-Item -Recurse -Force $src $destAgy
-
-# 2. Claude Code (Global trên Windows)
-$destClaude = "$env:USERPROFILE\.claude\skills\vietnamese-human-readable-writing"
-New-Item -ItemType Directory -Force -Path (Split-Path $destClaude) | Out-Null
-Copy-Item -Recurse -Force $src $destClaude
-
-# 3. OpenAI Codex (Global trên Windows — có thể dùng .codex\skills thay cho .agents\skills)
-$destCodex = "$env:USERPROFILE\.codex\skills\vietnamese-human-readable-writing"
-New-Item -ItemType Directory -Force -Path (Split-Path $destCodex) | Out-Null
-Copy-Item -Recurse -Force $src $destCodex
-```
-
-*(Nếu cài theo từng dự án, thay biến `$dest...` bằng `<project-root>\.agents\skills\vietnamese-human-readable-writing` cho Antigravity/Codex hoặc `<project-root>\.claude\skills\vietnamese-human-readable-writing` cho Claude Code.)*
-
-### Xác minh Cấu trúc & Kiểm tra Kích hoạt Runtime
-1. **Kiểm tra cấu trúc gói đã copy** gồm đủ 5 file (không copy nhầm `research/` hay `evaluation/`):
-   ```text
-   vietnamese-human-readable-writing\
-   ├── SKILL.md
-   └── references\
-       ├── business-specs.md
-       ├── information-architecture.md
-       ├── technical-specs.md
-       └── vietnamese-clarity-and-style.md
-   ```
-   Có thể kiểm tra nhanh trong PowerShell: `Get-ChildItem -Recurse -File "<đường-dẫn-đích>"`.
-2. **Mở phiên làm việc mới** trên Antigravity / Claude Code / Codex để runtime nạp lại danh sách skill.
-3. **Kiểm tra Discovery:** Gõ `/skills` trong Codex hoặc Claude Code (hoặc kiểm tra danh sách available skills trong Antigravity) và xác nhận `vietnamese-human-readable-writing` xuất hiện đúng với `description`.
-4. **Kiểm tra kích hoạt thực tế (2 câu test nhanh):**
-   - *Nên kích hoạt (Positive):* Thử yêu cầu *"Viết lại câu quy tắc nghiệp vụ tiếng Việt sau cho rõ nghĩa mà không tự bịa thêm dữ kiện: Sau 3 lần vi phạm liên tiếp, thực hiện khóa tạm thời tài khoản và gửi thông báo cho quản trị viên."* → Skill kích hoạt sẽ tách rõ phần đã biết và liệt kê điểm chưa xác định (`thời hạn khóa`, `kênh/nội dung thông báo`).
-   - *Không nên kích hoạt (Negative):* Thử yêu cầu lập trình thuần tiếng Anh như *"Write a Python pytest unit test for binary search"* → Skill giữ nguyên không can thiệp.
-
-### Khi nào chỉ cần Simple Prompt vs `SKILL.md` độc lập vs Full Skill (`v4.1.0-beta`)?
-Thực nghiệm đối chứng Round 2 trên `held-out-v2.jsonl` (`v4.0`, trước bản vá `v4.1`) cho thấy rõ đánh đổi chi phí – chất lượng (tách riêng tập `n = 24` và tập `n = 12` trùng khớp của `C0`; mọi số token là **ước lượng heuristic theo `bytes / 3,8`** vì runtime không cung cấp billing token usage thực tế):
-
-**Bảng A — Trên trọn bộ `held-out-v2.jsonl` (`n = 24`):**
-
-| Lựa chọn | Kích thước / Ước lượng token hệ thống | Độ trễ TB (`flash`) | Hard Fail (Judge cặp đấu `pro`) | Phù hợp nhất cho |
-|---|---:|---:|---:|---|
-| **Simple Prompt 6 ý** (`Group B`) | `609 bytes` *(~160 tokens ước lượng)* | `23,80s` | **`8 / 24 (33,3%)`** *(vs C)* | Hỏi đáp nhanh, trò chuyện tự nhiên không có rủi ro nghiệp vụ/kỹ thuật. |
-| **Full Skill** (`Group C`, bản v4 + `0–2` ref) | `8.694 → 19.019 bytes` *(TB ~3.814 tokens ước lượng)* | `39,11s` | **`0 / 24`** *(vs A)* \| **`1 / 24`** *(vs B: `H2-06`)* | Đặc tả PRD/BRD/IDD/API/SAD, phân tích kỹ thuật đa trục, biên tập nguồn thiếu chi tiết. |
-
-**Bảng B — Trên đúng 12 ca phức tạp trùng khớp của nhóm Ablation (`n = 12`):**
-`A: 5/12` HF \| `B: 6/12` HF \| `C0 (SKILL.md-only, 8.694 bytes / ~2.288 tokens ước lượng, 29,06s): 2/12` HF \| `C (Full Skill v4): 0/12` *(khi ghép vs A/B)* và `2/12` *(khi ghép vs C0 — `H2-12, H2-19`)*. Khi dùng kết hợp quy chuẩn kiểm định độc lập trong [standalone-hf-protocol.md](./evaluation/standalone-hf-protocol.md) trên bản phát hành **v4.1 Beta** cho 9 ca hồi quy tập trung, **v4.1 đạt `0/9` Hard Fail**.
-
-> [!TIP]
-> Trong **chế độ Nhẹ**, Skill **không nạp thêm file tham chiếu** (`refs = []`), chỉ nạp phần `SKILL.md` (`~2.288 tokens` ước lượng) khi được kích hoạt (`trigger` `16/16`, `F1 = 1,00`). Chi tiết đánh giá bản vá xem [v4.1-stabilization-report.md](./evaluation/v4.1-stabilization-report.md).
-
----
-
-## 3. Tóm tắt Kết quả Kiểm thử (`v4.0` Round 2 & Bản vá `v4.1 Beta`)
-
-Toàn bộ kết quả chấm mù thực hiện trên `flash` (sinh) và `pro` (giám khảo [eval-blind-judge-v2](./evaluation/judge-instructions-v2.md) đã hiệu chuẩn `5/6`, hoán đổi 2 lượt vị trí A/B). Chi tiết xem [evaluation-report-v2.md](./evaluation/evaluation-report-v2.md) và [v4.1-stabilization-report.md](./evaluation/v4.1-stabilization-report.md).
-
-1. **Kiểm toán lại dữ liệu lịch sử v3 dưới Rubric v2 (`n = 24`, [held-out-test.jsonl](./evaluation/held-out-test.jsonl)):**
-   - Kết quả lịch sử v3 điều chỉnh từ `20W/1L/3 Inc` (`0/24 HF`) thành **`18` thắng v3 / `2` thua Baseline (`TEST-02`, `TEST-05`) / `4` bất nhất**, trong đó **Skill v3 dính `2/24` HF (`HF-6`: `TEST-02`, `TEST-05`)** và **Baseline dính `8/24` HF**.
-   - Xem thêm Errata số liệu Báo cáo v3 tại [evaluation-report.md](./evaluation/evaluation-report.md).
-2. **Bộ Hồi quy (`Regression v4 vs v3`, `n = 24`):**
-   - `v4` xóa sạch toàn bộ 3 ca HF của `v3` (`TEST-02, 05, 17`: **`0/24` HF** vs `3/24`), thắng **`9` vs `8`** (`7` bất nhất vị trí), tăng mạnh điểm **Đầy đủ `D2` (`3,750` vs `3,375`)**, **Tính sử dụng được `D9` (`3,562` vs `3,125`)** và **Trung thực `D1` (`3,312` vs `3,104`)** dù văn bản dài hơn (`767,9` vs `573,2` từ).
-3. **Bộ Kiểm thử Mới `held-out-v2.jsonl` (`n = 24`, gồm `technical_depth`, `ambiguity_no_fabrication`, `natural_conversation`, `hybrid_docs`, `real_world_long_docs` mô phỏng):**
-   - **`C (Full v4)` vs `A (Neutral)`:** **`20 / 24 (83,3%)`** thắng đồng thuận (`3` thua `A`, `1` bất nhất), **`0/24` vs `8/24` HF**, nhóm sạch (`n=16`) thắng **`12/16` (`75%`)**.
-   - **`C (Full v4)` vs `B (Simple Prompt)`:** **`17 / 24 (70,8%)`** thắng đồng thuận (`1` thua `B` tại `H2-14`, `6` bất nhất), **`1/24` (`H2-06: HF-2`) vs `8/24` HF**, nhóm sạch (`n=15`) thắng **`9/15`**.
-   - **`C (Full v4)` vs `C0 (SKILL-only Ablation, n = 12)`:** **`7 / 12` thắng `C`** vs `3` thắng `C0` (`H2-12, 19, 22`), `2` bất nhất *(trên đúng 12 ca này: `C0` và `C` cùng ghi nhận `2/12` HF theo Judge cặp đấu)*.
-4. **Bản vá `v4.1.0-beta` & Kiểm thử Hồi quy Tập trung (`n = 9` ca đã biết, KHÔNG phải held-out benchmark mới):**
-   - Kiểm định Gate 0 độc lập 1 output/lượt ([standalone-hf-protocol.md](./evaluation/standalone-hf-protocol.md)) xác nhận `H2-06` là `Verified HF` (`2/2` lượt standalone) ở bản `v4`, còn `H2-12` và `H2-19` `PASS_GATE_0` ở standalone (`H2-19` có mâu thuẫn xác nhận giữa Bảng/Mermaid và Câu hỏi mở).
-   - Trên 9 ca hồi quy tập trung (`v4.1 vs v4`), **Skill v4.1 đạt `0/9` Hard Fail** ở cả Standalone Gate 0 lẫn Blind A/B (`v4.1` thắng **`4`** gồm `H2-06, H2-12, H2-19, TEST-05`; `v4` thắng **`3`**; `2` bất nhất; điểm `D1 +0,556`, `D4 +0,334`, `D9 +0,700`).
-5. **Hạn chế chưa kiểm chứng:** Chưa chạy thực nghiệm đo thời gian hiểu đúng trên người đọc Việt Nam thật (`TtCU`, xem [human-eval-protocol.md](./evaluation/human-eval-protocol.md)); 4 ca `real_world_long_docs` là tài liệu mô phỏng sát thực tế; mới kiểm thử trong 1 họ mô hình (`flash` / `pro`) nên chưa kết luận độ ổn định chéo Claude/GPT/model khác.
-
----
-
-## 4. Kiểm định Toàn vẹn & Tái chạy Thống kê
+Cài đặt bằng **1 câu lệnh** qua [Skills CLI (`skills.sh`)](https://skills.sh) (yêu cầu Node.js ≥ 22.20):
 
 ```bash
-python evaluation/scripts/validate_datasets.py --check-skill
-python evaluation/scripts/analyze_results_v2.py
+npx skills add tronghongnguyen1012/vietnamese-human-readable-writing
 ```
+
+Trên **Windows PowerShell**, nếu hệ thống chặn `npx.ps1`, chạy thẳng `npx.cmd` kèm `--copy`:
+
+```powershell
+npx.cmd --yes skills add tronghongnguyen1012/vietnamese-human-readable-writing -g --copy
+```
+
+Xem hướng dẫn đầy đủ cho từng agent (`-a antigravity`, `claude-code`, `codex`, `cursor`), cập nhật, gỡ bỏ và cài thủ công không cần Node.js tại **[INSTALL.md](./INSTALL.md)**.
+
+---
+
+## Skill này giải quyết vấn đề gì?
+
+AI có thể tạo văn bản tiếng Việt rất nhanh và đúng ngữ pháp, nhưng người đọc chuyên môn vẫn phải đọc đi đọc lại vì 3 vấn đề:
+1. **Câu chữ mang cấu trúc tiếng Anh:** Lạm dụng danh từ hóa (*"cung cấp năng lực xử lý việc..."*), bị động máy móc (*"được... bởi..."*), rào đón dài dòng.
+2. **Nhảy thẳng vào chi tiết hoặc nén mỏng kỹ thuật:** Để người đọc tự ghép điều kiện, ngoại lệ, hoặc rút gọn bảng so sánh làm sai cơ chế hệ thống.
+3. **Tạo "độ rõ giả tạo" (*False Clarity*):** Khi yêu cầu gốc thiếu chủ thể, giao thức hay ngưỡng số, AI mặc định thường tự bịa tên hệ thống, API field hoặc quy tắc cho câu văn trôi chảy, khiến BA/Dev hiểu nhầm là dữ kiện đã chốt.
+
+### Khác gì với "Humanizer" tiếng Việt thông thường?
+
+| Tiêu chí | Humanizer thông thường | ViWrite (`vietnamese-human-readable-writing`) |
+|---|---|---|
+| **Mục tiêu cốt lõi** | Đổi giọng cho tự nhiên hoặc tránh bộ lọc AI. | Giúp **con người hiểu đúng ngay lần đọc đầu** và dùng được ngay vào công việc. |
+| **Khi nguồn thiếu thông tin** | Dễ đoán bù để câu văn nghe mượt mà. | **Cấm tự bịa** — giữ phần chắc chắn và tách rõ điểm chưa chốt / câu hỏi mở. |
+| **Tài liệu kỹ thuật & nghiệp vụ** | Ít quy tắc cho `và/hoặc`, biên `< / <=`, API contract hay sơ đồ. | Kiểm tra chéo văn bản–bảng–sơ đồ–BR–AC, giữ nguyên trạng thái `[Chưa chốt]` xuyên suốt. |
+| **Hội thoại đời thường** | Thường áp dụng một giọng viết chung. | Tự động giữ nhẹ (`refs = []`), trả lời tự nhiên theo mạch trò chuyện. |
+
+---
+
+## Trước và Sau khi dùng Skill
+
+<p align="center">
+  <img src="assets/before-after.svg" alt="Before and After — Ca H2-07" width="840">
+</p>
+
+Xem thêm 5 ví dụ trích **nguyên văn** từ kết quả benchmark trong **[examples/](./examples/README.md)**:
+- [Hội thoại tự nhiên](./examples/01-natural-conversation.md) (`H2-14`: 56 từ hài hước, `refs = []`, không giảng đạo lý)
+- [Giao tiếp công việc trên Teams](./examples/02-workplace-communication.md) (`TEST-10`: đi thẳng BLUF, chia việc FE/BE sắc nét)
+- [Business Rule đa nghĩa](./examples/03-business-rule-and-prd.md) (`H2-12`: bóc tách phương án có điều kiện, không chọn ngầm)
+- [RFC Kỹ thuật & SAD có Mermaid](./examples/04-technical-and-sad.md) (`H2-06` kiểm chứng lock PostgreSQL, `H2-19` đồng bộ trạng thái `[Chưa chốt]`)
+- [Nguồn thiếu dữ kiện (Trường hợp B)](./examples/05-ambiguous-source-case-b.md) (`H2-07`: chống *False Clarity*)
+
+---
+
+## Ngữ cảnh Hỗ trợ
+
+- **Nên dùng (Kích hoạt tự động):** Hội thoại tiếng Việt hằng ngày; giải thích kiến thức & đánh đổi kỹ thuật chuyên sâu; tin nhắn Slack/Teams/Email công việc; PRD, BRD, User Story, Acceptance Criteria, Business Rule; IDD, SAD, API Spec, RFC, Runbook; biên tập lại văn bản tiếng Việt rối hoặc nặng dịch máy.
+- **Không dùng:** Sinh code thuần túy, giải toán thuần túy, hoặc tác vụ hoàn toàn bằng ngôn ngữ khác tiếng Việt.
+
+---
+
+## Tương thích Agent & Runtime
+
+> Báo cáo chi tiết cả 4 tầng (*Định dạng → Cài đặt → Nạp danh sách → Kích hoạt sinh*) và log smoke test Windows xem tại **[docs/compatibility-and-smoke-test.md](./docs/compatibility-and-smoke-test.md)**. Skill **chưa** phát hành trên curated marketplace chính thức của các hãng.
+
+| Runtime | Định dạng & Manifest | Cài đặt trên Windows (`skills.sh`) | Nạp danh sách (`Discovery`) | Kích hoạt sinh (`Activation`) |
+|---|---|---|---|---|
+| **Antigravity IDE / CLI** | `SKILL.md` + `.antigravity-plugin/plugin.json` | Đã test thực tế (`--copy`, khớp SHA-256) | Đã xác minh (`skills list`) | **Đã kiểm chứng** (`flash` / `pro`) |
+| **Claude Code & Desktop** | `SKILL.md` + `.claude-plugin/{plugin,marketplace}.json` | Đã test copy qua CLI (`-a claude-code`) | Chưa test live trong app Claude | Chưa kiểm chứng trên model Claude |
+| **OpenAI Codex (CLI / App / IDE)** | `SKILL.md` + `.codex-plugin/` + `.agents/plugins/` | Đã test copy vào `.agents/skills/` | Chưa test live trong app Codex | Chưa kiểm chứng trên model GPT/Codex |
+| **Cursor** | `SKILL.md` + `.cursor-plugin/plugin.json` | Đã test copy vào `.agents/skills/` | Chưa test live trong Cursor | Chưa kiểm chứng live trong Cursor |
+
+---
+
+## Cách Skill Hoạt động
+
+1. **Phân loại ngữ cảnh & Nguồn (Context & Case Triage):** Tôn trọng trước mọi yêu cầu riêng của người dùng về văn phong/định dạng; tách **Trường hợp A** (nguồn đủ ý, diễn đạt rối) khỏi **Trường hợp B** (nguồn thiếu dữ kiện hoặc tự mâu thuẫn).
+2. **Progressive Disclosure linh hoạt (`0 → 1 → tối đa 2` file):** Trò chuyện ngắn không đọc thêm file (`refs = []`); tác vụ chuyên sâu chỉ mở 1 file phù hợp trong [`skills/vietnamese-human-readable-writing/references/`](./skills/vietnamese-human-readable-writing/references/), hoặc tối đa 2 file với tài liệu lai (PRD kèm API, IDD kèm BR).
+3. **Kiểm tra cuối có chọn lọc:** Với tài liệu chuyên môn phức tạp, đối chiếu lại 6 điểm (đủ ý, không mất điều kiện, giữ nguyên trạng thái `[Chưa chốt]` giữa văn bản–bảng–sơ đồ–BR–AC, kiểm chứng khẳng định kỹ thuật rủi ro cao) — **bỏ qua** bước kiểm tra nặng này trong hội thoại thường.
+
+---
+
+## Điểm nổi bật từ Thực nghiệm
+
+<p align="center">
+  <img src="assets/benchmark-chart.svg" alt="Verified Benchmark Highlights" width="840">
+</p>
+
+- **Chống bịa dữ kiện vượt xa prompt ngắn thông thường:** Trên 24 ca đa dạng của [held-out-v2.jsonl](./evaluation/held-out-v2.jsonl), `Skill v4` thắng **`20/24 (83,3%)`** trước AI mặc định (`0/24` vs `8/24` HF) và thắng **`17/24 (70,8%)`** trước Prompt 6 quy tắc (`1/24` vs `8/24` HF). Prompt ngắn thông thường vẫn dính tới `33,3%` lỗi Hard Fail khi gặp nguồn thiếu thông tin.
+- **Bản vá ổn định `v4.1.0-beta`:** Trên 9 ca hồi quy tập trung đã biết (3 ca lỗi trọng tâm của v4 + hội thoại + kỹ thuật sâu + tài liệu dài), **v4.1 đạt `0/9` Hard Fail** ở cả kiểm định Gate 0 độc lập lẫn chấm mù `v4.1 vs v4`, khắc phục lỗi lock mode PostgreSQL (`H2-06`) và đồng bộ trạng thái `[Chưa chốt]` trên sơ đồ Mermaid (`H2-19`).
+
+---
+
+## Tài liệu Chuyên sâu (Nghiên cứu & Kiểm thử)
+
+- [CHANGELOG.md](./CHANGELOG.md) — Lịch sử thay đổi `v1 → v4.1.0-beta`
+- [docs/compatibility-and-smoke-test.md](./docs/compatibility-and-smoke-test.md) — Phân tích 4 repo tham chiếu, smoke test Windows & đề xuất License
+- [docs/DESIGN_DECISIONS.md](./docs/DESIGN_DECISIONS.md) · [docs/REVIEW-FINDINGS.md](./docs/REVIEW-FINDINGS.md) — Quyết định kiến trúc & kết quả kiểm toán
+- [research/research-report.md](./research/research-report.md) · [competitive-research-report.md](./research/competitive-research-report.md) — Cơ sở Việt ngữ học & đối chiếu 8 repo Skill
+- [evaluation/v4.1-stabilization-report.md](./evaluation/v4.1-stabilization-report.md) · [evaluation-report-v2.md](./evaluation/evaluation-report-v2.md) — Báo cáo kiểm thử đầy đủ & đính chính đánh giá
+
+---
+
+## Giới hạn, Góp ý & Giấy phép
+
+- **Giới hạn hiện tại:** Toàn bộ kết quả chất lượng văn bản hiện dựa trên **LLM Blind Judge (`pro`)** với model sinh **`flash`**; **chưa chạy thử nghiệm đo thời gian hiểu đúng (*Time to Correct Understanding*) trên người đọc Việt Nam thật** (quy trình đã thiết kế sẵn tại [human-eval-protocol.md](./evaluation/human-eval-protocol.md)). Các trường hợp tài liệu dài trong `held-out-v2.jsonl` là tài liệu mô phỏng, và prompt đầy đủ + file tham chiếu sẽ tăng độ trễ ở các tác vụ phức tạp.
+- **Phản hồi & Đóng góp:** Khi báo lỗi đầu ra, vui lòng đính kèm prompt gốc, đoạn trả lời bị lỗi và mục [CONTRIBUTING / Issues](https://github.com/tronghongnguyen1012/vietnamese-human-readable-writing/issues). Không thay đổi tên định danh `vietnamese-human-readable-writing` hoặc dữ liệu lịch sử dưới `evaluation/results*`.
+- **Giấy phép:** Hiện repository **chưa đính kèm tệp `LICENSE`**; xem phân tích đề xuất **MIT** / **Apache-2.0** tại [docs/compatibility-and-smoke-test.md](./docs/compatibility-and-smoke-test.md#4-%C4%91%E1%BB%81-xu%E1%BA%A5t-gi%E1%BA%A5y-ph%C3%A9p-m%C3%A3-ngu%E1%BB%93n-m%E1%BB%9F-license-proposal) trước khi chủ sở hữu phê duyệt.

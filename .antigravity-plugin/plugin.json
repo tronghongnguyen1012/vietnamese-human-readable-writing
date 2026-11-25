@@ -1,0 +1,18 @@
+{
+  "name": "vietnamese-human-readable-writing",
+  "displayName": "ViWrite (Vietnamese Human-Readable Writing)",
+  "version": "4.1.0-beta",
+  "description": "Write clear, structured, natural Vietnamese without fabricating missing facts across chat, workplace messages, business specs, and technical documentation.",
+  "logo": "assets/logo.svg",
+  "suggestedPrompts": [
+    "Làm rõ câu quy tắc nghiệp vụ tiếng Việt sau mà không tự bịa thêm dữ kiện",
+    "Viết đặc tả API Spec / IDD tiếng Việt giữ nguyên trạng thái chưa chốt",
+    "Biên tập đoạn văn tiếng Việt nặng dịch máy cho tự nhiên và đúng trình tự"
+  ],
+  "author": {
+    "name": "tronghongnguyen1012",
+    "url": "https://github.com/tronghongnguyen1012"
+  },
+  "homepage": "https://github.com/tronghongnguyen1012/vietnamese-human-readable-writing",
+  "repository": "https://github.com/tronghongnguyen1012/vietnamese-human-readable-writing"
+}
