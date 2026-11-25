@@ -1,6 +1,6 @@
 # Hướng dẫn Cài đặt, Cập nhật & Gỡ bỏ (`INSTALL.md`)
 
-Hướng dẫn chi tiết cài đặt **ViWrite** (Skill ID: `vietnamese-human-readable-writing`, bản phát hành `v4.1.0-beta`) theo từng runtime, không dùng custom installer, hook hay dịch vụ nền.
+Hướng dẫn chi tiết cài đặt **ViWrite** (Skill ID: `vietnamese-human-readable-writing`, bản phát hành **`v4.2.0-beta`**) theo từng runtime, không dùng custom installer, hook hay dịch vụ nền.
 
 > **Phương thức khuyến nghị trên mọi runtime:** Dùng **Universal Skills CLI (`skills.sh`)** — đã kiểm thử thực tế trên Windows (cả project-local lẫn sandbox global `-g`). Các cách nạp **Native Plugin** bên dưới đang đánh dấu **`experimental`** vì máy kiểm thử chưa cài sẵn CLI/app gốc của từng hãng để xác minh live.
 
@@ -25,28 +25,36 @@ npx.cmd --yes skills add tronghongnguyen1012/vietnamese-human-readable-writing -
 # Cài Global (dùng cho mọi dự án của bạn)
 npx.cmd --yes skills add tronghongnguyen1012/vietnamese-human-readable-writing -g --copy -y
 
-# Ghim đúng tag phát hành Beta hiện tại
-npx.cmd --yes skills add tronghongnguyen1012/vietnamese-human-readable-writing@v4.1.0-beta --skill vietnamese-human-readable-writing -g --copy -y
+# Ghim đúng tag phát hành Beta hiện tại (v4.2.0-beta)
+npx.cmd --yes skills add tronghongnguyen1012/vietnamese-human-readable-writing@v4.2.0-beta --skill vietnamese-human-readable-writing -g --copy -y
 
 # Cài một lúc cho cả Antigravity, Claude Code, Codex và Cursor (Project-local)
 npx.cmd --yes skills add tronghongnguyen1012/vietnamese-human-readable-writing --skill vietnamese-human-readable-writing -a antigravity claude-code codex cursor --copy -y
 ```
 
-### Liệt kê, Cập nhật & Gỡ bỏ
+### Liệt kê, Cập nhật lên `v4.2.0-beta`, Rollback về `v4.1.0-beta` & Gỡ bỏ
 
 ```powershell
 # Liệt kê skill đã cài (project-local và global)
 npx.cmd --yes skills list
 npx.cmd --yes skills list -g
 
-# Cập nhật riêng Project-local (-p) hoặc toàn cục (-g)
+# Cập nhật bản đã cài lên mới nhất (Project-local -p hoặc Global -g)
 npx.cmd --yes skills update -p -y
 npx.cmd --yes skills update -g -y
+
+# Hoặc cài đè ghim đúng bản v4.2.0-beta (Global Antigravity)
+npx.cmd --yes skills add tronghongnguyen1012/vietnamese-human-readable-writing@v4.2.0-beta --skill vietnamese-human-readable-writing -a antigravity -g --copy -y
+
+# Rollback về bản ổn định trước đó (v4.1.0-beta) qua skills.sh
+npx.cmd --yes skills add tronghongnguyen1012/vietnamese-human-readable-writing@v4.1.0-beta --skill vietnamese-human-readable-writing -a antigravity -g --copy -y
 
 # Gỡ bỏ hoàn toàn khỏi Project-local hoặc Global
 npx.cmd --yes skills remove vietnamese-human-readable-writing -y
 npx.cmd --yes skills remove vietnamese-human-readable-writing -g -y
 ```
+
+*(Nếu rollback **thủ công** không dùng Node.js: clone/checkout đúng tag `git checkout v4.1.0-beta`, xóa thư mục đích rồi copy lại `.\skills\vietnamese-human-readable-writing`; kiểm tra dòng tiêu đề đầu `SKILL.md` hiển thị `# Viết Tiếng Việt Rõ Nghĩa và Khả Dụng (v4.1)`.)*
 
 ---
 

@@ -1,0 +1,70 @@
+[
+  {
+    "smoke_id": "Smoke1_Pos",
+    "arm": "v4.1_native",
+    "subagent_id": "d0f6f17d-5fe8-45bf-bab1-9787a0a64b7a",
+    "output": "**Câu viết lại (giữ nguyên dữ kiện nguồn):**\n> Sau 3 lần vi phạm liên tiếp, khóa tạm thời trong 24 giờ và gửi cảnh báo *(chưa xác định chủ thể thực hiện, đối tượng bị khóa và đối tượng nhận cảnh báo)*.\n\nNếu dùng trong tài liệu quy định hoặc đặc tả cần tường minh vai trò, có thể viết theo mẫu chờ điền dữ kiện:\n> Sau 3 lần vi phạm liên tiếp, **[Chủ thể thực hiện]** khóa tạm thời **[đối tượng bị khóa]** trong 24 giờ và gửi cảnh báo đến **[đối tượng nhận]**.\n\n**Điểm chưa xác định / cần chốt:**\n- **Thiếu trực tiếp trong câu gốc:**\n  - *Chủ thể thực hiện:* Ai hoặc thành phần nào thực hiện việc khóa và gửi cảnh báo?\n  - *Đối tượng bị khóa:* Khóa đối tượng nào trong 24 giờ?\n  - *Đối tượng nhận cảnh báo:* Gửi cảnh báo đến ai?\n- **Cần chốt thêm nếu dùng để triển khai (tùy chọn):** Hành vi nào được tính là vi phạm và bộ đếm số lần vi phạm được xử lý thế nào sau khi hết 24 giờ.",
+    "all_read_paths": [
+      "C:\\Users\\Ztayrong440z\\.gemini\\config\\skills\\vietnamese-human-readable-writing\\SKILL.md",
+      "C:\\Users\\Ztayrong440z\\.gemini\\config\\plugins\\superpowers\\skills\\using-superpowers\\SKILL.md",
+      "C:\\Users\\Ztayrong440z\\.gemini\\config\\skills\\vietnamese-human-readable-writing\\references\\vietnamese-clarity-and-style.md"
+    ],
+    "viwrite_skill_path": "C:\\Users\\Ztayrong440z\\.gemini\\config\\skills\\vietnamese-human-readable-writing\\SKILL.md",
+    "viwrite_refs_paths": [
+      "C:\\Users\\Ztayrong440z\\.gemini\\config\\skills\\vietnamese-human-readable-writing\\references\\vietnamese-clarity-and-style.md"
+    ],
+    "latency_sec": 23.0,
+    "model_reported": "gemini-4-hydrogen-high",
+    "input_tokens_sum": 16639,
+    "output_tokens_sum": 3586,
+    "word_count": 188
+  },
+  {
+    "smoke_id": "Smoke1_Neg",
+    "arm": "v4.1_native",
+    "subagent_id": "4e9dd657-d948-4c6d-9618-1d7d42cf06df",
+    "output": "import pytest\n\nfrom binary_search import binary_search\n\n\n@pytest.mark.parametrize(\n    \"arr, target, expected\",\n    [\n        ([], 5, -1),\n        ([1], 1, 0),\n        ([1], 2, -1),\n        ([1, 3, 5, 7, 9], 1, 0),\n        ([1, 3, 5, 7, 9], 5, 2),\n        ([1, 3, 5, 7, 9], 9, 4),\n        ([1, 3, 5, 7, 9], 0, -1),\n        ([1, 3, 5, 7, 9], 4, -1),\n        ([1, 3, 5, 7, 9], 10, -1),\n        ([-10, -3, 0, 4, 12], -10, 0),\n        ([-10, -3, 0, 4, 12], -3, 1),\n        ([-10, -3, 0, 4, 12], 12, 4),\n        ([-10, -3, 0, 4, 12], -5, -1),\n    ],\n)\ndef test_binary_search(arr, target, expected):\n    assert binary_search(arr, target) == expected\n\n\ndef test_binary_search_duplicates():\n    arr = [1, 2, 2, 2, 3, 4]\n    index = binary_search(arr, 2)\n    assert 1 <= index <= 3\n    assert arr[index] == 2\n\n\ndef test_binary_search_large_array():\n    arr = list(range(0, 10000, 2))\n    assert binary_search(arr, 4568) == 2284\n    assert binary_search(arr, 4569) == -1\n",
+    "all_read_paths": [],
+    "viwrite_skill_path": null,
+    "viwrite_refs_paths": [],
+    "latency_sec": 9.0,
+    "model_reported": "gemini-4-hydrogen-high",
+    "input_tokens_sum": 10106,
+    "output_tokens_sum": 1179,
+    "word_count": 142
+  },
+  {
+    "smoke_id": "Smoke2_Pos",
+    "arm": "v4.2-rc_native",
+    "subagent_id": "f517ede3-6a18-443e-97c4-482169d66d05",
+    "output": "**Bản viết lại (giữ nguyên dữ kiện nguồn, lược bỏ từ ngữ hành chính):**\n> Sau 3 lần vi phạm liên tiếp, khóa tạm thời trong 24 giờ và gửi cảnh báo.\n\nNếu cần làm rõ ngữ nghĩa khi hoàn thiện quy định hoặc đặc tả, bạn có thể điền trực tiếp vào các vị trí đang khuyết dữ kiện:\n> Sau 3 lần vi phạm liên tiếp, **[chủ thể thực hiện]** khóa tạm thời **[đối tượng bị khóa]** trong 24 giờ và gửi cảnh báo tới **[người nhận]**.\n\n**Các dữ kiện câu gốc chưa nêu rõ (không tự suy đoán thêm):**\n- **Chủ thể thực hiện:** Hệ thống tự động xử lý hay người vận hành/quản trị viên thao tác?\n- **Đối tượng bị khóa:** Khóa tài khoản, thiết bị, địa chỉ IP hay tính năng nào?\n- **Người nhận cảnh báo:** Gửi cho bên vi phạm, bộ phận quản trị/vận hành hay cả hai?",
+    "all_read_paths": [
+      "c:\\Users\\Ztayrong440z\\.gemini\\antigravity\\scratch\\Vi Writer\\.agents\\skills\\vietnamese-human-readable-writing\\SKILL.md",
+      "C:\\Users\\Ztayrong440z\\.gemini\\config\\plugins\\superpowers\\skills\\using-superpowers\\SKILL.md",
+      "c:\\Users\\Ztayrong440z\\.gemini\\antigravity\\scratch\\Vi Writer\\.agents\\skills\\vietnamese-human-readable-writing\\references\\vietnamese-clarity-and-style.md"
+    ],
+    "viwrite_skill_path": "c:\\Users\\Ztayrong440z\\.gemini\\antigravity\\scratch\\Vi Writer\\.agents\\skills\\vietnamese-human-readable-writing\\SKILL.md",
+    "viwrite_refs_paths": [
+      "c:\\Users\\Ztayrong440z\\.gemini\\antigravity\\scratch\\Vi Writer\\.agents\\skills\\vietnamese-human-readable-writing\\references\\vietnamese-clarity-and-style.md"
+    ],
+    "latency_sec": 25.0,
+    "model_reported": "gemini-4-hydrogen-high",
+    "input_tokens_sum": 17614,
+    "output_tokens_sum": 3608,
+    "word_count": 156
+  },
+  {
+    "smoke_id": "Smoke2_Neg",
+    "arm": "v4.2-rc_native",
+    "subagent_id": "017c6b4b-c17e-48df-9521-9719fb31e14b",
+    "output": "import pytest\n\nfrom binary_search import binary_search\n\n\n@pytest.mark.parametrize(\n    (\"arr\", \"target\", \"expected\"),\n    [\n        ([], 5, -1),\n        ([5], 5, 0),\n        ([5], 3, -1),\n        ([1, 3, 5, 7, 9], 1, 0),\n        ([1, 3, 5, 7, 9], 5, 2),\n        ([1, 3, 5, 7, 9], 9, 4),\n        ([2, 4, 6, 8], 4, 1),\n        ([2, 4, 6, 8], 6, 2),\n        ([1, 3, 5, 7], 0, -1),\n        ([1, 3, 5, 7], 10, -1),\n        ([1, 3, 5, 7], 4, -1),\n        ([-10, -5, 0, 5, 10], -5, 1),\n        ([-10, -5, 0, 5, 10], -10, 0),\n    ],\n)\ndef test_binary_search(arr: list[int], target: int, expected: int) -> None:\n    assert binary_search(arr, target) == expected\n\n\ndef test_binary_search_with_duplicates() -> None:\n    arr = [1, 2, 2, 2, 3, 4]\n    index = binary_search(arr, 2)\n    assert 0 <= index < len(arr)\n    assert arr[index] == 2\n\n\ndef test_binary_search_large_array() -> None:\n    arr = list(range(0, 10_000, 2))\n    assert binary_search(arr, 4_200) == 2_100\n    assert binary_search(arr, 4_201) == -1\n",
+    "all_read_paths": [],
+    "viwrite_skill_path": null,
+    "viwrite_refs_paths": [],
+    "latency_sec": 13.0,
+    "model_reported": "gemini-4-hydrogen-high",
+    "input_tokens_sum": 9070,
+    "output_tokens_sum": 2183,
+    "word_count": 146
+  }
+]

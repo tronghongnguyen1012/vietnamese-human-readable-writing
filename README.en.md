@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/tronghongnguyen1012/vietnamese-human-readable-writing/releases/tag/v4.1.0-beta"><img src="https://img.shields.io/badge/release-v4.1.0--beta-0F766E?style=flat-square" alt="Release v4.1.0-beta"></a>
+  <a href="https://github.com/tronghongnguyen1012/vietnamese-human-readable-writing/releases/tag/v4.2.0-beta"><img src="https://img.shields.io/badge/release-v4.2.0--beta-0F766E?style=flat-square" alt="Release v4.2.0-beta"></a>
   <a href="https://agentskills.io"><img src="https://img.shields.io/badge/spec-agentskills.io-1E293B?style=flat-square" alt="Agent Skills Spec"></a>
   <a href="https://skills.sh"><img src="https://img.shields.io/badge/CLI-skills.sh-0D9488?style=flat-square" alt="skills.sh"></a>
   <img src="https://img.shields.io/badge/skill_id-vietnamese--human--readable--writing-334155?style=flat-square" alt="Skill ID">
@@ -136,12 +136,12 @@ npx.cmd --yes skills update -g -y
 
 | Runtime | 1. Manifest / Schema | 2. Skills CLI Discovery | 3. File Install (`--copy`) | 4. Native Runtime Discovery | 5. Native Auto Activation | 6. Model Quality Evaluation |
 |---|---|---|---|---|---|---|
-| **Antigravity** | **Official Schema Valid** (`antigravity.google/schemas/v1/plugin.json`) | **Verified** | **Windows Verified** (project & sandbox `-g`) | Not live-tested in `agy` app/CLI | Not live-tested in `agy` app/CLI | **Evaluated via Subagent** (`flash` / `pro`)\* |
+| **Antigravity** | **Official Schema Valid** (`antigravity.google/schemas/v1/plugin.json`) | **Verified** | **Windows Verified** (project & sandbox `-g`) | **Workspace override verified** (`v4.2`, subagent host)\* | **Pos/Neg smoke verified** (`v4.2` & `v4.1`)\* | **Evaluated via Subagent** (`flash` / `pro` / `Gemini 4 Neon`)\* |
 | **Claude Code / Desktop** | Marketplace SchemaStore Valid; plugin structural OK | **Verified** | **Windows Verified** (project & sandbox `-g`) | Not live-tested | Not live-tested | Untested on Claude models |
 | **OpenAI Codex** | Structural Valid (`marketplace.json` `source: local`) | **Verified** | **Windows Verified** (project & sandbox `-g`) | Not live-tested | Not live-tested | Untested on GPT/Codex models |
 | **Cursor** | Structural Valid (`.cursor-plugin/plugin.json`) | **Verified** | **Windows Verified** (project & sandbox `-g`) | Not live-tested | Not live-tested | Untested in Cursor Agent |
 
-\* **Important distinction:** All Antigravity quality evaluations (`v4` and `v4.1`) ran through an **Antigravity subagent** (Level 6 only). They do **not** verify Level 4 (*Native Runtime Discovery*) or Level 5 (*Native Automatic Activation*) inside the live IDE/CLI application. ViWrite is also not yet published on any vendor-curated marketplace. Full details and test logs are in **[docs/compatibility-and-smoke-test.md](./docs/compatibility-and-smoke-test.md)**.
+\* **Important distinction:** Antigravity `v4`/`v4.1` benchmarks used subagent injection, and the `v4.2.0-beta` smoke test & 7-case validation verified Antigravity workspace `.agents/skills/` override inside the IDE subagent harness (not the standalone `agy` CLI binary). ViWrite is not yet published on any vendor-curated marketplace. Full details and test logs are in **[docs/compatibility-and-smoke-test.md](./docs/compatibility-and-smoke-test.md)** and **[evaluation/v4.2-rc/native-validation-report.md](./evaluation/v4.2-rc/native-validation-report.md)**.
 
 ---
 
@@ -163,17 +163,18 @@ npx.cmd --yes skills update -g -y
 
 - On **24 held-out cases** ([held-out-v2.jsonl](./evaluation/held-out-v2.jsonl), generator `flash`, two-pass position-swapped Blind Judge `pro`), `Skill v4` won **`20/24 (83.3%)`** vs a Neutral baseline (`0/24` vs `8/24` Hard Fails) and **`17/24 (70.8%)`** vs a 6-rule Simple Prompt (`1/24*` vs `8/24` Hard Fails).
 - On the **9-case targeted regression** for **`v4.1.0-beta`**: **`0/9` Hard Fails** in both standalone Gate 0 audits and blind A/B checks vs `v4`.
+- On the **focused native validation** for **`v4.2.0-beta`** ([native-validation-report.md](./evaluation/v4.2-rc/native-validation-report.md), `Gemini 4 Neon`): integrates selective refinements from two archived R&D rounds on top of `v4.1` (5 task modes to stop leaking internal open-question lists into end-user notices/emails, meaning-first reconstruction, flexible reading order, tighter `may` vs `will` / scope / domain-term preservation). Achieved **`7/7` Gate 0 PASS** (`0` Critical/Major, `1` Minor wording nuance on unseen `NV-06`) vs **`6/6` Gate 0 PASS** for native `v4.1` (`1` Minor with `2` missing must-preserve open questions on `NV-04`).
 
 **Package layout & detailed research:**
-- Runtime payload is self-contained inside [`skills/vietnamese-human-readable-writing/SKILL.md`](./skills/vietnamese-human-readable-writing/SKILL.md) (82 lines) and [`references/`](./skills/vietnamese-human-readable-writing/references/), loading zero extra files during casual conversation.
+- Runtime payload is self-contained inside [`skills/vietnamese-human-readable-writing/SKILL.md`](./skills/vietnamese-human-readable-writing/SKILL.md) (91 lines) and [`references/`](./skills/vietnamese-human-readable-writing/references/), loading `0–2` reference files depending on task complexity.
 - [docs/compatibility-and-smoke-test.md](./docs/compatibility-and-smoke-test.md) — 6-level compatibility breakdown, Windows test logs, and MIT License + IP audit.
-- [docs/DESIGN_DECISIONS.md](./docs/DESIGN_DECISIONS.md) · [docs/REVIEW-FINDINGS.md](./docs/REVIEW-FINDINGS.md) · [CHANGELOG.md](./CHANGELOG.md) — Architecture decisions & `v1 → v4.1.0-beta` release notes.
-- [research/research-report.md](./research/research-report.md) · [evaluation/v4.1-stabilization-report.md](./evaluation/v4.1-stabilization-report.md) · [evaluation/evaluation-report-v2.md](./evaluation/evaluation-report-v2.md) — Full research & evaluation archives.
+- [docs/DESIGN_DECISIONS.md](./docs/DESIGN_DECISIONS.md) · [docs/REVIEW-FINDINGS.md](./docs/REVIEW-FINDINGS.md) · [CHANGELOG.md](./CHANGELOG.md) — Architecture decisions & `v1 → v4.2.0-beta` release notes.
+- [research/research-report.md](./research/research-report.md) · [evaluation/v4.1-stabilization-report.md](./evaluation/v4.1-stabilization-report.md) · [evaluation/evaluation-report-v2.md](./evaluation/evaluation-report-v2.md) · [evaluation/v4.2-rc/native-validation-report.md](./evaluation/v4.2-rc/native-validation-report.md) — Evaluation records (R&D branches preserved at tags [`archive/experiment-semantic-reconstruction`](https://github.com/tronghongnguyen1012/vietnamese-human-readable-writing/tree/archive/experiment-semantic-reconstruction) & [`archive/experiment-v5-communication-first`](https://github.com/tronghongnguyen1012/vietnamese-human-readable-writing/tree/archive/experiment-v5-communication-first)).
 
 ---
 
 ## Limitations & License
 
-- **Current limitations:** Quality evaluations rely on an **LLM Blind Judge (`pro`)** scoring **`flash`** outputs; **human reader testing (*Time to Correct Understanding*) has not been run yet** ([evaluation/human-eval-protocol.md](./evaluation/human-eval-protocol.md)). Long multi-section documents in `held-out-v2.jsonl` are simulated cases.
+- **Current limitations:** `v4.2.0-beta` refinements are backed by a small `7`-case focused native validation and single-user directional Human Evaluation ([human-evaluation-log.md](./evaluation/v4.2-rc/human-evaluation-log.md)), **not statistical proof of overall superiority**. Because global `v4.1` remained installed in Antigravity, no pure 0-skill Gemini baseline was isolated in the native check ([prior-experiments-errata.md](./evaluation/v4.2-rc/prior-experiments-errata.md)). Earlier `v4` benchmarks used an LLM Blind Judge (`pro`) on `flash` outputs; multi-reader comprehension speed (*Time to Correct Understanding*, [human-eval-protocol.md](./evaluation/human-eval-protocol.md)) and live runs in Claude Code / Codex / Cursor remain untested.
 - **License:** Released under the **[MIT License](./LICENSE)** (`Copyright (c) 2026 Trong Nguyen (tronghongnguyen1012)`). See the IP/reuse audit in [docs/compatibility-and-smoke-test.md](./docs/compatibility-and-smoke-test.md).
 - **Bug reports:** Open an issue in [GitHub Issues](https://github.com/tronghongnguyen1012/vietnamese-human-readable-writing/issues) with the original prompt and output snippet.
