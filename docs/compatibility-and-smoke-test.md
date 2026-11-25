@@ -5,7 +5,7 @@ Tài liệu ghi nhận kết quả thực tế (chỉ báo cáo những gì đã
 2. Ma trận tương thích **6 tầng độc lập** trên các runtime AI.
 3. Kết quả kiểm tra schema/cấu trúc của 6 tệp plugin manifest.
 4. Nhật ký smoke test thực tế trên Windows (project-local, cập nhật `-p`, global cô lập `-g`, cài thủ công lặp lại).
-5. Kiểm toán quyền sở hữu nội dung & đề xuất **MIT License** chờ chủ repository xác nhận.
+5. Kiểm toán quyền sở hữu nội dung & xác nhận áp dụng **MIT License**.
 
 ---
 
@@ -68,9 +68,9 @@ Máy kiểm thử hiện tại **không cài sẵn** `claude`, `codex`, `cursor`
 
 ---
 
-## 5. Kiểm toán Nguồn Gốc Tài sản & Đề xuất Giấy phép (`MIT License`)
+## 5. Kiểm toán Nguồn Gốc Tài sản & Giấy phép (`MIT License`)
 
-Theo yêu cầu chỉ áp dụng giấy phép khi chủ repository xác nhận, **tệp `LICENSE` cố ý chưa được tạo**. Kết quả kiểm toán quyền sử dụng toàn bộ tệp hiện có trong repository:
+Chủ repository đã xác nhận áp dụng **MIT License** tại tệp [`LICENSE`](../LICENSE) (`Copyright (c) 2026 Trong Nguyen (tronghongnguyen1012)`) và đồng bộ trường `"license": "MIT"` trong các plugin manifest (`.claude-plugin/`, `.codex-plugin/`, `.cursor-plugin/`, `.antigravity-plugin/`). Kết quả kiểm toán quyền sử dụng toàn bộ tệp hiện có trong repository:
 
 | Thành phần trong Repository | Nguồn gốc & Tình trạng Bản quyền | Khả năng áp dụng MIT License |
 |---|---|---|
@@ -80,4 +80,4 @@ Theo yêu cầu chỉ áp dụng giấy phép khi chủ repository xác nhận, 
 | `assets/*.svg` (`logo`, `banner*`, `before-after*`, `benchmark-chart*`) | Đồ họa SVG vector tự tạo mới 100%, chỉ dùng bảng màu tự chọn và font hệ thống (`system-ui`, `Segoe UI`, `Roboto`, `Helvetica`, `Arial`), không nhúng font hay icon thương mại bên thứ ba. | Sẵn sàng |
 | `.claude-plugin/`, `.codex-plugin/`, `.agents/plugins/`, `.cursor-plugin/`, `.antigravity-plugin/` | Manifest JSON tự viết theo đặc tả cấu trúc công khai của từng nền tảng. | Sẵn sàng |
 
-**Đề xuất cho chủ repository:** **MIT License** phù hợp nhất vì toàn bộ tài sản đều là nội dung tự biên soạn, tương thích đồng bộ với cả 4 repository tham chiếu và giữ rào cản thấp nhất cho người cài đặt vào IDE/CI nội bộ. Sau khi chủ repository xác nhận, chỉ cần tạo tệp `LICENSE` ở gốc repo (năm bản quyền + tên chủ sở hữu) và bổ sung `"license": "MIT"` vào các manifest tương ứng nếu muốn.
+**Kết luận áp dụng:** **MIT License** tương thích đồng bộ với toàn bộ nội dung tự biên soạn và cả 4 repository tham chiếu, giúp người dùng cá nhân và doanh nghiệp cài đặt thuận tiện vào IDE/CI.

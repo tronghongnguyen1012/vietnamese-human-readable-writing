@@ -14,7 +14,7 @@
   <a href="https://agentskills.io"><img src="https://img.shields.io/badge/spec-agentskills.io-1E293B?style=flat-square" alt="Agent Skills Spec"></a>
   <a href="https://skills.sh"><img src="https://img.shields.io/badge/CLI-skills.sh-0D9488?style=flat-square" alt="skills.sh"></a>
   <img src="https://img.shields.io/badge/skill_id-vietnamese--human--readable--writing-334155?style=flat-square" alt="Skill ID">
-  <a href="./docs/compatibility-and-smoke-test.md"><img src="https://img.shields.io/badge/license-MIT%20(proposed)-64748B?style=flat-square" alt="MIT Proposed License"></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/badge/license-MIT-0F766E?style=flat-square" alt="MIT License"></a>
 </p>
 
 <p align="center">
@@ -175,5 +175,5 @@ npx.cmd --yes skills update -g -y
 ## Limitations & License
 
 - **Current limitations:** Quality evaluations rely on an **LLM Blind Judge (`pro`)** scoring **`flash`** outputs; **human reader testing (*Time to Correct Understanding*) has not been run yet** ([evaluation/human-eval-protocol.md](./evaluation/human-eval-protocol.md)). Long multi-section documents in `held-out-v2.jsonl` are simulated cases.
-- **License status:** No `LICENSE` file is committed yet. Based on the originality/IP check in [docs/compatibility-and-smoke-test.md](./docs/compatibility-and-smoke-test.md), **MIT License** is proposed pending repository owner confirmation.
+- **License:** Released under the **[MIT License](./LICENSE)** (`Copyright (c) 2026 Trong Nguyen (tronghongnguyen1012)`). See the IP/reuse audit in [docs/compatibility-and-smoke-test.md](./docs/compatibility-and-smoke-test.md).
 - **Bug reports:** Open an issue in [GitHub Issues](https://github.com/tronghongnguyen1012/vietnamese-human-readable-writing/issues) with the original prompt and output snippet.

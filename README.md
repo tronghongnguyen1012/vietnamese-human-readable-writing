@@ -14,7 +14,7 @@
   <a href="https://agentskills.io"><img src="https://img.shields.io/badge/spec-agentskills.io-1E293B?style=flat-square" alt="Agent Skills Spec"></a>
   <a href="https://skills.sh"><img src="https://img.shields.io/badge/CLI-skills.sh-0D9488?style=flat-square" alt="skills.sh"></a>
   <img src="https://img.shields.io/badge/skill_id-vietnamese--human--readable--writing-334155?style=flat-square" alt="Skill ID">
-  <a href="./docs/compatibility-and-smoke-test.md"><img src="https://img.shields.io/badge/license-MIT%20(proposed)-64748B?style=flat-square" alt="MIT Proposed License"></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/badge/license-MIT-0F766E?style=flat-square" alt="MIT License"></a>
 </p>
 
 <p align="center">
@@ -168,7 +168,7 @@ ViWrite phân tách trung thực **6 tầng kiểm chứng** thay vì gộp chun
 
 **Cơ chế gói Skill & tài liệu chuyên sâu:**
 - Gói thực thi nằm gọn trong [`skills/vietnamese-human-readable-writing/SKILL.md`](./skills/vietnamese-human-readable-writing/SKILL.md) (82 dòng) và [`references/`](./skills/vietnamese-human-readable-writing/references/) (`business-specs`, `information-architecture`, `technical-specs`, `vietnamese-clarity-and-style`), giữ nhẹ hội thoại thường và chỉ nạp đúng tài liệu cần thiết cho đặc tả phức tạp.
-- [docs/compatibility-and-smoke-test.md](./docs/compatibility-and-smoke-test.md) — Ma trận tương thích 6 tầng, nhật ký smoke test Windows & kiểm toán quyền sử dụng mã nguồn mở (đề xuất **MIT License**).
+- [docs/compatibility-and-smoke-test.md](./docs/compatibility-and-smoke-test.md) — Ma trận tương thích 6 tầng, nhật ký smoke test Windows & kiểm toán bản quyền (**MIT License**).
 - [docs/DESIGN_DECISIONS.md](./docs/DESIGN_DECISIONS.md) · [docs/REVIEW-FINDINGS.md](./docs/REVIEW-FINDINGS.md) · [CHANGELOG.md](./CHANGELOG.md) — Thiết kế kiến trúc & lịch sử phát hành `v1 → v4.1.0-beta`.
 - [research/research-report.md](./research/research-report.md) · [evaluation/v4.1-stabilization-report.md](./evaluation/v4.1-stabilization-report.md) · [evaluation/evaluation-report-v2.md](./evaluation/evaluation-report-v2.md) — Cơ sở Việt ngữ học & báo cáo kiểm thử chi tiết.
 
@@ -177,5 +177,5 @@ ViWrite phân tách trung thực **6 tầng kiểm chứng** thay vì gộp chun
 ## Giới hạn & Giấy phép
 
 - **Giới hạn hiện tại:** Đánh giá chất lượng văn bản đến nay mới dùng **LLM Blind Judge (`pro`)** với model sinh **`flash`**; **chưa chạy thử nghiệm đo thời gian hiểu đúng (*Time to Correct Understanding*) trên người đọc Việt Nam thật** (quy trình đã chuẩn bị sẵn tại [evaluation/human-eval-protocol.md](./evaluation/human-eval-protocol.md)). Các ca tài liệu dài trong `held-out-v2.jsonl` là dữ liệu mô phỏng.
-- **Giấy phép:** Repository **chưa đính kèm tệp `LICENSE`**. Sau khi kiểm toán toàn bộ tài sản nội bộ hoàn toàn tự biên soạn (xem [docs/compatibility-and-smoke-test.md](./docs/compatibility-and-smoke-test.md)), dự án đề xuất áp dụng **MIT License** và sẽ chỉ tạo tệp `LICENSE` khi chủ repository xác nhận.
+- **Giấy phép:** Phân phối theo **[MIT License](./LICENSE)** (`Copyright (c) 2026 Trong Nguyen (tronghongnguyen1012)`). Xem kết quả kiểm toán nguồn gốc tài sản tại [docs/compatibility-and-smoke-test.md](./docs/compatibility-and-smoke-test.md).
 - **Góp ý lỗi đầu ra:** Vui lòng mở Issue tại [GitHub Issues](https://github.com/tronghongnguyen1012/vietnamese-human-readable-writing/issues) kèm prompt gốc và đoạn trả lời gặp vấn đề.
