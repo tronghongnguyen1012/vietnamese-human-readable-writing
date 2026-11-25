@@ -4,6 +4,18 @@ Tài liệu ghi nhận quá trình tiến hóa của **Vietnamese Human-Readable
 
 ---
 
+## `v4.2-rc` — Communication-First Refinement on `v4.1` Core (Nhánh `release/v4.2-rc`, từ `main` `a63c39ce`)
+
+Bản tích hợp có chọn lọc các cải tiến đã chứng minh hiệu quả từ hai nhánh thực nghiệm **Semantic Reconstruction** ([`275ce12b`](https://github.com/tronghongnguyen1012/vietnamese-human-readable-writing/commit/275ce12b03ca40299a65eb13166407dd893dd96c)) và **V5 Communication-First** ([`3f1c3d5c`](https://github.com/tronghongnguyen1012/vietnamese-human-readable-writing/commit/3f1c3d5c95f6290bc4c9fdb47450db1825589389)) trực tiếp trên nền `SKILL.md` v4.1 (không sử dụng nguyên mẫu tối giản V5-A/V5-B làm bản phát hành chính thức nhằm giữ trọn chiều sâu và độ linh hoạt ngữ cảnh của v4.1):
+
+- **Tích hợp Semantic Reconstruction vào quy trình lõi (`SKILL.md` Mục 2.1, Mục 4.1 & 4.3):** Yêu cầu hiểu trọn vẹn thông điệp và tái tổ chức theo nhu cầu tiếp nhận của người đọc thay vì sửa từng câu trên khung văn bản gốc. *Bằng chứng:* Trong Human Evaluation vòng SR (`SR-03, SR-04, SR-07`), `Group C` (v4.1 + SR) được ưu tiên ở cả `3/3` ca so với `Group B` dài dòng.
+- **Tách rạch ròi 5 chế độ tác vụ & cách xử lý nguồn thiếu dữ kiện (`SKILL.md` Mục 1 & Mục 2.2):** Phân biệt *Hội thoại tự nhiên*, *Viết thành phẩm cho người đọc cuối*, *Đặc tả để triển khai*, *Review & phân tích* và *Giải thích kiến thức/kỹ thuật*. Chặn thói quen tự động gắn khối `"Điểm bản gốc chưa nêu cụ thể"` vào thông báo/email/SOP cho người đọc cuối (từng xảy ra ở `Group B` trên `SR-01`, `SR-02`, `SR-03`, `SR-07`), nhưng giữ chặt câu hỏi `[Chưa chốt]` ở đặc tả triển khai (`SR-05`, `V5-05`) và không che giấu lỗ hổng gây rủi ro vận hành.
+- **Trình tự truyền đạt linh hoạt không ép ngắn (`SKILL.md` Mục 1 & Mục 4.2):** Bỏ một khuôn sắp xếp cứng duy nhất; cho phép mở bằng quyết định/tác động (email/quyết định), bằng vấn đề thực tế (giải thích lý do cần cơ chế), bằng phân biệt bản chất trước tình huống (so sánh cơ chế), hoặc bối cảnh–điều kiện–trình tự (hướng dẫn vận hành). *Bằng chứng:* Trong Human Evaluation vòng V5 (`V5-01..V5-06`), `v4.1` (kích hoạt dưới nhãn `Group A`) được ưu tiên ở `V5-01`, `V5-03`, `V5-04`, ngang bằng ở `V5-05`, trong khi `Group C` thắng ở `V5-02`, `V5-06` — cho thấy nền v4.1 vẫn có lợi thế về độ dày thông tin và trình tự giải thích.
+- **Khóa chặt bảo toàn ngữ nghĩa & phân biệt thuật ngữ thật vs từ hành chính (`SKILL.md` Mục 2.3–2.4 & Mục 4.4):** Bổ sung kiểm tra tường minh `có thể` vs `sẽ` (từ lỗi `SR-01 B_prior`), `phải` vs `nên`, chống thu hẹp/mở rộng phạm vi ngoài nguồn (từ các lỗi `Minor` ở `SR-07 C`, `V5-03 C`, `V5-06 C`), cấm trình bày định danh/trạng thái/kiến trúc tự đề xuất như thiết kế đã chốt, và phân biệt thuật ngữ nghiệp vụ chính xác (như `"đối soát"` trong tài chính) với chữ hành chính sáo rỗng.
+- **Giữ hệ thống `references/` & chỉnh sửa xung đột tối thiểu (`vietnamese-clarity-and-style.md`):** Chỉ hiệu đính quy tắc Trường hợp B cho thành phẩm cuối và bổ sung ví dụ tái cấu trúc theo nghĩa ở mục Light Edit; giữ nguyên `business-specs.md`, `technical-specs.md` và `information-architecture.md`.
+
+---
+
 ## `v4.1` — Targeted Stabilization Patch (Nhánh `round-2/v4-stabilization`, từ `cf5f4e9`)
 
 Bản vá tập trung giải quyết 6 nhóm lỗi/bất nhất phát hiện sau Round 2 trước khi đưa Skill vào thử nghiệm sử dụng thực tế, giữ nguyên kiến trúc lõi v4 (`validate_datasets.py --check-skill` PASS, `82` dòng / `8.904 bytes`):

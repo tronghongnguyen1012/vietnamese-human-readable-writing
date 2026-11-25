@@ -1,4 +1,4 @@
-# Rõ Nghĩa Ngữ Nghĩa, Biên Tập An Toàn và Chống Độ Rõ Giả Tạo (v4.1)
+# Rõ Nghĩa Ngữ Nghĩa, Biên Tập An Toàn và Chống Độ Rõ Giả Tạo (v4.2-rc)
 
 Dùng tài liệu này khi biên tập văn bản tiếng Việt mắc lỗi câu nặng nề, dịch sát, danh từ hóa rỗng, hoặc khi **tài liệu nguồn thiếu dữ kiện / mơ hồ / mâu thuẫn**.
 
@@ -17,7 +17,7 @@ Nguồn thiếu tác thể thực hiện, đối tượng chịu tác động, �
 - **Điều cấm tuyệt đối (False Clarity):** Không tự điền tên phân hệ, giao thức, ngưỡng số hay âm thầm chọn một phía để viết thành câu có vẻ rõ ràng trơn tru.
   - *Ví dụ sai:* Nguồn ghi `"Hệ thống thực hiện đồng bộ trạng thái giao dịch giữa các phân hệ liên quan nhằm đảm bảo tính nhất quán."` → Viết lại thành `"PAY gửi trạng thái thanh toán cho OMS qua webhook."` (tự bịa phân hệ, hướng truyền và giao thức).
 - **4 chế độ xử lý cho Trường hợp B:**
-  1. **Giữ nguyên phần chắc chắn + Gắn Gap Marker / Câu hỏi chốt:** Viết gọn phần đã xác định được từ nguồn, liệt kê ngắn gọn đúng các tham số còn khuyết (`Ai gửi cho ai? Khi nào kích hoạt? Giao thức gì? Lỗi xử lý ra sao?`).
+  1. **Giữ nguyên phần chắc chắn + Gắn Gap Marker / Câu hỏi chốt *(cho Review & Đặc tả triển khai)*:** Viết gọn phần đã xác định được từ nguồn, liệt kê ngắn gọn đúng các tham số còn khuyết (`Ai gửi cho ai? Khi nào kích hoạt? Giao thức gì? Lỗi xử lý ra sao?`). **Lưu ý với thành phẩm cho người đọc cuối (thông báo, email, tài liệu hướng dẫn):** không tự động gắn khối kiểm tra điểm thiếu xuống cuối bài; giữ nguyên mức độ bất định của nguồn trong câu chữ tự nhiên, trừ trường hợp thiếu sót nghiêm trọng gây rủi ro vận hành hoặc hiểu nhầm nghĩa vụ.
   2. **Nêu các cách hiểu có điều kiện (khi có 2–3 hướng rõ ràng):** Trình bày tách bạch `Phương án hiểu 1 (nếu ...) → ...` và `Phương án hiểu 2 (nếu ...) → ...` để BA/PO/Kinh doanh chọn thay vì tự chọn ngầm.
   3. **Báo cáo trực diện mâu thuẫn:** Khi Mục A và Mục B xung đột số liệu/thời hạn/quy tắc, chỉ rõ chính xác hai câu mâu thuẫn và không tự xóa một vế.
   4. **Giữ đúng phạm vi & không hỏi vặn thừa:** Không mở rộng phân tích mọi khía cạnh chỉ vì nguồn thiếu dữ kiện; tách rõ *điểm chưa rõ ảnh hưởng trực tiếp mục đích hiện tại* vs *điểm cần chốt trước khi triển khai* vs *câu hỏi mở rộng tùy chọn*. Nếu ngữ cảnh đã có sẵn đáp án hoặc chi tiết không ảnh hưởng công việc, xử lý trực tiếp luôn.
@@ -28,7 +28,7 @@ Nguồn thiếu tác thể thực hiện, đối tượng chịu tác động, �
 
 - **Giữ "được" và "bị" đúng sắc thái:** Dùng *"được"* cho kết quả tích cực/được duyệt; *"bị"* cho sự cố/bất lợi; loại bỏ *"được [V] bởi [Tác thể vô tri]"* kiểu dịch sát tiếng Anh.
 - **Tách phạm vi phủ định `"không ... và ..."`:** Không nối thẳng vế phủ định với vế khẳng định bằng `"và"` — tách thành `, đồng thời giới hạn...` hoặc tách câu riêng.
-- **Chế độ Biên tập Nhẹ (Light Edit):** Khi câu gốc đã rõ tác thể, đúng ngữ pháp, tự nhiên và đúng giọng tác giả, **không sửa chỉ để đổi từ đồng nghĩa**. Mỗi thay đổi phải nhắm vào một lỗi cụ thể (mơ hồ, danh từ hóa rỗng, lặp ý, sai quy chiếu, lệch trình tự).
+- **Chế độ Biên tập Nhẹ (Light Edit) vs Tái cấu trúc theo nghĩa:** Khi câu gốc đã rõ tác thể, đúng ngữ pháp, tự nhiên và đúng giọng tác giả, **không sửa chỉ để đổi từ đồng nghĩa**. Ngược lại, khi văn bản gốc mắc nặng lỗi hành chính rườm rà hoặc rối cấu trúc, đừng chỉ vá 2–3 từ trên bộ khung cũ — hãy hiểu trọn thông điệp rồi tái tạo lại câu mạch lạc theo nhu cầu người đọc, đồng thời giữ đúng thuật ngữ nghiệp vụ (ví dụ `"đối soát"` trong tài liệu tài chính).
 
 ### Bảng Chữa nhanh Các Mẫu Câu Phổ biến
 
