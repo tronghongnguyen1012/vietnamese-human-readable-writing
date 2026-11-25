@@ -1,0 +1,148 @@
+{
+  "SR-01": [
+    {
+      "label": "Mẫu 1",
+      "group": "D",
+      "run": "user_provided",
+      "model": "GPT-6.2 Instant (default, user-provided)"
+    },
+    {
+      "label": "Mẫu 2",
+      "group": "C",
+      "run": "run1",
+      "model": "Gemini 4 Neon (inherit)"
+    },
+    {
+      "label": "Mẫu 3",
+      "group": "B",
+      "run": "run1",
+      "model": "Gemini 4 Neon (inherit)"
+    },
+    {
+      "label": "Mẫu 4",
+      "group": "A",
+      "run": "run1",
+      "model": "Gemini 4 Neon (inherit)"
+    }
+  ],
+  "SR-02": [
+    {
+      "label": "Mẫu 1",
+      "group": "B",
+      "run": "run1",
+      "model": "Gemini 4 Neon (inherit)"
+    },
+    {
+      "label": "Mẫu 2",
+      "group": "A",
+      "run": "run1",
+      "model": "Gemini 4 Neon (inherit)"
+    },
+    {
+      "label": "Mẫu 3",
+      "group": "C",
+      "run": "run1",
+      "model": "Gemini 4 Neon (inherit)"
+    }
+  ],
+  "SR-03": [
+    {
+      "label": "Mẫu 1",
+      "group": "C",
+      "run": "run1",
+      "model": "Gemini 4 Neon (inherit)"
+    },
+    {
+      "label": "Mẫu 2",
+      "group": "B",
+      "run": "run1",
+      "model": "Gemini 4 Neon (inherit)"
+    },
+    {
+      "label": "Mẫu 3",
+      "group": "A",
+      "run": "run1",
+      "model": "Gemini 4 Neon (inherit)"
+    }
+  ],
+  "SR-04": [
+    {
+      "label": "Mẫu 1",
+      "group": "C",
+      "run": "run1",
+      "model": "Gemini 4 Neon (inherit)"
+    },
+    {
+      "label": "Mẫu 2",
+      "group": "B",
+      "run": "run1",
+      "model": "Gemini 4 Neon (inherit)"
+    },
+    {
+      "label": "Mẫu 3",
+      "group": "A",
+      "run": "run1",
+      "model": "Gemini 4 Neon (inherit)"
+    }
+  ],
+  "SR-05": [
+    {
+      "label": "Mẫu 1",
+      "group": "C",
+      "run": "run1",
+      "model": "Gemini 4 Neon (inherit)"
+    },
+    {
+      "label": "Mẫu 2",
+      "group": "B",
+      "run": "run1",
+      "model": "Gemini 4 Neon (inherit)"
+    },
+    {
+      "label": "Mẫu 3",
+      "group": "A",
+      "run": "run1",
+      "model": "Gemini 4 Neon (inherit)"
+    }
+  ],
+  "SR-06": [
+    {
+      "label": "Mẫu 1",
+      "group": "A",
+      "run": "run1",
+      "model": "Gemini 4 Neon (inherit)"
+    },
+    {
+      "label": "Mẫu 2",
+      "group": "B",
+      "run": "run1",
+      "model": "Gemini 4 Neon (inherit)"
+    },
+    {
+      "label": "Mẫu 3",
+      "group": "C",
+      "run": "run1",
+      "model": "Gemini 4 Neon (inherit)"
+    }
+  ],
+  "SR-07": [
+    {
+      "label": "Mẫu 1",
+      "group": "C",
+      "run": "run1",
+      "model": "Gemini 4 Neon (inherit)"
+    },
+    {
+      "label": "Mẫu 2",
+      "group": "B",
+      "run": "run1",
+      "model": "Gemini 4 Neon (inherit)"
+    },
+    {
+      "label": "Mẫu 3",
+      "group": "A",
+      "run": "run1",
+      "model": "Gemini 4 Neon (inherit)"
+    }
+  ]
+}
